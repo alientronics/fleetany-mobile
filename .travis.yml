@@ -1,0 +1,21 @@
+language: android
+
+sudo: false
+
+node_js:
+  -"4.1"
+
+android:
+  components:
+  - platform-tools
+  - tools
+  - build-tools-21.1.1
+  - android-21
+
+install:
+  - npm install
+  - npm install -g cordova ionic@beta
+
+script:
+  - ionic platform add android
+  - ionic build android
