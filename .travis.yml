@@ -12,9 +12,13 @@ android:
   - build-tools-21.1.1
   - android-21
 
+before_install:
+  - nvm install v4
+  - npm i -g npm@^2.0.0
+  - npm install -g cordova ionic@beta
+
 install:
   - npm install
-  - npm install -g cordova ionic@beta
 
 script:
   - ionic platform add android
