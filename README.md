@@ -3,6 +3,8 @@ fleetany-mobile
 
 fleetany ionic2 mobile app for gps and fuel tracking
 
+[![Build Status](https://travis-ci.org/alientronics/fleetany-mobile.png?branch=master)](https://travis-ci.org/alientronics/fleetany-mobile)
+
 License
 -------
 
