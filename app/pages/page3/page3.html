@@ -7,4 +7,34 @@
 
 <ion-content class="page3">
 
+  <ion-list>
+
+    <ion-item>
+      <ion-label>Price</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Amount</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Car Plate</ion-label>
+      <ion-select [(ngModel)]="plate">
+        <ion-option value="ita1915">ITA-1915</ion-option>
+        <ion-option value="idf3120">IFD-3120</ion-option>
+        <ion-option value="irg6389">IRG-6389</ion-option>
+        <ion-option value="iof0956">IOF-0956</ion-option>
+        <ion-option value="iws3298">IWS-3298</ion-option>
+        <ion-option value="ibx3678">IBX-3678</ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
+  <div padding>
+    <button primary block>Send Fuel</button>
+  </div>
+
 </ion-content>
