@@ -4,8 +4,15 @@
 
 <ion-content padding class="page1">
   <h2>Welcome to Fleetany Mobile!</h2>
-  <p>
+  <p *ngIf="!loggedIn">
     Please, log in before use Fleetany
   </p>
-  <button primary block (click)="googleLogin()">Log In with Google</button>
+  <button primary block (click)="googleLogin()" *ngIf="!loggedIn">Log In with Google</button>
+  <div *ngIf="loggedIn">
+    <img [src]="userImage" class="image"/>
+    <p>{{welcome}}</p>
+    <p>{{debug}}</p>
+    <p>{{loggedIn}}</p>
+  </div>
+  <button danger block (click)="googleLogout()" *ngIf="loggedIn">Logout  Google</button>
 </ion-content>

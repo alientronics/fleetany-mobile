@@ -19,6 +19,8 @@ before_install:
 
 install:
   - npm install
+  - cordova plugin add cordova-plugin-googleplus
+  - cordova prepare
 
 script:
   - ionic platform add android
