@@ -19,9 +19,10 @@ before_install:
 
 install:
   - npm install
+  - ionic platform add android
   - cordova plugin add cordova-plugin-googleplus
+  - ionic plugin add cordova-plugin-geolocation
   - cordova prepare
 
 script:
-  - ionic platform add android
   - ionic build android
