@@ -1,23 +1,13 @@
 
 <ion-navbar *navbar>
   <ion-title>
-    Fuel
+    fleetany
   </ion-title>
 </ion-navbar>
 
 <ion-content class="page3">
 
   <ion-list>
-
-    <ion-item>
-      <ion-label>Price</ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Amount</ion-label>
-      <ion-input type="text"></ion-input>
-    </ion-item>
 
     <ion-item>
       <ion-label>Car Plate</ion-label>
@@ -29,6 +19,26 @@
         <ion-option value="iws3298">IWS-3298</ion-option>
         <ion-option value="ibx3678">IBX-3678</ion-option>
       </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Fuel Price</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Fuel Amount</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Vehicle Miliage</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Tank Fill Up</ion-label>
+      <ion-toggle [(ngModel)]="tankfill"></ion-toggle>
     </ion-item>
 
   </ion-list>

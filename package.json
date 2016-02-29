@@ -18,7 +18,7 @@
     "strip-sourcemap-loader": "0.0.1"
   },
   "name": "fleetany-mobile",
-  "description": "fleetany-mobile: Fleetany Ionic2 Mobile App for GPS and Fuel tracking",
+  "description": "fleetany app for gps and fuel tracking",
   "cordovaPlugins": [
     "cordova-plugin-device",
     "cordova-plugin-console",

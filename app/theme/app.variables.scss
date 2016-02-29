@@ -21,10 +21,15 @@
 // are different per mode.
 
 $colors: (
-  primary:    #387ef5,
+  primary:    #ffb000,
   secondary:  #32db64,
-  danger:     #f53d3d,
+  danger:     #ff7000,
   light:      #f4f4f4,
   dark:       #222,
   favorite:   #69BB7B
 );
+
+$toolbar-background:         #ffb000;
+$toolbar-text-color:         #fff;
+$toolbar-active-color:       #fff;
+$toolbar-inactive-color:     #ffce62;

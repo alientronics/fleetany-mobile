@@ -8,6 +8,7 @@ import {Geolocation} from 'ionic-native';
 export class Page2 {
 
   constructor() {
+  	this.gpstracking = true;
 
 	let watch = Geolocation.watchPosition();
 	watch.subscribe((data) => {
