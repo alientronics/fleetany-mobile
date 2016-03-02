@@ -16,11 +16,10 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
-        loader: 'babel',
+        test: /\.ts$/,
+        loader: 'awesome-typescript',
         query: {
-          presets: ['es2015'],
-          plugins: ['transform-decorators-legacy']
+          'doTypeCheck': true,
         },
         include: path.resolve('app'),
         exclude: /node_modules/
@@ -42,6 +41,6 @@ module.exports = {
     alias: {
       'angular2': path.resolve('node_modules/angular2')
     },
-    extensions: ['', '.js']
+    extensions: ['', '.js', '.ts']
   }
 };

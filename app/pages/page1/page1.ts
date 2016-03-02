@@ -1,16 +1,24 @@
+'use strict';
+
 import {Page, Alert, NavController, Events} from 'ionic-framework/ionic';
-import {forwardRef, Inject} from 'angular2/core';
+import {forwardRef, Inject, Type} from 'angular2/core';
 import {UserData} from '../../providers/user-data';
 
 @Page({
   templateUrl: 'build/pages/page1/page1.html',
 })
-export class Page1 {
-  static get parameters() {
-    return [[NavController],[UserData],[Events]];
-  }
 
-  constructor(nav, userData, events) {
+export class Page1 {
+
+  private nav: NavController;
+  private userData: UserData;
+  private events: Events;
+  private loggedIn: boolean;
+  private userImage: string;
+  private welcome: string;
+  private debug: string;
+
+  constructor(nav: NavController, userData: UserData, events: Events) {
     this.nav = nav;
     this.userData = userData;
     this.events = events;
@@ -26,7 +34,7 @@ export class Page1 {
   doAlert(title, message) {
     let alert = Alert.create({
       title: title,
-      body: message,
+      message: message,
       buttons: ['Ok']
     });
     this.nav.present(alert);
@@ -72,10 +80,6 @@ export class Page1 {
 
   listenToLoginEvents() {
     this.events.subscribe('user:login', () => {
-      this.loggedIn = true;
-    });
-
-    this.events.subscribe('user:signup', () => {
       this.loggedIn = true;
     });
 
