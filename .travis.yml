@@ -13,6 +13,7 @@ android:
   - android-23
 
 before_install:
+  # try travis
   - nvm install v4
   - npm i -g npm@^2.0.0
   - npm install -g cordova ionic@beta
