@@ -24,10 +24,17 @@ if (rootdir) {
       }
 
       if(fs.existsSync(testBuildPath)) {
+<<<<<<< HEAD:hooks/after_prepare/021_remove_tests_files.js
         process.stdout.write('Removing test build from assets after prepare: ' + testBuildPath + '\n');
         del.sync(testBuildPath);
       } else {
         process.stdout.write('Test build @ ' + testBuildPath + ' does not exist for removal' + '\n');
+=======
+        process.stdout.write('Removing test build from assets after prepare: ' + testBuildPath);
+        if (!process.env.TRAVIS) { del.sync(testBuildPath); }
+      } else {
+        process.stdout.write('Test build @ ' + testBuildPath + ' does not exist for removal');
+>>>>>>> 1424c74499ca40e6448d4c9bfbd3d9369b144fad:hooks/after_prepare/020_remove_tests_files.js
       }
 
     } catch(e) {
