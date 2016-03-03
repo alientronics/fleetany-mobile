@@ -1,7 +1,7 @@
 interface IGooglePlus {
-    isAvailable(success: any): void; 
-    login(options: any, success: any, error: any): void; 
-    logout(success: any): void;
+    isAvailable(success: (avaiablity:boolean) => void): void; 
+    login(options: any, success: (object:any) => void, error: (message:string) => void): void; 
+    logout(success: (message:string) => void): void;
 }
 
 interface IPlugins {

@@ -1,0 +1,11 @@
+{
+	"vehicles":
+		[
+			{ "key": "ita1915", "value": "ITA-1915" },
+			{ "key": "idf3120", "value": "IFD-3120" },
+			{ "key": "iof0956", "value": "IOF-0956" },
+			{ "key": "iws3298", "value": "IWS-3298" },
+			{ "key": "ibx3678", "value": "ITA-1915" },
+			{ "key": "irg6389", "value": "IBX-3678" }
+		]
+}

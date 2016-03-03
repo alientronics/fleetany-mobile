@@ -16,9 +16,7 @@ export function main(): void {
 
     beforeEach(() => {
       let platform: Platform = new Platform();
-      let events: Events = new Events();
-      let userData: UserData = new UserData(events);
-      fleetanyApp = new FleetanyApp(platform, events, userData);
+      fleetanyApp = new FleetanyApp(platform);
     });
 
     it('initialises with a root page', () => {
@@ -27,15 +25,6 @@ export function main(): void {
 
     it('initialises with an app', () => {
       expect(fleetanyApp['app']).not.toBe(null);
-    });
-
-    it('initialises with no user logged', () => {
-      expect(fleetanyApp['loggedIn']).toBe(false);
-    });
-
-    it('should watch user login', () => {
-      fleetanyApp.events.publish('user:login');
-      expect(fleetanyApp['loggedIn']).toBe(true);
     });
 
   });

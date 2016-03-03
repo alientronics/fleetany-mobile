@@ -24,14 +24,14 @@ if (rootdir) {
       }
 
       if(fs.existsSync(testBuildPath)) {
-        console.log('Removing test build from assets after prepare: ' + testBuildPath);
+        process.stdout.write('Removing test build from assets after prepare: ' + testBuildPath + '\n');
         del.sync(testBuildPath);
       } else {
-        console.log('Test build @ ' + testBuildPath + ' does not exist for removal');
+        process.stdout.write('Test build @ ' + testBuildPath + ' does not exist for removal' + '\n');
       }
 
     } catch(e) {
-      process.stdout.write(e);
+      process.stdout.write(e + '\n');
     }
   }
 }

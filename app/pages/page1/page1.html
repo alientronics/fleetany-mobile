@@ -1,18 +1,50 @@
 <ion-navbar *navbar>
   <ion-title>fleetany</ion-title>
+  <ion-buttons start>
+    <button (click)="googleLogin()" [hidden]="loggedIn">
+      <ion-icon name="log-in"></ion-icon>
+    </button>
+    <button (click)="googleLogout()" [hidden]="!loggedIn">
+      <ion-icon name="log-out"></ion-icon>
+    </button>
+  </ion-buttons>
+
+  <ion-buttons end>
+    <button (click)="onAbout()">
+      <ion-icon name="help-circle"></ion-icon>
+    </button>
+  </ion-buttons>
 </ion-navbar>
 
 <ion-content padding class="page1">
-  <h2>Welcome to Fleetany Mobile!</h2>
-  <p *ngIf="!loggedIn">
-    Please, log in before use Fleetany
-  </p>
+
+  <ion-card>
+    <ion-card-header>
+      Welcome to Fleetany Mobile!
+    </ion-card-header>
+    <ion-card-content>
+      Fleetany is a freemiun open source fleet management system.
+    </ion-card-content>
+  </ion-card>
+
+  <p *ngIf="!loggedIn">Please, log in before use Fleetany</p>
   <button primary block (click)="googleLogin()" *ngIf="!loggedIn">Log In with Google</button>
+
   <div *ngIf="loggedIn">
     <img [src]="userImage" class="image"/>
     <p>{{welcome}}</p>
-    <p>{{debug}}</p>
-    <p>{{loggedIn}}</p>
   </div>
-  <button danger block (click)="googleLogout()" *ngIf="loggedIn">Logout  Google</button>
+  <ion-list>
+
+    <ion-item *ngIf="loggedIn">
+      <ion-label>Select your car</ion-label>
+      <ion-select [(ngModel)]="plate" (ngModelChange)="plateChange($event)">
+        <ion-option *ngFor="#vehicle of vehicles" value="{{vehicle.key}}">
+          {{vehicle.value}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
 </ion-content>
