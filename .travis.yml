@@ -27,7 +27,7 @@ install:
   - cordova plugin add cordova-plugin-googleplus
   - ionic plugin add cordova-plugin-geolocation
   - cordova prepare
-# build again
+
 script:
   - ionic build android
-  - npm test 
+  - npm test
