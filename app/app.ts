@@ -1,6 +1,6 @@
 'use strict';
 
-import {App, Platform} from 'ionic-framework/ionic';
+import {App, Platform} from 'ionic-angular';
 import {TabsPage} from './pages/tabs/tabs';
 import {UserData} from './providers/user-data';
 import {Type} from 'angular2/core';
@@ -14,12 +14,10 @@ export class FleetanyApp {
 
   private rootPage: Type;
   private platform: Platform;
-  private loggedIn: boolean;
 
   constructor(platform: Platform) {
     this.rootPage = TabsPage;
     this.platform = platform;
-    this.loggedIn = false;
 
     this.platform.ready().then(() => {
       // The platform is now ready. Note: if this callback fails to fire, follow
@@ -36,7 +34,10 @@ export class FleetanyApp {
       // For example, we might change the StatusBar color. This one below is
       // good for dark backgrounds and light text:
       // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
+
+      // Disable BACK button on home
     });
+
   }
 
 }

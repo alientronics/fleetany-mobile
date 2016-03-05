@@ -11,8 +11,7 @@ System.config({
   baseURL: '/base/',
   defaultJSExtensions: true,
   paths: {
-    'ionic/*': 'node_modules/ionic-framework/*.js',
-    'ionic-framework/*': 'node_modules/ionic-framework/*.js',
+    'ionic-angular/*': 'node_modules/ionic-angular/*.js',
     'angular2/*': 'node_modules/angular2/*.js',
     'rxjs/*': 'node_modules/rxjs/*.js'
   }

@@ -1,7 +1,7 @@
 'use strict';
 
 import {Injectable, Inject} from 'angular2/core';
-import {Storage, LocalStorage, Events} from 'ionic-framework/ionic';
+import {Storage, LocalStorage, Events} from 'ionic-angular';
 import {Http} from 'angular2/http';
 import {Settings} from '../config/settings';
 

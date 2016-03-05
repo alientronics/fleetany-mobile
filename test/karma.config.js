@@ -23,11 +23,10 @@ module.exports = function(config) {
       'node_modules/reflect-metadata/Reflect.js',
 
       { pattern: 'node_modules/angular2/**/*.js', included: false, watched: false },
-      { pattern: 'node_modules/ionic-framework/**/*.js', included: false, watched: false },
+      { pattern: 'node_modules/ionic-angular/**/*.js', included: false, watched: false },
       { pattern: 'node_modules/ionic-native/dist/**/*.js', included: false, watched: false },
       { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
       { pattern: 'www/build/test/**/*.js', included: false, watched: true },
-      { pattern: 'www/build/test/**/*.html', included: false, served: true},
 
       'test/test-main.js'
     ],
@@ -35,8 +34,8 @@ module.exports = function(config) {
     // list of files to exclude
     exclude: [
       'node_modules/angular2/**/*_spec.js',
-      'node_modules/ionic-framework/**/*spec*',
-      'node_modules/ionic-framework/decorators/app.js'
+      'node_modules/ionic-angular/**/*spec*',
+      'node_modules/ionic-angular/decorators/app.js'
     ],
 
     // preprocess matching files before serving them to the browser
@@ -68,13 +67,24 @@ module.exports = function(config) {
     //           Also any files you want to serve need to be in the files array above with serverd: true
     proxies: {
       // allows us to keep test code separate from app code and still have the references work
-      '/base/node_modules/ionic-framework/decorators/app.js': '/base/www/build/test/app.stub.js', // stub out Ionic's @App decorator
-      '/base/www/build/app': '/base/www/build/test',
-      '/build': '/base/www/build/test',
+      '/base/node_modules/ionic-angular/decorators/app.js': '/base/www/build/test/app.stub.js', // stub out Ionic's @App decorator
+      //proxy ionic native
       '/base/plugins': '/base/node_modules/ionic-native/dist/plugins',
       '/base/ionic-native.js': '/base/node_modules/ionic-native/dist/index.js',
       '/base/ng1.js': '/base/node_modules/ionic-native/dist/ng1.js',
-      '/base/util.js': '/base/node_modules/ionic-native/dist/util.js'
+      '/base/util.js': '/base/node_modules/ionic-native/dist/util.js',
+      //proxy ionic angular
+      '/base/ionic-angular.js': '/base/node_modules/ionic-angular/index.js',
+      '/base/animations': '/base/node_modules/ionic-angular/animations',
+      '/base/config': '/base/node_modules/ionic-angular/config',
+      '/base/decorators': '/base/node_modules/ionic-angular/decorators',
+      '/base/components': '/base/node_modules/ionic-angular/components',
+      '/base/platform': '/base/node_modules/ionic-angular/platform',
+      '/base/util': '/base/node_modules/ionic-angular/util',
+      '/base/translation': '/base/node_modules/ionic-angular/translation',
+      '/base/transitions': '/base/node_modules/ionic-angular/transitions',
+      '/base/gestures': '/base/node_modules/ionic-angular/gestures',
+      '/base/gestures/gesture.js': '/base/node_modules/ionic-angular/gestures/gesture.js'
     },
 
     // level of logging

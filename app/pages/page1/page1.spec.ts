@@ -1,5 +1,5 @@
 import { Page1 } from './page1';
-import { Events }   from 'ionic-framework/ionic';
+import { Events, Platform }   from 'ionic-angular';
 import { UserData } from '../../providers/user-data';
 import { Http, BaseRequestOptions } from 'angular2/http';
 import { MockBackend } from 'angular2/http/testing'
@@ -13,9 +13,10 @@ export function main(): void {
 
     beforeEach(() => {
       let events: Events = new Events();
+      let platform: Platform = new Platform();
       let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
       let userData: UserData = new UserData(events, http);
-      page1 = new Page1(null, userData, events);
+      page1 = new Page1(null, userData, events, platform);
 
       // Mock Google Plus Plugin
       let googleplus = jasmine.createSpyObj('googleplus', ['isAvailable', 'login', 'logout']);
@@ -39,7 +40,8 @@ export function main(): void {
           return callback('logout successful'); 
         } 
       );
-      window.plugins = {googleplus: googleplus};
+      let bgGeo = jasmine.createSpyObj('backgroundGeoLocation', ['configure', 'start', 'stop', 'finish']);
+      window.plugins = {googleplus: googleplus, backgroundGeoLocation:  bgGeo};
 
     });
 

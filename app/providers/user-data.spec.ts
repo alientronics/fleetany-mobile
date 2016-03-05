@@ -1,5 +1,5 @@
 import { UserData } from './user-data';
-import { Events } from 'ionic-framework/ionic';
+import { Events } from 'ionic-angular';
 import { Http, BaseRequestOptions } from 'angular2/http';
 import { MockBackend } from 'angular2/http/testing'
 

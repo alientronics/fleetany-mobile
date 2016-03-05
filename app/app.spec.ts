@@ -1,6 +1,6 @@
 import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS} from 'angular2/platform/testing/browser';
 import { setBaseTestProviders } from 'angular2/testing';
-import { Platform, Events }   from 'ionic-framework/ionic';
+import { Platform, Events }   from 'ionic-angular';
 import { FleetanyApp }           from './app';
 import { UserData } from './providers/user-data';
 

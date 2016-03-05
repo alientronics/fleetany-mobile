@@ -1,6 +1,6 @@
 'use strict';
 
-import {Page, Alert, NavController, Events} from 'ionic-framework/ionic';
+import {Page, Alert, NavController, Events, Platform} from 'ionic-angular';
 import {forwardRef, Inject, Type} from 'angular2/core';
 import {UserData} from '../../providers/user-data';
 import {About} from '../about/about';
@@ -12,6 +12,7 @@ import {About} from '../about/about';
 export class Page1 {
 
   private nav: NavController;
+  private platform: Platform;
   private userData: UserData;
   private events: Events;
   private loggedIn: boolean;
@@ -20,8 +21,9 @@ export class Page1 {
   private plate: string;
   private vehicles: Array<any>;
 
-  constructor(nav: NavController, userData: UserData, events: Events) {
+  constructor(nav: NavController, userData: UserData, events: Events, platform: Platform) {
     this.nav = nav;
+    this.platform = platform;
     this.userData = userData;
     this.events = events;
     this.loggedIn = false;
@@ -38,6 +40,11 @@ export class Page1 {
   listenToLoginEvents() {
     this.events.subscribe('user:login', () => {
       this.loggedIn = true;
+      if (this.nav) {
+        this.nav.push(Page1).then( () => { //force page reload
+          this.nav.popToRoot();
+        });
+      }
     });
 
     this.events.subscribe('user:logout', () => {
@@ -46,7 +53,7 @@ export class Page1 {
   }
 
   googleLogin() {
-    if (window.plugins) {
+    if (window.plugins) { //if (this.platform.is('mobile')) {
       window.plugins.googleplus.isAvailable((available) => {
         if (available) {
             window.plugins.googleplus.login(
@@ -70,6 +77,29 @@ export class Page1 {
       this.userData.login(dummyUser);
       this.updateUser(dummyUser);
     }
+  }
+
+  confirmLogout() {
+    let confirmAlert = Alert.create({
+      title: 'Confirm logout',
+      message: 'Do you really want to logout?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Bye',
+          handler: () => {
+            this.googleLogout();
+          }
+        }
+      ]
+    });
+    this.nav.present(confirmAlert);
   }
 
   googleLogout() {

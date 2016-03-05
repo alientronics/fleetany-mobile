@@ -23,6 +23,7 @@ $RECYCLE.BIN/
 platforms/
 plugins/
 typings/
+coverage/
 
 .DS_Store
 Thumbs.db

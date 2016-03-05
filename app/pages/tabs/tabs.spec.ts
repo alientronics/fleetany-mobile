@@ -1,4 +1,5 @@
 import { TabsPage } from './tabs';
+import { Platform, NavController, Alert } from 'ionic-angular';
 
 let tabs: TabsPage = null;
 
@@ -7,13 +8,18 @@ export function main(): void {
 
   describe('TabsPage', () => {
 
-    beforeEach(() => {      
-      tabs = new TabsPage();
+    beforeEach(() => {     
+      let platform = new Platform();
+      tabs = new TabsPage(platform, null);
     });
 
     it('initialises', () => {
       expect(tabs).not.toBeNull();
     });
+
+      //expect(Geolocation.watchPosition).toHaveBeenCalled();
+      //expect(page2['latitude']).toBe(30.03);
+      //expect(page2['longitude']).toBe(51.22);
 
   });
 }

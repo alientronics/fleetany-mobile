@@ -4,7 +4,7 @@
     <button (click)="googleLogin()" [hidden]="loggedIn">
       <ion-icon name="log-in"></ion-icon>
     </button>
-    <button (click)="googleLogout()" [hidden]="!loggedIn">
+    <button (click)="confirmLogout()" [hidden]="!loggedIn">
       <ion-icon name="log-out"></ion-icon>
     </button>
   </ion-buttons>
@@ -27,16 +27,16 @@
     </ion-card-content>
   </ion-card>
 
-  <p *ngIf="!loggedIn">Please, log in before use Fleetany</p>
-  <button primary block (click)="googleLogin()" *ngIf="!loggedIn">Log In with Google</button>
+  <p [hidden]="loggedIn">Please, log in before use Fleetany</p>
+  <button primary block (click)="googleLogin()" [hidden]="loggedIn">Log In with Google</button>
 
-  <div *ngIf="loggedIn">
+  <div [hidden]="!loggedIn">
     <img [src]="userImage" class="image"/>
     <p>{{welcome}}</p>
   </div>
-  <ion-list>
 
-    <ion-item *ngIf="loggedIn">
+  <ion-list [hidden]="!loggedIn">
+    <ion-item>
       <ion-label>Select your car</ion-label>
       <ion-select [(ngModel)]="plate" (ngModelChange)="plateChange($event)">
         <ion-option *ngFor="#vehicle of vehicles" value="{{vehicle.key}}">
@@ -44,7 +44,6 @@
         </ion-option>
       </ion-select>
     </ion-item>
-
   </ion-list>
 
 </ion-content>
