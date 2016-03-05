@@ -29,5 +29,5 @@ install:
   - cordova prepare
 
 script:
-  - npm test
   - ionic build android
+  - npm test
