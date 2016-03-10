@@ -7,45 +7,53 @@
 
 <ion-content class="page3">
 
-  <ion-list>
+  <form [(ngFormModel)]="fuelForm">
+    <ion-list>
 
-    <ion-item>
-      <ion-label>Price</ion-label>
-      <ion-input type="number" [(ngModel)]="price"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>Price</ion-label>
+        <ion-input type="number" [(ngFormControl)]="price"></ion-input>
+      </ion-item>
+      <div *ngIf="price.hasError('required') && price.touched && false" 
+          class="error">* Price should be numeric!</div>
 
-    <ion-item>
-      <ion-label>Amount</ion-label>
-      <ion-input type="number" [(ngModel)]="amount"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>Amount</ion-label>
+        <ion-input type="number" [(ngFormControl)]="amount"></ion-input>
+      </ion-item>
+      <div *ngIf="amount.hasError('required') && amount.touched && false" 
+          class="error">* Amount should be numeric!</div>
 
-    <ion-item>
-      <ion-label>Type</ion-label>
-      <ion-select [(ngModel)]="type">
-        <ion-option value="regular">regular</ion-option>
-        <ion-option value="unleaded">unleaded</ion-option>
-        <ion-option value="leaded">leaded</ion-option>
-        <ion-option value="propane">propane</ion-option>
-        <ion-option value="diesel">diesel</ion-option>
-        <ion-option value="ethanol">ethanol</ion-option>
-      </ion-select>
-    </ion-item>
+      <ion-item>
+        <ion-label>Miliage</ion-label>
+        <ion-input type="number" [(ngFormControl)]="miliage"></ion-input>
+      </ion-item>
+      <div *ngIf="miliage.hasError('required') && miliage.touched && false" 
+          class="error">* Miliage should be numeric!</div>
 
-    <ion-item>
-      <ion-label>Miliage</ion-label>
-      <ion-input type="number" [(ngModel)]="miliage"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>Type</ion-label>
+        <ion-select [(ngFormControl)]="type">
+          <ion-option value="regular">regular</ion-option>
+          <ion-option value="unleaded">unleaded</ion-option>
+          <ion-option value="leaded">leaded</ion-option>
+          <ion-option value="propane">propane</ion-option>
+          <ion-option value="diesel">diesel</ion-option>
+          <ion-option value="ethanol">ethanol</ion-option>
+        </ion-select>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Tank Fill Up</ion-label>
-      <ion-toggle [(ngModel)]="tankfill"></ion-toggle>
-    </ion-item>
+      <ion-item>
+        <ion-label>Tank Fill Up</ion-label>
+        <ion-toggle [(ngFormControl)]="tankfill" checked="true"></ion-toggle>
+      </ion-item>
 
-  </ion-list>
-
-  <div padding>
-    <button primary block (click)="sendFuel()">Send Fuel</button>
-  </div>
+    </ion-list>
+    
+    <div padding>
+      <button type="submit" primary block [disabled]="!fuelForm.valid" (click)="onSubmit(fuelForm.value)">Send Fuel</button>
+    </div>
+  </form>
 
   <ion-card [hidden]="!fuelsent">
 
