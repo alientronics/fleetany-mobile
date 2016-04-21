@@ -31,3 +31,10 @@ install:
 script:
   - ionic build android
   - npm test
+
+notifications:
+  email:
+    recipients:
+      - henrique.dias@alientronics.com.br
+    on_success: change
+    on_failure: always

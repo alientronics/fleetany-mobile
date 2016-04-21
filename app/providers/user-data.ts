@@ -2,7 +2,7 @@
 
 import {Injectable, Inject} from 'angular2/core';
 import {Storage, LocalStorage, Events} from 'ionic-angular';
-import {Http} from 'angular2/http';
+import {Http, Headers} from 'angular2/http';
 import {Settings} from '../config/settings';
 
 let settings: Settings = new Settings();
@@ -17,6 +17,7 @@ export class UserData {
   private RAW_DATA: string;
   private data: any;
   public email: string;
+  public plate: int;
 
   constructor(
       @Inject(Events) private events: Events,
@@ -50,6 +51,7 @@ export class UserData {
 
   setPlate(plate) {
     this.storage.set(this.PLATE, plate);
+    this.plate = plate;
   }
 
   getPlate() {
@@ -82,13 +84,15 @@ export class UserData {
       // We're using Angular Http provider to request the data,
       // then on the response it'll map the JSON data to a parsed JS object.
       // Next we process the data and resolve the promise with the new data.
-      postApi('user', { email: this.email } ).subscribe(res => {
+
+      this.postApi('user', { email: this.email }).subscribe(res => {
         // we've got back the raw data, now generate the core schedule data
         // and save the data for later reference
         this.data = JSON.stringify(res.json());
         this.storage.set(this.RAW_DATA, this.data);
         resolve(this.data);
       });
+
     });
   }
 
@@ -106,9 +110,15 @@ export class UserData {
   }
 
   postApi(url, data) {
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
     data['api_token'] = settings.api_token;
-    data['vehicle_id'] = this.userData.getPlate();
-    return this.http.post(settings.base_url + url, JSON.stringify(data));
+    if (this.plate) data['vehicle_id'] = this.plate;
+    var query = "";
+    for (var key in data) {
+      query += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+    }
+    return this.http.post(settings.base_path + url, query , { headers} );
   }
 
 }
