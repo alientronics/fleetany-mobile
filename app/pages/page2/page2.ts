@@ -1,6 +1,8 @@
 'use strict';
 
 import {Page, IonicApp, Platform} from 'ionic-angular';
+import {Http} from 'angular2/http';
+import {UserData} from '../../providers/user-data';
 import {Geolocation} from 'ionic-native';
 
 @Page({
@@ -13,12 +15,15 @@ export class Page2 {
   private longitude: number;
   private watcher: any;
   private app: IonicApp;
+  private userData: UserData;
   private platform: Platform;
   private bgGeo: any;
 
-  constructor(app: IonicApp, platform: Platform) {
+  constructor(app: IonicApp, userData: UserData, platform: Platform, http: Http) {
   	this.gpstracking = false;
     this.app = app;
+    this.userData = userData;
+    this.http = http;
     this.platform = platform;
 
     if (this.platform.is('mobile')) {
@@ -53,7 +58,11 @@ export class Page2 {
       this.watcher = Geolocation.watchPosition(options).subscribe((data) => {
         this.latitude = data.coords.latitude;
         this.longitude = data.coords.longitude;
-        this.app.getComponent('tab2').tabBadge++;
+        
+        //settings.genUrl(settings.vehicles_url, this.userData.email)
+        this.http.post('http://localhost:8000/api/v1/gps?api_token=OTscjZ19F&email=admin@alientronics.com.br&vehicle_id=1&&latitude='+this.latitude+'&longitude='+this.longitude).subscribe(res => {
+		  this.app.getComponent('tab2').tabBadge++;
+        });
       })
 
     } else {
