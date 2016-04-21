@@ -40,14 +40,19 @@ export class Page3 {
       if(this.fuelForm.valid) {
           console.log('Submitted value: ', value);
 
-          for(let field in this.fuelForm.controls) {
-              this.fuelForm.controls[field].updateValue('');
-          };
+          value['vehicle_id'] = this.userData.getPlate();
+          this.userData.postApi('trip', params).subscribe(res => {
 
-          this.fuelForm.controls['type'].updateValue('regular');
-          this.fuelForm.controls['tankfill'].updateValue(true);
+            for(let field in this.fuelForm.controls) {
+                this.fuelForm.controls[field].updateValue('');
+            };
 
-          this.fuelsent = true;
+            this.fuelForm.controls['type'].updateValue('regular');
+            this.fuelForm.controls['tankfill'].updateValue(true);
+
+            this.fuelsent = true;
+
+          });
       }
   } 
 

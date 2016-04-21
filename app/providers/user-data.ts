@@ -82,7 +82,7 @@ export class UserData {
       // We're using Angular Http provider to request the data,
       // then on the response it'll map the JSON data to a parsed JS object.
       // Next we process the data and resolve the promise with the new data.
-      this.http.post(settings.genUrl(settings.vehicles_url, this.email)).subscribe(res => {
+      postApi('user', { email: this.email } ).subscribe(res => {
         // we've got back the raw data, now generate the core schedule data
         // and save the data for later reference
         this.data = JSON.stringify(res.json());
@@ -103,6 +103,12 @@ export class UserData {
 	  
       return vehicles.sort();
     });
+  }
+
+  postApi(url, data) {
+    data['api_token'] = settings.api_token;
+    data['vehicle_id'] = this.userData.getPlate();
+    return this.http.post(settings.base_url + url, JSON.stringify(data));
   }
 
 }
