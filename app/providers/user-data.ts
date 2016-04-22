@@ -17,7 +17,7 @@ export class UserData {
   private RAW_DATA: string;
   private data: any;
   public email: string;
-  public plate: int;
+  public plate: number;
 
   constructor(
       @Inject(Events) private events: Events,
@@ -85,7 +85,7 @@ export class UserData {
       // then on the response it'll map the JSON data to a parsed JS object.
       // Next we process the data and resolve the promise with the new data.
 
-      this.postApi('user', { email: this.email }).subscribe(res => {
+      this.postApi('user', {}).subscribe(res => {
         // we've got back the raw data, now generate the core schedule data
         // and save the data for later reference
         this.data = JSON.stringify(res.json());
@@ -112,6 +112,7 @@ export class UserData {
   postApi(url, data) {
     var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    data['email'] = this.email;
     data['api_token'] = settings.api_token;
     if (this.plate) data['vehicle_id'] = this.plate;
     var query = "";
