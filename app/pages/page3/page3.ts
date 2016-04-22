@@ -1,6 +1,7 @@
 'use strict';
 
 import {Page} from 'ionic-angular';
+import {UserData} from '../../providers/user-data';
 import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl } from 'angular2/common';
 
 @Page({
@@ -10,6 +11,7 @@ import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl
 export class Page3 {
 
   private fuelForm: ControlGroup;
+  private userData: UserData;
   private price: AbstractControl;
   private amount: AbstractControl;
   private type: AbstractControl;
@@ -17,7 +19,8 @@ export class Page3 {
   private tankfill: AbstractControl;
   private fuelsent: boolean;
 
-  constructor(fb: FormBuilder) {
+  constructor(fb: FormBuilder, userData: UserData) {
+    this.userData = userData;
   	this.fuelsent = false;
 
     this.fuelForm = fb.group({  
@@ -40,7 +43,13 @@ export class Page3 {
       if(this.fuelForm.valid) {
           console.log('Submitted value: ', value);
 
-          value['vehicle_id'] = this.userData.getPlate();
+          let params = [];
+          params.fuel_cost = value.price;
+          params.fuel_amount = value.amount;
+          params.end_mileage = value.miliage;
+          params.fuel_type = 1;
+          params.tank_fill_up = value.tankfill ? 1 : 0;			
+            
           this.userData.postApi('trip', params).subscribe(res => {
 
             for(let field in this.fuelForm.controls) {
@@ -51,7 +60,7 @@ export class Page3 {
             this.fuelForm.controls['tankfill'].updateValue(true);
 
             this.fuelsent = true;
-
+            
           });
       }
   } 
