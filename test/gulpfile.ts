@@ -23,7 +23,7 @@ function build() {
     join(TYPINGS_DIR, '/browser.d.ts'),
   ];
   let result = gulp.src(src)
-    .pipe(plugins.inlineNg2Template({ useRelativePaths: false, base: 'www' }))
+    //.pipe(plugins.inlineNg2Template({ useRelativePaths: false, base: 'www' }))
     .pipe(plugins.typescript(tsProject));
 
   return result.js

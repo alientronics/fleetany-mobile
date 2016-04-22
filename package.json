@@ -18,11 +18,12 @@
     "del": "2.2.0",
     "es6-module-loader": "0.17.11",
     "gulp": "3.9.1",
-    "gulp-inline-ng2-template": "^1.1.2",
     "gulp-load-plugins": "1.2.0",
-    "gulp-tslint": "4.3.2",
-    "gulp-typescript": "2.12.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-tslint": "4.3.5",
+    "gulp-typescript": "^2.12.1",
     "gulp-util": "^3.0.7",
+    "gulp-watch": "4.3.5",
     "jasmine-core": "2.4.1",
     "karma": "0.13.21",
     "karma-chrome-launcher": "0.2.2",
@@ -39,7 +40,13 @@
     "tslint": "3.5.0",
     "tslint-eslint-rules": "1.0.1",
     "typescript": "1.8.2",
-    "typings": "0.7.7"
+    "typings": "0.7.7",
+    "ionic-gulp-browserify-typescript": "^1.0.1",
+    "ionic-gulp-fonts-copy": "^1.0.0",
+    "ionic-gulp-html-copy": "^1.0.0",
+    "ionic-gulp-sass-build": "^1.0.0",
+    "ionic-gulp-scripts-copy": "^1.0.0",
+    "ionic-gulp-webpack": "^1.0.0"
   },
   "name": "fleetany-mobile",
   "description": "fleetany app for gps and fuel tracking",
@@ -55,10 +62,7 @@
     "cordova-plugin-mauron85-background-geolocation"
   ],
   "cordovaPlatforms": [
-    {
-      "platform": "android",
-      "locator": "browser"
-    },
+    "android",
     "ios"
   ],
   "scripts": {
