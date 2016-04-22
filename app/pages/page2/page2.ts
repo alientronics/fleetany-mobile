@@ -59,18 +59,11 @@ export class Page2 {
         this.latitude = data.coords.latitude;
         this.longitude = data.coords.longitude;
         
-        //settings.genUrl(settings.vehicles_url, this.userData.email)
-        this.http.post('http://localhost:8000/api/v1/gps?api_token=OTscjZ19F&email=admin@alientronics.com.br&vehicle_id=1&&latitude='+this.latitude+'&longitude='+this.longitude).subscribe(res => {
-		  this.app.getComponent('tab2').tabBadge++;
-        });
-
-        /*
-          params = data.coords;
+        let params = data.coords;
           
-          this.userData.postApi('gps',params).subscribe(res => {
-            this.app.getComponent('tab2').tabBadge++;
-          });
-        */
+        this.userData.postApi('gps', params).subscribe(res => {
+          this.app.getComponent('tab2').tabBadge++;
+        });
       })
 
     } else {
