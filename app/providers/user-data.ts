@@ -109,6 +109,19 @@ export class UserData {
     });
   }
 
+  getApi(url, data) {
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    data['email'] = this.email;
+    data['api_token'] = settings.api_token;
+    if (this.plate) data['vehicle_id'] = this.plate;
+    var query = "";
+    for (var key in data) {
+      query += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+    }
+    return this.http.get(settings.base_path + url + '?' + query , { headers} );
+  }
+  
   postApi(url, data) {
     var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');

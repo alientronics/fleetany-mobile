@@ -34,12 +34,9 @@
       <ion-item>
         <ion-label>Type</ion-label>
         <ion-select [(ngFormControl)]="type">
-          <ion-option value="regular">regular</ion-option>
-          <ion-option value="unleaded">unleaded</ion-option>
-          <ion-option value="leaded">leaded</ion-option>
-          <ion-option value="propane">propane</ion-option>
-          <ion-option value="diesel">diesel</ion-option>
-          <ion-option value="ethanol">ethanol</ion-option>
+          <ion-option *ngFor="#type of types" value="{{type.key}}">
+            {{type.value}}
+          </ion-option>
         </ion-select>
       </ion-item>
 

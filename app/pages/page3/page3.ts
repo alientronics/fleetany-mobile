@@ -18,10 +18,12 @@ export class Page3 {
   private miliage: AbstractControl;
   private tankfill: AbstractControl;
   private fuelsent: boolean;
+  private types: Array<any>;
 
   constructor(fb: FormBuilder, userData: UserData) {
     this.userData = userData;
   	this.fuelsent = false;
+    this.types = []
 
     this.fuelForm = fb.group({  
         'price':    ['', Validators.required ],
@@ -34,6 +36,18 @@ export class Page3 {
     for(let field in this.fuelForm.controls) {
         this[field] = this.fuelForm.controls[field];
     };
+
+	this.userData.getApi('fuelType', {}).subscribe(res => {
+        let data = JSON.stringify(res.json());
+        let dataP = JSON.parse(data);
+        let types = [];
+      
+        for (var i = 0; i < dataP.length; i = i + 1) {
+          types.push({ "key": dataP[i].id, "value": dataP[i].name });
+        }
+        
+        this.types = types;
+	});
 
     this.fuelForm.controls['type'].updateValue('regular');
     this.fuelForm.controls['tankfill'].updateValue(true);
