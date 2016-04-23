@@ -1,6 +1,6 @@
 'use strict';
 
-import {Page, IonicApp, Platform} from 'ionic-angular';
+import {Page, IonicApp, Platform, Alert, NavController} from 'ionic-angular';
 import {Http} from 'angular2/http';
 import {UserData} from '../../providers/user-data';
 import {Geolocation} from 'ionic-native';
@@ -19,8 +19,7 @@ export class Page2 {
   private platform: Platform;
   private bgGeo: any;
 
-  constructor(app: IonicApp, userData: UserData, platform: Platform, http: Http) {
-  	this.gpstracking = false;
+  constructor(app: IonicApp, userData: UserData, platform: Platform, http: Http, public nav: NavController) {
     this.app = app;
     this.userData = userData;
     this.http = http;
@@ -33,21 +32,36 @@ export class Page2 {
   }
 
   gpsToggle(value) {
-
-    if (value) {
-      this.app.getComponent('tab2').tabBadge = 0;
+    if (this.userData.plate == undefined) {
+      if (window.cordova) {
+      	Toast.show("Vehicle should be selected!", 5000, "center").subscribe(
+		  toast => {
+		    console.log(toast);
+		  }
+		);
+      } else {
+		let alert = Alert.create({
+	      title: 'Error!',
+	      message: 'Vehicle should be selected!',
+	      buttons: ['Ok']
+	    });
+	    this.nav.present(alert);
+      }
     } else {
-      this.app.getComponent('tab2').tabBadge = '';
-      this.latitude = null;
-      this.longitude = null;
-    }
-
-    if (this.platform.is('mobile')) {
-      this.gpsToggleBrowser(value);
-    } else {
-      this.gpsToggleBrowser(value);
-    }
-
+      	if (value) {
+	      this.app.getComponent('tab2').tabBadge = 0;
+	    } else {
+	      this.app.getComponent('tab2').tabBadge = '';
+	      this.latitude = null;
+	      this.longitude = null;
+	    }
+	
+	    if (this.platform.is('mobile')) {
+	      this.gpsToggleBrowser(value);
+	    } else {
+	      this.gpsToggleBrowser(value);
+	    }
+	}
   }
 
   gpsToggleBrowser(value) {
@@ -61,11 +75,9 @@ export class Page2 {
         
         let params = data.coords;
          
-        if(this.userData.plate != undefined) { 
-          this.userData.postApi('gps', params).subscribe(res => {
-            this.app.getComponent('tab2').tabBadge++;
-          });
-        }
+        this.userData.postApi('gps', params).subscribe(res => {
+          this.app.getComponent('tab2').tabBadge++;
+        });
       })
 
     } else {

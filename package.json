@@ -59,7 +59,8 @@
     "cordova-plugin-googleplus",
     "ionic-plugin-keyboard",
     "cordova-plugin-geolocation",
-    "cordova-plugin-mauron85-background-geolocation"
+    "cordova-plugin-mauron85-background-geolocation",
+    "cordova-plugin-x-toast"
   ],
   "cordovaPlatforms": [
     "android",

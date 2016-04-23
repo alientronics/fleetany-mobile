@@ -1,7 +1,8 @@
 'use strict';
 
-import {Page} from 'ionic-angular';
+import {Page, Alert, NavController} from 'ionic-angular';
 import {UserData} from '../../providers/user-data';
+import {Toast} from 'ionic-native';
 import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl } from 'angular2/common';
 
 @Page({
@@ -21,7 +22,7 @@ export class Page3 {
   private vehiclefailed: boolean;
   private types: Array<any>;
 
-  constructor(fb: FormBuilder, userData: UserData) {
+  constructor(fb: FormBuilder, userData: UserData, public nav: NavController) {
     this.userData = userData;
   	this.fuelsent = false;
   	this.vehiclefailed = false;
@@ -59,7 +60,22 @@ export class Page3 {
           params.tank_fill_up = value.tankfill ? 1 : 0;			
            
           if (this.userData.plate == undefined) {
-          	this.vehiclefailed = true;
+          	
+          	if (window.cordova) {
+	          	Toast.show("Vehicle should be selected!", 5000, "center").subscribe(
+				  toast => {
+				    console.log(toast);
+				  }
+				);
+			} else {
+				let alert = Alert.create({
+			      title: 'Error!',
+			      message: 'Vehicle should be selected!',
+			      buttons: ['Ok']
+			    });
+			    this.nav.present(alert);
+			}
+			    
           } else {
             this.userData.postApi('trip', params).subscribe(res => {
 
