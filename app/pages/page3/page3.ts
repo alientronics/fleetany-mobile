@@ -58,9 +58,8 @@ export class Page3 {
           params.fuel_type = 1;
           params.tank_fill_up = value.tankfill ? 1 : 0;			
            
-           
-          if (!this.userData.plate) {
-          	vehiclefailed = true;
+          if (this.userData.plate == undefined) {
+          	this.vehiclefailed = true;
           } else {
             this.userData.postApi('trip', params).subscribe(res => {
 
