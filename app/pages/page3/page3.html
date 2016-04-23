@@ -66,4 +66,18 @@
 
   </ion-card>
 
+  <ion-card [hidden]="!vehiclefailed">
+
+    <ion-card-content>
+      <ion-item>
+        Vehicle should be selected!
+        <button outline item-right (click)="closeAlert()">
+          <ion-icon name='close'></ion-icon>
+          close
+        </button>
+      </ion-item>
+    </ion-card-content>
+
+  </ion-card>
+
 </ion-content>
