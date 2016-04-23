@@ -101,25 +101,25 @@ export class UserData {
       let dataP = JSON.parse(data);
       let vehicles = [];
       
-      for (var i = 0; i < dataP.length; i = i + 1) {
-	    vehicles.push({ "key": dataP[i].id, "value": dataP[i].number });
+      for (var i = 0; i < dataP.vehicles.length; i = i + 1) {
+	    vehicles.push({ "key": dataP.vehicles[i].id, "value": dataP.vehicles[i].number });
 	  }
 	  
       return vehicles.sort();
     });
   }
 
-  getApi(url, data) {
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    data['email'] = this.email;
-    data['api_token'] = settings.api_token;
-    if (this.plate) data['vehicle_id'] = this.plate;
-    var query = "";
-    for (var key in data) {
-      query += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
-    }
-    return this.http.get(settings.base_path + url + '?' + query , { headers} );
+  getFuelTypes() {
+    return this.load().then(data => {
+      let dataP = JSON.parse(data);
+      let fuelTypes = [];
+      
+      for (var i = 0; i < dataP.fuelTypes.length; i = i + 1) {
+	    fuelTypes.push({ "key": dataP.fuelTypes[i].id, "value": dataP.fuelTypes[i].name });
+	  }
+	  
+      return fuelTypes.sort();
+    });
   }
   
   postApi(url, data) {

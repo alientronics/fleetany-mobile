@@ -37,18 +37,10 @@ export class Page3 {
         this[field] = this.fuelForm.controls[field];
     };
 
-	this.userData.getApi('fuelType', {}).subscribe(res => {
-        let data = JSON.stringify(res.json());
-        let dataP = JSON.parse(data);
-        let types = [];
-      
-        for (var i = 0; i < dataP.length; i = i + 1) {
-          types.push({ "key": dataP[i].id, "value": dataP[i].name });
-        }
-        
-        this.types = types;
-	});
-
+	this.userData.getFuelTypes().then((types) => {
+      this.types = types;
+    });
+    
     this.fuelForm.controls['type'].updateValue('regular');
     this.fuelForm.controls['tankfill'].updateValue(true);
   }
