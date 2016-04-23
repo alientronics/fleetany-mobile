@@ -60,10 +60,12 @@ export class Page2 {
         this.longitude = data.coords.longitude;
         
         let params = data.coords;
-          
-        this.userData.postApi('gps', params).subscribe(res => {
-          this.app.getComponent('tab2').tabBadge++;
-        });
+         
+        if(this.userData.plate != undefined) { 
+          this.userData.postApi('gps', params).subscribe(res => {
+            this.app.getComponent('tab2').tabBadge++;
+          });
+        }
       })
 
     } else {
