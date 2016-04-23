@@ -59,7 +59,7 @@ export class Page3 {
           params.tank_fill_up = value.tankfill ? 1 : 0;			
            
            
-          if (!this.plate) {
+          if (!this.userData.plate) {
           	vehiclefailed = true;
           } else {
             this.userData.postApi('trip', params).subscribe(res => {
