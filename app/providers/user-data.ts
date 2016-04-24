@@ -91,7 +91,12 @@ export class UserData {
         this.data = JSON.stringify(res.json());
         this.storage.set(this.RAW_DATA, this.data);
         resolve(this.data);
-      });
+      },
+      error => {
+        alert('Error: ' + error.statusText);
+        console.log(error);
+      }
+      );
 
     });
   }
