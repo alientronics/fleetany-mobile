@@ -11,10 +11,12 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-navigation href="http://*/*"/>
     <platform name="android">
         <allow-intent href="market:*" />
         <allow-intent href="http://*/*" />
         <allow-intent href="https://*/*" />
+        <access origin="*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
         <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />
@@ -39,6 +41,7 @@
         <allow-intent href="itms-apps:*" />
         <allow-intent href="http://*/*" />
         <allow-intent href="https://*/*" />
+        <access origin="*" />
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
         <icon height="114" src="resources/ios/icon/icon@2x.png" width="114" />
         <icon height="40" src="resources/ios/icon/icon-40.png" width="40" />
@@ -81,4 +84,6 @@
     <plugin name="cordova-plugin-googleplus" spec="~4.0.8" />
     <plugin name="cordova-plugin-mauron85-background-geolocation" spec="~0.9.4" />
     <plugin name="cordova-plugin-geolocation" spec="~2.1.0" />
+    <plugin name="cordova-plugin-whitelist" spec="~1.0.0"/>
+    <plugin name="cordova-plugin-x-toast" spec="~2.5.0" />
 </widget>
