@@ -3,7 +3,7 @@
 import {Page, IonicApp, Platform, Alert, NavController} from 'ionic-angular';
 import {Http} from 'angular2/http';
 import {UserData} from '../../providers/user-data';
-import {Geolocation} from 'ionic-native';
+import {Geolocation, Toast} from 'ionic-native';
 
 @Page({
   templateUrl: 'build/pages/page2/page2.html'
@@ -75,9 +75,15 @@ export class Page2 {
         
         let params = data.coords;
          
-        this.userData.postApi('gps', params).subscribe(res => {
-          this.app.getComponent('tab2').tabBadge++;
-        });
+        this.userData.postApi('gps', params).subscribe(
+          res => {
+            this.app.getComponent('tab2').tabBadge++;
+          },
+          error => {
+            alert('Error sending data: ' + error.statusText);
+            console.log(error);
+          }
+        );
       })
 
     } else {

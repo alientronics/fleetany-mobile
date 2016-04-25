@@ -63,10 +63,10 @@ export class Page3 {
           	
           	if (window.cordova) {
 	          	Toast.show("Vehicle should be selected!", 5000, "center").subscribe(
-				  toast => {
-				    console.log(toast);
-				  }
-				);
+      				  toast => {
+      				    console.log(toast);
+      				  }
+      				);
 			} else {
 				let alert = Alert.create({
 			      title: 'Error!',
@@ -77,7 +77,8 @@ export class Page3 {
 			}
 			    
           } else {
-            this.userData.postApi('trip', params).subscribe(res => {
+            this.userData.postApi('trip', params).subscribe(
+              res => {
 
                 for(let field in this.fuelForm.controls) {
                   this.fuelForm.controls[field].updateValue('');
@@ -88,7 +89,12 @@ export class Page3 {
 
                 this.fuelsent = true;
             
-            });
+              },
+              error => {
+                alert('Error sending data: ' + error.statusText);
+                console.log(error);
+              }
+            );
           }
       }
   } 

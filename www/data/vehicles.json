@@ -7,5 +7,10 @@
 			{ "id": "iws3298", "number": "IWS-3298" },
 			{ "id": "ibx3678", "number": "ITA-1915" },
 			{ "id": "irg6389", "number": "IBX-3678" }
+		],
+	"fuelTypes":
+		[
+			{ "id": "1", "name": "premium"},
+			{ "id": "2", "name": "unleaded"}
 		]
 }

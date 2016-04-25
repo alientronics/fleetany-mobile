@@ -85,7 +85,7 @@ export class UserData {
       // then on the response it'll map the JSON data to a parsed JS object.
       // Next we process the data and resolve the promise with the new data.
 
-      // this.http.get('./data/vehicles.json').subscribe(res => { //debuging
+      //this.http.get('./data/vehicles.json').subscribe(res => { //debuging
       this.postApi('user', {}).subscribe(res => {
         // we've got back the raw data, now generate the core schedule data
         // and save the data for later reference
@@ -94,7 +94,7 @@ export class UserData {
         resolve(this.data);
       },
       error => {
-        alert('Error: ' + error.statusText);
+        alert('Error sending data: ' + error.statusText);
         console.log(error);
       }
       );
