@@ -120,8 +120,8 @@ export class UserData {
       let fuelTypes = [];
       
       for (var i = 0; i < dataP.fuelTypes.length; i = i + 1) {
-	    fuelTypes.push({ "key": dataP.fuelTypes[i].id, "value": dataP.fuelTypes[i].name });
-	  }
+  	    fuelTypes.push({ "key": dataP.fuelTypes[i].id, "value": dataP.fuelTypes[i].name });
+  	  }
 	  
       return fuelTypes.sort();
     });

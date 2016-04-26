@@ -56,7 +56,7 @@ export class Page3 {
           params.fuel_cost = value.price;
           params.fuel_amount = value.amount;
           params.end_mileage = value.miliage;
-          params.fuel_type = 1;
+          params.fuel_type = value.type;
           params.tank_fill_up = value.tankfill ? 1 : 0;			
            
           if (this.userData.plate == undefined) {
