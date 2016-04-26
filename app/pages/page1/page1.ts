@@ -33,7 +33,11 @@ export class Page1 {
 
     this.userData.hasLoggedIn().then((userObj) => {
       this.loggedIn = (userObj !== null);
-      this.updateUser(JSON.parse(userObj));      
+      this.updateUser(JSON.parse(userObj));   
+
+      this.userData.getPlate().then((value) => {
+        this.userData.setPlate(value); 
+      });
     });
 
     this.listenToLoginEvents();
