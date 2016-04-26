@@ -87,7 +87,20 @@ export class Page3 {
                 this.fuelForm.controls['type'].updateValue('regular');
                 this.fuelForm.controls['tankfill'].updateValue(true);
 
-                this.fuelsent = true;
+                if (window.cordova) {
+                  Toast.show("Fuel sent successfully!", 5000, "center").subscribe(
+                    toast => {
+                      console.log(toast);
+                    }
+                  );
+                } else {
+                  let alert = Alert.create({
+                    title: 'Success!',
+                    message: 'Fuel sent successfully!',
+                    buttons: ['Ok']
+                  });
+                 this.nav.present(alert);
+                }
             
               },
               error => {
@@ -98,10 +111,5 @@ export class Page3 {
           }
       }
   } 
-
-  closeAlert() {
-  	this.fuelsent = false;
-  	this.vehiclefailed = false;
-  }
 
 }

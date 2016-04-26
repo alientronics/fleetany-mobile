@@ -35,33 +35,33 @@ export class Page2 {
     if (this.userData.plate == undefined) {
       if (window.cordova) {
       	Toast.show("Vehicle should be selected!", 5000, "center").subscribe(
-		  toast => {
-		    console.log(toast);
-		  }
-		);
+    		  toast => {
+    		    console.log(toast);
+    		  }
+    		);
       } else {
-		let alert = Alert.create({
-	      title: 'Error!',
-	      message: 'Vehicle should be selected!',
-	      buttons: ['Ok']
-	    });
-	    this.nav.present(alert);
+		    let alert = Alert.create({
+  	      title: 'Error!',
+  	      message: 'Vehicle should be selected!',
+  	      buttons: ['Ok']
+  	    });
+	     this.nav.present(alert);
       }
     } else {
-      	if (value) {
+    	if (value) {
 	      this.app.getComponent('tab2').tabBadge = 0;
 	    } else {
 	      this.app.getComponent('tab2').tabBadge = '';
 	      this.latitude = null;
 	      this.longitude = null;
-	    }
-	
+      }
+
 	    if (this.platform.is('mobile')) {
 	      this.gpsToggleBrowser(value);
 	    } else {
 	      this.gpsToggleBrowser(value);
 	    }
-	}
+    }
   }
 
   gpsToggleBrowser(value) {
