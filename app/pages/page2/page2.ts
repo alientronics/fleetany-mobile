@@ -27,9 +27,9 @@ export class Page2 {
     this.http = http;
     this.platform = platform;
 
-    if (this.platform.is('mobile')) {
+    //if (this.platform.is('mobile')) {
       //this.bgGeo = window.plugins.backgroundGeoLocation;
-    }
+    //}
 
   }
 

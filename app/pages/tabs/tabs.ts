@@ -26,9 +26,9 @@ export class TabsPage {
     this.nav = nav;
 
     //this.platform.registerBackButtonAction(e => this.checkBack(e), 100); //not working ionic 2
-    if (this.platform.is('android')) {
-      document.addEventListener('backbutton', this.checkBack, false); //not working in ionic 2
-    }
+    //if (this.platform.is('android')) {
+    //  document.addEventListener('backbutton', this.checkBack, false); //not working in ionic 2
+    //}
   }
 
   checkBack() {

@@ -1,6 +1,10 @@
 import { Page2 } from './page2';
 import { Geolocation } from 'ionic-native';
 import { IonicApp, Platform } from 'ionic-angular';
+import { Events }   from 'ionic-angular';
+import { UserData } from '../../providers/user-data';
+import { Http, BaseRequestOptions } from 'angular2/http';
+import { MockBackend } from 'angular2/http/testing'
 
 let page2: Page2 = null;
 
@@ -29,9 +33,12 @@ export function main(): void {
     beforeEach(() => {   
       let app = new IonicApp(null, null, null);
       let platform: Platform = new Platform();
+      let events: Events = new Events();
+      let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
+      let userData: UserData = new UserData(events, http);
       spyOn(Geolocation, 'watchPosition').and.callFake(watchPositionStub); 
       spyOn(app, 'getComponent').and.returnValue({ tabBadge: 0});
-      page2 = new Page2(app, platform);
+      page2 = new Page2(app, userData, platform, events, http, null);
     });
 
     it('initialises', () => {
