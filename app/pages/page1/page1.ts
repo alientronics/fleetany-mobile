@@ -16,6 +16,7 @@ export class Page1 {
   private userData: UserData;
   private events: Events;
   private loggedIn: boolean;
+  private gpstracking: boolean;
   private userImage: string;
   private welcome: string;
   private plate: string;
@@ -27,6 +28,7 @@ export class Page1 {
     this.userData = userData;
     this.events = events;
     this.loggedIn = false;
+    this.gpstracking = false;
     this.vehicles = []
 
     this.userData.hasLoggedIn().then((userObj) => {
@@ -35,6 +37,7 @@ export class Page1 {
     });
 
     this.listenToLoginEvents();
+    this.listenToGpsEvents();
   }
 
   listenToLoginEvents() {
@@ -49,6 +52,16 @@ export class Page1 {
 
     this.events.subscribe('user:logout', () => {
       this.loggedIn = false;
+    });
+  }
+
+  listenToGpsEvents() {
+    this.events.subscribe('gps:on', () => {
+      this.gpstracking = true;
+    });
+
+    this.events.subscribe('gps:off', () => {
+      this.gpstracking = false;
     });
   }
 
@@ -134,7 +147,24 @@ export class Page1 {
   }
 
   plateChange(value) {
-    this.userData.setPlate(value);
+    if(this.gpstracking) {
+      if (window.cordova) {
+        Toast.show("Vehicle can not be changed while gps is on!", 5000, "center").subscribe(
+          toast => {
+            console.log(toast);
+          }
+        );
+      } else {
+        let alert = Alert.create({
+          title: 'Error!',
+          message: 'Vehicle can not be changed while gps is on!',
+          buttons: ['Ok']
+        });
+       this.nav.present(alert);
+      }
+    } else {
+      this.userData.setPlate(value); 
+    }
   }
 
 }

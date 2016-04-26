@@ -1,6 +1,6 @@
 'use strict';
 
-import {Page, IonicApp, Platform, Alert, NavController} from 'ionic-angular';
+import {Page, IonicApp, Platform, Alert, Events, NavController} from 'ionic-angular';
 import {Http} from 'angular2/http';
 import {UserData} from '../../providers/user-data';
 import {Geolocation, Toast} from 'ionic-native';
@@ -10,6 +10,7 @@ import {Geolocation, Toast} from 'ionic-native';
 })
 export class Page2 {
 
+  private events: Events;
   private gpstracking: boolean;
   private latitude: number;
   private longitude: number;
@@ -19,9 +20,10 @@ export class Page2 {
   private platform: Platform;
   private bgGeo: any;
 
-  constructor(app: IonicApp, userData: UserData, platform: Platform, http: Http, public nav: NavController) {
+  constructor(app: IonicApp, userData: UserData, platform: Platform, events: Events, http: Http, public nav: NavController) {
     this.app = app;
     this.userData = userData;
+    this.events = events;
     this.http = http;
     this.platform = platform;
 
@@ -49,8 +51,10 @@ export class Page2 {
       }
     } else {
     	if (value) {
+        this.events.publish('gps:on');
 	      this.app.getComponent('tab2').tabBadge = 0;
 	    } else {
+        this.events.publish('gps:off');
 	      this.app.getComponent('tab2').tabBadge = '';
 	      this.latitude = null;
 	      this.longitude = null;

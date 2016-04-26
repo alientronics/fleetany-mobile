@@ -38,7 +38,7 @@
   <ion-list [hidden]="!loggedIn">
     <ion-item>
       <ion-label>Select your car</ion-label>
-      <ion-select [(ngModel)]="plate" (ngModelChange)="plateChange($event)">
+      <ion-select [disabled]="gpstracking" [(ngModel)]="plate" (ngModelChange)="plateChange($event)">
         <ion-option *ngFor="#vehicle of vehicles" value="{{vehicle.key}}">
           {{vehicle.value}}
         </ion-option>
