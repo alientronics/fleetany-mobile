@@ -35,20 +35,7 @@ export class Page2 {
 
   gpsToggle(value) {
     if (this.userData.plate == 'null') {
-      if (window.cordova) {
-      	Toast.show("Vehicle should be selected!", 5000, "center").subscribe(
-    		  toast => {
-    		    console.log(toast);
-    		  }
-    		);
-      } else {
-		    let alert = Alert.create({
-  	      title: 'Error!',
-  	      message: 'Vehicle should be selected!',
-  	      buttons: ['Ok']
-  	    });
-	     this.nav.present(alert);
-      }
+      this.userData.showToast('Vehicle should be selected!', 'Error!', this.nav);
     } else {
     	if (value) {
         this.events.publish('gps:on');

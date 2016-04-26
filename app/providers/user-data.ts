@@ -1,7 +1,8 @@
 'use strict';
 
 import {Injectable, Inject} from 'angular2/core';
-import {Storage, LocalStorage, Events} from 'ionic-angular';
+import {Storage, LocalStorage, Events, Alert} from 'ionic-angular';
+import {Toast} from 'ionic-native';
 import {Http, Headers} from 'angular2/http';
 import {Settings} from '../config/settings';
 
@@ -138,6 +139,23 @@ export class UserData {
       query += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
     }
     return this.http.post(settings.base_path + url, query , { headers} );
+  }
+
+  showToast(message, title, nav) {
+    if (window.cordova) {
+      Toast.show(message, 5000, "center").subscribe(
+        toast => {
+          console.log(toast);
+        }
+      );
+    } else {
+      let alert = Alert.create({
+        title: title,
+        message: message,
+        buttons: ['Ok']
+      });
+     nav.present(alert);
+    }
   }
 
 }

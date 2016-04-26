@@ -152,20 +152,7 @@ export class Page1 {
 
   plateChange(value) {
     if(this.gpstracking) {
-      if (window.cordova) {
-        Toast.show("Vehicle can not be changed while gps is on!", 5000, "center").subscribe(
-          toast => {
-            console.log(toast);
-          }
-        );
-      } else {
-        let alert = Alert.create({
-          title: 'Error!',
-          message: 'Vehicle can not be changed while gps is on!',
-          buttons: ['Ok']
-        });
-       this.nav.present(alert);
-      }
+      this.userData.showToast('Vehicle can not be changed while gps is on!', 'Error!', this.nav);
     } else {
       this.userData.setPlate(value); 
     }

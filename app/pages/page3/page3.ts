@@ -59,23 +59,8 @@ export class Page3 {
           params.fuel_type = value.type;
           params.tank_fill_up = value.tankfill ? 1 : 0;			
            
-          if (this.userData.plate == undefined) {
-          	
-          	if (window.cordova) {
-	          	Toast.show("Vehicle should be selected!", 5000, "center").subscribe(
-      				  toast => {
-      				    console.log(toast);
-      				  }
-      				);
-			} else {
-				let alert = Alert.create({
-			      title: 'Error!',
-			      message: 'Vehicle should be selected!',
-			      buttons: ['Ok']
-			    });
-			    this.nav.present(alert);
-			}
-			    
+          if (this.userData.plate == 'null') {
+            this.userData.showToast('Vehicle should be selected!', 'Error!', this.nav);			    
           } else {
             this.userData.postApi('trip', params).subscribe(
               res => {
@@ -87,20 +72,7 @@ export class Page3 {
                 this.fuelForm.controls['type'].updateValue('regular');
                 this.fuelForm.controls['tankfill'].updateValue(true);
 
-                if (window.cordova) {
-                  Toast.show("Fuel sent successfully!", 5000, "center").subscribe(
-                    toast => {
-                      console.log(toast);
-                    }
-                  );
-                } else {
-                  let alert = Alert.create({
-                    title: 'Success!',
-                    message: 'Fuel sent successfully!',
-                    buttons: ['Ok']
-                  });
-                 this.nav.present(alert);
-                }
+                this.userData.showToast('Fuel sent successfully!', 'Success!', this.nav);
             
               },
               error => {
