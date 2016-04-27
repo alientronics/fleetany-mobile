@@ -7,21 +7,17 @@ import { MockBackend } from 'angular2/http/testing'
 
 let page3: Page3 = null;
 
-export function main(): void {
-  'use strict';
+describe('Page3', () => {
 
-  describe('Page3', () => {
-
-    beforeEach(() => {     
-      let events: Events = new Events();
-      let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
-      let userData: UserData = new UserData(events, http);
-      page3 = new Page3(new FormBuilder(), userData, null);
-    });
-
-    it('initialises', () => {
-      expect(page3).not.toBeNull();
-    });
-
+  beforeEach(() => {     
+    let events: Events = new Events();
+    let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
+    let userData: UserData = new UserData(events, http);
+    page3 = new Page3(new FormBuilder(), userData, null);
   });
-}
+
+  it('initialises', () => {
+    expect(page3).not.toBeNull();
+  });
+
+});

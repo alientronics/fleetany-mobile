@@ -25,11 +25,13 @@ install:
   - npm install
   - ionic platform add android
   - cordova prepare
+  - npm run webdriver-update
 
 script:
   - export TS_NODE_DISABLE_WARNINGS=false
   - ionic build android
   - npm test
+  - npm run coverage
 
 notifications:
   email:

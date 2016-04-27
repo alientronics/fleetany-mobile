@@ -18,6 +18,7 @@ interface IPlugins {
 
 interface Window {    
     plugins: IPlugins;
+    cordova: boolean;
 }
 
 declare var window: Window;

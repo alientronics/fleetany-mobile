@@ -48,18 +48,18 @@ export class Page3 {
     this.fuelForm.controls['tankfill'].updateValue(true);
   }
 
-  onSubmit(value: string): void { 
+  onSubmit(value: any): void { 
       if(this.fuelForm.valid) {
           console.log('Submitted value: ', value);
 
-          let params = [];
+          let params: any = {};
           params.fuel_cost = value.price;
           params.fuel_amount = value.amount;
           params.end_mileage = value.miliage;
           params.fuel_type = value.type;
           params.tank_fill_up = value.tankfill ? 1 : 0;			
            
-          if (this.userData.plate == 'null') {
+          if (this.userData.plate == null) {
             this.userData.showToast('Vehicle should be selected!', 'Error!', this.nav);			    
           } else {
             this.userData.postApi('trip', params).subscribe(

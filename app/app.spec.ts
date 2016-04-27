@@ -9,23 +9,19 @@ setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_P
 
 let fleetanyApp: FleetanyApp = null;
 
-export function main(): void {
-  'use strict';
+describe('FleetanyApp', () => {
 
-  describe('FleetanyApp', () => {
-
-    beforeEach(() => {
-      let platform: Platform = new Platform();
-      fleetanyApp = new FleetanyApp(platform);
-    });
-
-    it('initialises with a root page', () => {
-      expect(fleetanyApp['rootPage']).not.toBe(null);
-    });
-
-    it('initialises with an app', () => {
-      expect(fleetanyApp['app']).not.toBe(null);
-    });
-
+  beforeEach(() => {
+    let platform: Platform = new Platform();
+    fleetanyApp = new FleetanyApp(platform);
   });
-}
+
+  it('initialises with a root page', () => {
+    expect(fleetanyApp['rootPage']).not.toBe(null);
+  });
+
+  it('initialises with an app', () => {
+    expect(fleetanyApp['app']).not.toBe(null);
+  });
+
+});

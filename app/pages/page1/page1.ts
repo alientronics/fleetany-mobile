@@ -89,7 +89,7 @@ export class Page1 {
       let dummyUser = {
         imageUrl: "https://github.com/identicons/jasonlong.png",
         displayName: "dear User",
-        email: "dummy@email.com"
+        email: "heukirne@gmail.com"
       }
       this.userData.login(dummyUser);
       this.updateUser(dummyUser);

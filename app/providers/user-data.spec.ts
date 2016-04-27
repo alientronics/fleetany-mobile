@@ -5,20 +5,16 @@ import { MockBackend } from 'angular2/http/testing'
 
 let userData: UserData = null;
 
-export function main(): void {
-  'use strict';
+describe('UserData', () => {
 
-  describe('UserData', () => {
-
-    beforeEach(() => {
-      let events: Events = new Events();
-      let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
-      userData = new UserData(events, http);
-    });
-
-    it('initialises', () => {
-      expect(userData).not.toBeNull();
-    });
-
+  beforeEach(() => {
+    let events: Events = new Events();
+    let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
+    userData = new UserData(events, http);
   });
-}
+
+  it('initialises', () => {
+    expect(userData).not.toBeNull();
+  });
+
+});

@@ -1,4 +1,4 @@
-import { APP_DIR, TEST_DIR, TEST_DEST, TYPINGS_DIR } from './config';
+import { APP_DIR, COVERAGE, TEST_DIR, TEST_DEST, TYPINGS_DIR } from './config';
 import { join }          from 'path';
 import * as del          from 'del';
 import * as fs           from 'fs';
@@ -25,23 +25,6 @@ gulp.task('build-app', (done: Function) => {
     'build',
     (<any>done)
   );
-});
-
-// compile E2E typescript into individual files, project directoy structure is replicated under www/build/test
-gulp.task('build-e2e', () => {
-
-  let tsProject: any = plugins.typescript.createProject('tsconfig.json', {
-    typescript: typescript,
-  });
-  let src: Array<any> = [
-    join(TYPINGS_DIR, '/browser.d.ts'),
-    join(APP_DIR, '**/*e2e.ts'),
-  ];
-  let result: any = gulp.src(src)
-    .pipe(plugins.typescript(tsProject));
-
-  return result.js
-    .pipe(gulp.dest(TEST_DEST));
 });
 
 // transpile unit tests into test.bundle.js, output sourcemaps
@@ -80,13 +63,12 @@ gulp.task('clean-test', () => {
 // run jasmine unit tests using karma with PhantomJS2 in single run mode
 gulp.task('karma', (done: Function) => {
 
-  new (<any>karma).Server(
-    {
+  var server = new (<any>karma).Server({
       configFile: join(process.cwd(), TEST_DIR, 'karma.config.js'),
       singleRun: true,
-    },
-    (() => done())
-  ).start();
+  });
+
+  server.start();
 });
 
 // run jasmine unit tests using karma with Chrome, Karma will be left open in Chrome for debug
@@ -134,6 +116,50 @@ gulp.task('patch-app', () =>  {
   plugins.util.log(join(appSrc, 'app.js') + ' has been patched with ' + stubSrc);
 });
 
+// remapped coverage (see remap-coverage) contains everything from the test bundle (including node modules)
+// this task removes everything we don't care about from the remapped istanbul JSON
+gulp.task('prune-coverage', () => {
+
+  const toPrune: Array<string> = ['node_modules', '.spec.ts', '.d.ts', 'testUtils.ts'];
+  let remapped: any = JSON.parse(<any>(fs.readFileSync(join(COVERAGE, 'istanbul-remap', 'coverage-remapped.json'))));
+  let pruned: Object = {};
+
+  Object.keys(remapped).forEach((key) => {
+    let doPrune: any = toPrune.find((glob) => (key.indexOf(glob) > -1));
+    // the find will return `undefined` if there is nothing to be pruned
+    if (doPrune) return;
+    pruned[key] = remapped[key];
+    pruned[key].path = remapped[key].path.replace('/source/', '');
+  });
+
+  fs.writeFileSync(join(COVERAGE, 'istanbul-remap', 'coverage-pruned.json'), JSON.stringify(pruned));
+});
+
+// using our sourcemap, remap the initial coverage output by Karma against the source Typescript
+gulp.task('remap-coverage', () => {
+
+  let remapIstanbul: any = require('remap-istanbul/lib/gulpRemapIstanbul');
+
+  return gulp.src(join(COVERAGE, 'istanbul-remap', 'coverage-final.json'))
+    .pipe(remapIstanbul({
+      reports: {
+        'json': join(COVERAGE, 'istanbul-remap', 'coverage-remapped.json'),
+      },
+    }));
+});
+
+// reads in remapped coverage in Istanbul JSON format and outputs lcov and a text summary to the console
+gulp.task('report-coverage', (done: Function) => {
+
+  let collector: any = new istanbul.Collector();
+  let reporter:  any = new istanbul.Reporter();
+  let pruned: Object = JSON.parse(<any>(fs.readFileSync(join(COVERAGE, 'istanbul-remap', 'coverage-pruned.json'))));
+
+  collector.add(pruned);
+  reporter.addAll([ 'text', 'lcov']);
+  reporter.write(collector, false, done);
+});
+
 // restore Ionic's app decorator after patching, see https://github.com/lathonez/clicker/issues/79
 gulp.task('restore-app', () => {
 
@@ -150,7 +176,16 @@ gulp.task('restore-app', () => {
 gulp.task('unit-test', (done: Function) => {
   runSequence(
     'build-unit',
-    //'karma',
+    'karma',
+    (<any>done)
+  );
+});
+
+gulp.task('coverage', (done: Function) => {
+  runSequence(
+    'remap-coverage',
+    'prune-coverage',
+    'report-coverage',
     (<any>done)
   );
 });

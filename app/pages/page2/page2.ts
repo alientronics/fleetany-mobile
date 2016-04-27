@@ -19,6 +19,7 @@ export class Page2 {
   private userData: UserData;
   private platform: Platform;
   private bgGeo: any;
+  private http: Http;
 
   constructor(app: IonicApp, userData: UserData, platform: Platform, events: Events, http: Http, public nav: NavController) {
     this.app = app;
@@ -34,7 +35,7 @@ export class Page2 {
   }
 
   gpsToggle(value) {
-    if (this.userData.plate == 'null') {
+    if (this.userData.plate == null) {
       this.userData.showToast('Vehicle should be selected!', 'Error!', this.nav);
     } else {
     	if (value) {
@@ -90,5 +91,5 @@ export class Page2 {
   gpsToggleMobile(value) {
 
   }
-
+  
 }

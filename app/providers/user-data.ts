@@ -143,7 +143,7 @@ export class UserData {
 
   showToast(message, title, nav) {
     if (window.cordova) {
-      Toast.show(message, 5000, "center").subscribe(
+      Toast.show(message, "5000", "center").subscribe(
         toast => {
           console.log(toast);
         }

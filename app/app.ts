@@ -7,7 +7,7 @@ import {Type} from 'angular2/core';
 
 @App({
   templateUrl: 'build/app.html',
-  config: {}, // http://ionicframework.com/docs/v2/api/config/Config/
+  config: {},
   providers: [UserData]
 })
 export class FleetanyApp {

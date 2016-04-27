@@ -2,18 +2,14 @@ import { About } from './about';
 
 let about: About = null;
 
-export function main(): void {
-  'use strict';
+describe('About', () => {
 
-  describe('About', () => {
+beforeEach(() => {      
+  about = new About();
+});
 
-    beforeEach(() => {      
-      about = new About();
-    });
+it('initialises', () => {
+  expect(about).not.toBeNull();
+});
 
-    it('initialises', () => {
-      expect(about).not.toBeNull();
-    });
-
-  });
-}
+});
