@@ -14,46 +14,36 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'node_modules/angular2/bundles/angular2-polyfills.js',
-      'node_modules/es6-module-loader/dist/es6-module-loader.js',
-      'node_modules/traceur/bin/traceur.js',
-      'node_modules/systemjs/dist/system.src.js',
-      'node_modules/reflect-metadata/Reflect.js',
-
-      { pattern: 'node_modules/angular2/**/*.js', included: false, watched: false },
-      { pattern: 'node_modules/ionic-angular/**/*.js', included: false, watched: false },
-      { pattern: 'node_modules/ionic-native/dist/**/*.js', included: false, watched: false },
-      { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
-      { pattern: 'www/build/test/**/*.js', included: false, watched: true },
-
-      'test/test-main.js'
+      'node_modules/angular2/bundles/angular2-polyfills.js', // 'Uncaught reflect-metadata shim is required when using class decorators'
+      'node_modules/traceur/bin/traceur-runtime.js',         // TypeError: undefined is not a constructor (evaluating 'new exports.Map()')
+      {pattern: 'www/build/test/test.bundle.js', included: true},
+      {pattern: 'www/build/test/test.bundle.js.map', included: false},
+      {pattern: 'www/build/**/*.html', included: false},
     ],
 
     // list of files to exclude
     exclude: [
       'node_modules/angular2/**/*_spec.js',
-      'node_modules/ionic-angular/**/*spec*',
-      'node_modules/ionic-angular/decorators/app.js'
+      'node_modules/ionic-angular/**/*spec*'
     ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'www/build/test/**/!(*.spec|*.stub).js': 'coverage',
+      'www/build/test/test.bundle.js': 'coverage'
     },
 
     // options on how to report coverage:
     coverageReporter: {
       reporters: [
-        {type: 'text'},
-        {type: 'lcov', dir: 'coverage', subdir: '.'}
+        {type: 'json', dir: 'coverage', subdir: 'istanbul-remap'}
       ]
     },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['mocha','coverage'],
+    reporters: ['mocha', 'coverage'],
 
     // web server port
     port: 9876,
@@ -64,25 +54,7 @@ module.exports = function(config) {
     // GOTCHA -- Karma proxies _everything_ through base first..
     //           Also any files you want to serve need to be in the files array above with serverd: true
     proxies: {
-      // allows us to keep test code separate from app code and still have the references work
-      '/base/node_modules/ionic-angular/decorators/app.js': '/base/www/build/test/app.stub.js', // stub out Ionic's @App decorator
-      //proxy ionic native
-      '/base/plugins': '/base/node_modules/ionic-native/dist/plugins',
-      '/base/ionic-native.js': '/base/node_modules/ionic-native/dist/index.js',
-      '/base/ng1.js': '/base/node_modules/ionic-native/dist/ng1.js',
-      '/base/util.js': '/base/node_modules/ionic-native/dist/util.js',
-      //proxy ionic angular
-      '/base/ionic-angular.js': '/base/node_modules/ionic-angular/index.js',
-      '/base/animations': '/base/node_modules/ionic-angular/animations',
-      '/base/config': '/base/node_modules/ionic-angular/config',
-      '/base/decorators': '/base/node_modules/ionic-angular/decorators',
-      '/base/components': '/base/node_modules/ionic-angular/components',
-      '/base/platform': '/base/node_modules/ionic-angular/platform',
-      '/base/util': '/base/node_modules/ionic-angular/util',
-      '/base/translation': '/base/node_modules/ionic-angular/translation',
-      '/base/transitions': '/base/node_modules/ionic-angular/transitions',
-      '/base/gestures': '/base/node_modules/ionic-angular/gestures',
-      '/base/gestures/gesture.js': '/base/node_modules/ionic-angular/gestures/gesture.js'
+      '/build': '/base/www/build'
     },
 
     // level of logging
@@ -98,26 +70,12 @@ module.exports = function(config) {
       'PhantomJS',
     ],
 
-    customLaunchers: {
-      Chrome_travis_ci: {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
-    },
-
-    // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true
+    // https://github.com/lathonez/clicker/issues/82
+    // try increasing this value if you see the error "Disconnected (1 times), because no message in 30000 ms."
+    browserNoActivityTimeout: 30000
   });
 
-  if (process.env.APPVEYOR) {
-    config.browsers = ['IE'];
-    config.singleRun = true;
-    config.browserNoActivityTimeout = 90000; // Note: default value (10000) is not enough
-  }
-
   if (process.env.TRAVIS || process.env.CIRCLECI) {
-    config.browsers = ['Chrome_travis_ci'];
-    config.singleRun = true;
+    config.browsers = ['Chrome', 'PhantomJS'];
   }
 };

@@ -27,6 +27,7 @@ install:
   - cordova prepare
 
 script:
+  - export TS_NODE_DISABLE_WARNINGS=false
   - ionic build android
   - npm test
 
