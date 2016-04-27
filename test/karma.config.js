@@ -75,7 +75,4 @@ module.exports = function(config) {
     browserNoActivityTimeout: 30000
   });
 
-  if (process.env.TRAVIS || process.env.CIRCLECI) {
-    config.browsers = ['Chrome', 'PhantomJS'];
-  }
 };

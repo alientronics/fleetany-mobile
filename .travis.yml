@@ -1,8 +1,5 @@
 language: android
 
-sudo: required
-dist: trusty
-
 node_js:
   -"4.1"
 
@@ -12,16 +9,6 @@ android:
   - tools
   - build-tools-23.0.1
   - android-23
-
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-      - google-chrome
-    packages:
-      - google-chrome-stable
-      - lib32stdc++6
-      - lib32z1
 
 before_install:
   - nvm install v4
