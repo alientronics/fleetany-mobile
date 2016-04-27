@@ -1,6 +1,7 @@
 language: android
 
 sudo: required
+dist: trusty
 
 node_js:
   -"4.1"
