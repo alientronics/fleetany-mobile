@@ -31,6 +31,18 @@ function watchPositionStub(options: any): any {
   return watcher;
 }
 
+
+function postApiStub(options: any): any {
+  'use strict';
+
+  let watcher: Object = {
+    subscribe: function(callback: any, error: any): void {
+      return callback(); 
+    }
+  };
+  return watcher;
+}
+
 describe('Page2', () => {
 
   beforeEach(() => {   
@@ -40,6 +52,7 @@ describe('Page2', () => {
     let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
     let userData: UserData = new UserData(events, http);
     userData.plate = 1;
+    spyOn(userData, 'postApi').and.callFake(postApiStub); 
     spyOn(Geolocation, 'watchPosition').and.callFake(watchPositionStub); 
     spyOn(mockClass, 'getComponent').and.returnValue({ tabBadge: 0});
     page2 = new Page2(mockClass, userData, platform, events, http, mockClass);

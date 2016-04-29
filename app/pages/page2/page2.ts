@@ -62,13 +62,11 @@ export class Page2 {
       let options = { maximumAge:0, timeout:Infinity, enableHighAccuracy:false};
       
       this.watcher = Geolocation.watchPosition(options).subscribe((data) => {
-        this.latitude = data.coords.latitude;
-        this.longitude = data.coords.longitude;
-        
-        let params = data.coords;
          
-        this.userData.postApi('gps', params).subscribe(
+        this.userData.postApi('gps', data.coords).subscribe(
           res => {
+            this.latitude = data.coords.latitude;
+            this.longitude = data.coords.longitude;
             this.app.getComponent('tab2').tabBadge++;
           },
           error => {
