@@ -20,9 +20,10 @@
     </ion-list-header>
 
     <ion-item *ngFor="#device of devices">
-      <ion-label>{{device.id}}</ion-label>
+      <ion-label>{{device.name}}</ion-label>
       <ion-radio value="{{device.id}}"></ion-radio>
     </ion-item>
+
   </ion-list>
 
   <ion-list [hidden]="!bledevice || blescan">
@@ -30,6 +31,9 @@
       Selected device
     </ion-list-header>
     <ion-item>{{bledevice}}</ion-item>
+    <ion-item>
+      <button primary block (click)="sendData()">Send Data</button>
+    </ion-item>
   </ion-list>
 
   <ion-card *ngFor="#data of datastream">

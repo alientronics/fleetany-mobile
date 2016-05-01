@@ -2,7 +2,7 @@
 
 import {Page, Platform, Events, NavController} from 'ionic-angular';
 import {UserData} from '../../providers/user-data';
-import {BLE} from 'ionic-native';
+import {BLE, BluetoothSerial} from 'ionic-native';
 import {Observable} from "rxjs/Observable";
 
 @Page({
@@ -18,11 +18,14 @@ export class Page4 {
   private devices: Array<any>;
   private deviceData: string;
   private datastream: Array<any>;
+  private watcher: any;
+  private counter: number;
 
   constructor(userData: UserData, platform: Platform, events: Events, public nav: NavController) {
     this.userData = userData;
     this.events = events;
     this.platform = platform;
+    this.counter = 1;
   }
 
   bleToggle(value) {
@@ -47,23 +50,48 @@ export class Page4 {
   bleToggleBrowser(value) {
     if (value) {
       this.bledevice = null;
-      this.devices = [
-        {id: '73:08:19:71:8C:9B'},
-        {id: '73:08:19:71:8C:9C'},
-        {id: '73:08:19:71:8C:9D'}
-      ];
-      setTimeout(() => {
-          this.blescan = false;
-          this.devices = [];
-          this.datastream.push('scan stopped');
-          console.log('scan stopped'); 
-      }, 6000);      
+      var devices = [
+        {id: '73:08:19:71:8C:9B', name: 'Sensor 1'},
+        {id: '73:08:19:71:8C:9C', name: 'Sensor 2'},
+        {id: '73:08:19:71:8C:9D', name: 'Sensor 2'}
+      ]; 
+      //devices = [];
+      if (devices.length > 0) {
+        this.devices = devices;
+      } else {
+        this.userData.showToast('No bluetooth device paired!', 'Error!', this.nav);
+      }   
     } else {
       this.devices = [];
     }
   }
 
   bleToggleMobile(value) {
+    if (value) {
+      BluetoothSerial.list().then(
+        value => {
+          if (value.length > 0) {
+            this.devices = value;
+          } else {
+            this.userData.showToast('No bluetooth device paired!', 'Error!', this.nav);
+          }
+          //this.datastream.push("list ok:" + JSON.stringify(value));
+          console.log(value);
+        },
+        err => {
+          this.datastream.push("list err:" + JSON.stringify(err));
+          console.error(err);
+        }
+      );
+    } else {
+      if (this.watcher) {
+        this.watcher.unsubscribe();
+        this.watcher = null;
+      }
+    }
+  }
+
+  bleToggleMobileBLE(value) {
     if (value) {
       if (this.bledevice) {
         BLE.disconnect(this.bledevice).then(() => {
@@ -74,11 +102,11 @@ export class Page4 {
       BLE.startScan([]).subscribe(
         device => {
           console.log(device.json());
-          this.datastream.push(JSON.stringify(device.json()));
+          this.datastream.push("subscribe ok:" + JSON.stringify(device.json()));
           this.devices.push(device.json());
         },
         err => {
-          this.datastream.push(JSON.stringify(err));
+          this.datastream.push("subscribe err:" + JSON.stringify(err));
           console.error(err);
         }
       );
@@ -90,21 +118,53 @@ export class Page4 {
         });
       }, 60000);
     } else {
-      //
+      BLE.stopScan().then(() => { 
+        this.datastream.push('scan stopped');
+        console.log('scan stopped'); 
+      });
     }
   }
   
-  bledeviceChanged(value) {
+  sendData() {
+    if (this.counter > 9) this.counter = 1;
     if (this.platform.is('mobile')) {
-      BLE.connect(value).subscribe(peripheralData => {
-        this.datastream.push(peripheralData);
-        console.log(peripheralData);
-      },
-      peripheralData => {
-        console.log('disconnected');
+      BluetoothSerial.isConnected().then((result) => {
+          var counter = (this.counter++).toString() + '\n';
+          BluetoothSerial.write(counter).then((data) => {
+            this.datastream.push("write data:" + JSON.stringify(data) + this.counter);
+            console.log("write data" + data);
+          });
       });
     } else {
-      this.blescan = false;
+      this.datastream.push("write data:" + this.counter++);
+    }
+  }
+
+  bledeviceChanged(value) {
+    this.blescan = false;
+    this.datastream = [];
+    if (this.platform.is('mobile')) {
+      BluetoothSerial.connect(value).then(
+        value => {
+          this.datastream.push("connect ok:" + JSON.stringify(value));
+          console.log(value);
+          this.watcher = BluetoothSerial.subscribe('\n').subscribe(
+            (data) => {
+              this.datastream.push("subscribe data:" + JSON.stringify(data));
+              console.log("subscribe data" + data);
+            },
+            (err) => {
+              this.datastream.push("subscribe err:" + JSON.stringify(data));
+              console.log("subscribeRaw err:" + data);
+            }
+          );
+        },
+        err => {
+          this.datastream.push("connect err:" + JSON.stringify(err));
+          console.error(err);
+        }
+      );
+    } else {
       var data = [
         {temp: 35.40, pres: 105.27},
         {temp: 35.40, pres: 105.27},
