@@ -86,4 +86,5 @@
     <plugin name="cordova-plugin-geolocation" spec="~2.1.0" />
     <plugin name="cordova-plugin-whitelist" spec="~1.0.0"/>
     <plugin name="cordova-plugin-x-toast" spec="~2.5.0" />
+    <plugin name="cordova-plugin-ble-central" spec="~1.0.6" />
 </widget>

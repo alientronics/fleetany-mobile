@@ -14,8 +14,4 @@ describe('TabsPage', () => {
     expect(tabs).not.toBeNull();
   });
 
-    //expect(Geolocation.watchPosition).toHaveBeenCalled();
-    //expect(page2['latitude']).toBe(30.03);
-    //expect(page2['longitude']).toBe(51.22);
-
 });

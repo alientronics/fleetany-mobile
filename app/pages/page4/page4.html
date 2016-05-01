@@ -1,0 +1,41 @@
+
+<ion-navbar *navbar>
+  <ion-title>
+    fleetany
+  </ion-title>
+</ion-navbar>
+
+<ion-content class="page2">
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Scan devices</ion-label>
+      <ion-toggle [(ngModel)]="blescan" (ngModelChange)="bleToggle($event)"></ion-toggle>
+    </ion-item>
+  </ion-list>
+
+  <ion-list radio-group [hidden]="!blescan" [(ngModel)]="bledevice" (ngModelChange)="bledeviceChanged($event)">
+    <ion-list-header>
+      Select device to pair
+    </ion-list-header>
+
+    <ion-item *ngFor="#device of devices">
+      <ion-label>{{device.id}}</ion-label>
+      <ion-radio value="{{device.id}}"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-list [hidden]="!bledevice || blescan">
+    <ion-list-header>
+      Selected device
+    </ion-list-header>
+    <ion-item>{{bledevice}}</ion-item>
+  </ion-list>
+
+  <ion-card *ngFor="#data of datastream">
+    <ion-card-content>
+      {{data}}
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
