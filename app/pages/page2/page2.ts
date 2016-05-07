@@ -61,12 +61,13 @@ export class Page2 {
 
       let options = { maximumAge:0, timeout:Infinity, enableHighAccuracy:false};
       
-      this.watcher = Geolocation.watchPosition(options).subscribe((data) => {
+      this.userData.getBluetoothData().then((bluetoothData) => {
+
+        this.watcher = Geolocation.watchPosition(options).subscribe((data) => {
         
-        this.userData.getBluetoothData().then((bluetoothData) => {
           let postData = data.coords;
           postData.json = bluetoothData;
-          
+
           this.userData.postApi('gps', postData).subscribe(
             res => {
               this.latitude = postData.latitude;
@@ -78,8 +79,8 @@ export class Page2 {
               console.log(error);
             }
           );
-        });
-      })
+        })
+      });
 
     } else {
 
