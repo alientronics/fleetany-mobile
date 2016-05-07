@@ -43,6 +43,17 @@ function postApiStub(options: any): any {
   return watcher;
 }
 
+function getBluetoothDataStub(): any {
+  'use strict';
+
+  let promise: Object = {
+    then: function(callback: any): void {
+      return callback(); 
+    }
+  };
+  return promise;
+}
+
 describe('Page2', () => {
 
   beforeEach(() => {   
@@ -52,7 +63,8 @@ describe('Page2', () => {
     let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
     let userData: UserData = new UserData(events, http);
     userData.plate = 1;
-    spyOn(userData, 'postApi').and.callFake(postApiStub); 
+    spyOn(userData, 'postApi').and.callFake(postApiStub);
+    spyOn(userData, 'getBluetoothData').and.callFake(getBluetoothDataStub); 
     spyOn(Geolocation, 'watchPosition').and.callFake(watchPositionStub); 
     spyOn(mockClass, 'getComponent').and.returnValue({ tabBadge: 0});
     page2 = new Page2(mockClass, userData, platform, events, http, mockClass);
