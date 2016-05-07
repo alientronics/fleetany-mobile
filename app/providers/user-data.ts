@@ -16,6 +16,7 @@ export class UserData {
   private JSON_OBJECT: string;
   private PLATE: string;
   private RAW_DATA: string;
+  private BLUETOOTH_DATA: string;
   private data: any;
   public email: string;
   public plate: number;
@@ -31,6 +32,7 @@ export class UserData {
     this.JSON_OBJECT = 'jsonObject';
     this.PLATE = 'plate';
     this.RAW_DATA = 'rawdata';
+    this.BLUETOOTH_DATA = 'bluetoothdata';
   }
 
   login(userObjet) {
@@ -46,8 +48,19 @@ export class UserData {
     this.storage.remove(this.JSON_OBJECT);
     this.storage.remove(this.PLATE);
     this.storage.remove(this.RAW_DATA);
+    this.storage.remove(this.BLUETOOTH_DATA);
     this.data = null;
     this.events.publish('user:logout');
+  }
+
+  setBluetoothData(data) {
+    this.storage.set(this.BLUETOOTH_DATA, data);
+  }
+
+  getBluetoothData() {
+    return this.storage.get(this.BLUETOOTH_DATA).then((value) => {
+      return value;
+    });
   }
 
   setPlate(plate) {

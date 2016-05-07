@@ -62,18 +62,23 @@ export class Page2 {
       let options = { maximumAge:0, timeout:Infinity, enableHighAccuracy:false};
       
       this.watcher = Geolocation.watchPosition(options).subscribe((data) => {
-         
-        this.userData.postApi('gps', data.coords).subscribe(
-          res => {
-            this.latitude = data.coords.latitude;
-            this.longitude = data.coords.longitude;
-            this.app.getComponent('tab2').tabBadge++;
-          },
-          error => {
-            alert('Error sending data: ' + error.statusText);
-            console.log(error);
-          }
-        );
+        
+        this.userData.getBluetoothData().then((bluetoothData) => {
+          let postData = data.coords;
+          postData.json = bluetoothData;
+          
+          this.userData.postApi('gps', postData).subscribe(
+            res => {
+              this.latitude = data.coords.latitude;
+              this.longitude = data.coords.longitude;
+              this.app.getComponent('tab2').tabBadge++;
+            },
+            error => {
+              alert('Error sending data: ' + error.statusText);
+              console.log(error);
+            }
+          );
+        });
       })
 
     } else {
