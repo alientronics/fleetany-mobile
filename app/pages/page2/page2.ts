@@ -69,8 +69,8 @@ export class Page2 {
           
           this.userData.postApi('gps', postData).subscribe(
             res => {
-              this.latitude = data.coords.latitude;
-              this.longitude = data.coords.longitude;
+              this.latitude = postData.latitude;
+              this.longitude = postData.longitude;
               this.app.getComponent('tab2').tabBadge++;
             },
             error => {
