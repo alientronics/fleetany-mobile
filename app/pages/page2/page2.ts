@@ -14,7 +14,7 @@ export class Page2 {
   private gpstracking: boolean;
   private latitude: number;
   private longitude: number;
-  private watcher: any;
+  public watcher: any;
   private app: IonicApp;
   private userData: UserData;
   private platform: Platform;
@@ -65,7 +65,7 @@ export class Page2 {
       this.watcher = Geolocation.watchPosition(options).subscribe((data) => {
         
         this.userData.getBluetoothData().then((bluetoothData) => {
-          let postData = data.coords;
+          let postData: any = data.coords;
           postData.json = bluetoothData;
           
           if ( JSON.stringify(data.coords) != JSON.stringify(this.lastPosition) ) {
@@ -94,7 +94,7 @@ export class Page2 {
         this.watcher = null;
       } catch (e) {
         alert('Error unsubscribe: ' + e.statusText);
-        console.log(error);
+        console.log(e);
       }
 
     }

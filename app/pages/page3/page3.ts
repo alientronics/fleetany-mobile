@@ -11,8 +11,8 @@ import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl
 })
 export class Page3 {
 
-  private fuelForm: ControlGroup;
-  private userData: UserData;
+  public fuelForm: ControlGroup;
+  public userData: UserData;
   private price: AbstractControl;
   private amount: AbstractControl;
   private type: AbstractControl;
@@ -40,7 +40,7 @@ export class Page3 {
         this[field] = this.fuelForm.controls[field];
     };
 
-	this.userData.getFuelTypes().then((types) => {
+    this.userData.getFuelTypes().then((types) => {
       this.types = types;
     });
     
@@ -76,7 +76,7 @@ export class Page3 {
             
               },
               error => {
-                alert('Error sending data: ' + error.statusText);
+                this.userData.showToast('Error sending data: ' + error.statusText, 'Error!', this.nav);
                 console.log(error);
               }
             );

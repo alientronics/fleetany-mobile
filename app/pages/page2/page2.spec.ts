@@ -12,6 +12,7 @@ class MockClass {
   public backButton = { subscribe : () => {} }
   public getComponent(): any { return true; }
   public present(): any { return true; }
+  public unsubscribe(): any { return true; }
 }
 
 function watchPositionStub(options: any): any {
@@ -88,6 +89,12 @@ describe('Page2', () => {
   it('should increment tab badge', () => {
     page2.gpsToggle(true);
     expect(page2['app'].getComponent).toHaveBeenCalledWith('tab2');
+  });
+
+  it('should unsubscribe watcher', () => {
+    page2.watcher = new MockClass();
+    page2.gpsToggleBrowser(false);
+    expect(page2.watcher).toBeNull();
   });
   
 });
