@@ -54,7 +54,10 @@ export class UserData {
   }
 
   setBluetoothData(data) {
-    this.storage.set(this.BLUETOOTH_DATA, data);
+    var arrayData = [];
+    arrayData = JSON.parse(localStorage.getItem(this.BLUETOOTH_DATA));
+    arrayData.push(data);
+    this.storage.set(this.BLUETOOTH_DATA, (JSON.stringify(arrayData)));
   }
 
   getBluetoothData() {

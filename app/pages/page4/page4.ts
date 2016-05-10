@@ -151,7 +151,7 @@ export class Page4 {
           this.watcher = BluetoothSerial.subscribe('\n').subscribe(
             (data) => {
               this.datastream.push("subscribe data:" + JSON.stringify(data));
-              this.userData.setBluetoothData(JSON.stringify(data));
+              this.userData.setBluetoothData(data[0]);
               console.log("subscribe data" + data);
             },
             (err) => {
@@ -171,8 +171,8 @@ export class Page4 {
         { id: 123457, ts: "2016-03-04 11:13:14", temp: 80.26, press: 40.46 },
         { id: 123458, ts: "2016-05-06 12:13:14", temp: 90.27, press: 50.47 }
        ];
-      this.datastream.push(JSON.stringify(data));
-      this.userData.setBluetoothData(JSON.stringify(data));
+      this.datastream.push(data);
+      this.userData.setBluetoothData(data[0]);
     }
   }
 
