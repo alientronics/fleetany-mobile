@@ -11,19 +11,19 @@ let settings: Settings = new Settings();
 @Injectable()
 export class UserData {
 
-  private storage: Storage;
+  public storage: Storage;
   private HAS_LOGGED_IN: string;
   private JSON_OBJECT: string;
   private PLATE: string;
   private RAW_DATA: string;
   private BLUETOOTH_DATA: string;
-  private data: any;
+  public data: any;
   public email: string;
   public plate: number;
 
   constructor(
-      @Inject(Events) private events: Events,
-      @Inject(Http) private http: Http
+      @Inject(Events) public events: Events,
+      @Inject(Http) public http: Http
   ) {
     this.storage = new Storage(LocalStorage);
     this.events = events;
@@ -124,9 +124,9 @@ export class UserData {
       let vehicles = [];
       
       for (var i = 0; i < dataP.vehicles.length; i = i + 1) {
-	    vehicles.push({ "key": dataP.vehicles[i].id, "value": dataP.vehicles[i].number });
-	  }
-	  
+      vehicles.push({ "key": dataP.vehicles[i].id, "value": dataP.vehicles[i].number });
+    }
+    
       return vehicles.sort();
     });
   }
@@ -137,9 +137,9 @@ export class UserData {
       let fuelTypes = [];
       
       for (var i = 0; i < dataP.fuelTypes.length; i = i + 1) {
-  	    fuelTypes.push({ "key": dataP.fuelTypes[i].id, "value": dataP.fuelTypes[i].name });
-  	  }
-	  
+        fuelTypes.push({ "key": dataP.fuelTypes[i].id, "value": dataP.fuelTypes[i].name });
+      }
+    
       return fuelTypes.sort();
     });
   }

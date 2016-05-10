@@ -12,6 +12,7 @@ class MockClass {
   public backButton = { subscribe : () => {} }
   public getComponent(): any { return true; }
   public present(): any { return true; }
+  public unsubscribe(): any { return true; }
 }
 
 function watchPositionStub(options: any): any {
@@ -43,6 +44,17 @@ function postApiStub(options: any): any {
   return watcher;
 }
 
+function getBluetoothDataStub(): any {
+  'use strict';
+
+  let promise: Object = {
+    then: function(callback: any): void {
+      return callback(); 
+    }
+  };
+  return promise;
+}
+
 describe('Page2', () => {
 
   beforeEach(() => {   
@@ -52,7 +64,8 @@ describe('Page2', () => {
     let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
     let userData: UserData = new UserData(events, http);
     userData.plate = 1;
-    spyOn(userData, 'postApi').and.callFake(postApiStub); 
+    spyOn(userData, 'postApi').and.callFake(postApiStub);
+    spyOn(userData, 'getBluetoothData').and.callFake(getBluetoothDataStub); 
     spyOn(Geolocation, 'watchPosition').and.callFake(watchPositionStub); 
     spyOn(mockClass, 'getComponent').and.returnValue({ tabBadge: 0});
     page2 = new Page2(mockClass, userData, platform, events, http, mockClass);
@@ -76,6 +89,12 @@ describe('Page2', () => {
   it('should increment tab badge', () => {
     page2.gpsToggle(true);
     expect(page2['app'].getComponent).toHaveBeenCalledWith('tab2');
+  });
+
+  it('should unsubscribe watcher', () => {
+    page2.watcher = new MockClass();
+    page2.gpsToggleBrowser(false);
+    expect(page2.watcher).toBeNull();
   });
   
 });

@@ -16,7 +16,7 @@ export class TabsPage {
   private tab3Root;
   private tab4Root;
   private platform: Platform;
-  private nav: NavController;
+  public nav: NavController;
 
   constructor(platform: Platform, nav: NavController) {
     // this tells the tabs component which Pages

@@ -10,15 +10,15 @@ import {Observable} from "rxjs/Observable";
 })
 export class Page4 {
 
-  private events: Events;
+  public events: Events;
   private blescan: boolean;
-  private userData: UserData;
-  private platform: Platform;
-  private bledevice: string;
-  private devices: Array<any>;
+  public userData: UserData;
+  public platform: Platform;
+  public bledevice: string;
+  public devices: Array<any>;
   private deviceData: string;
-  private datastream: Array<any>;
-  private watcher: any;
+  public datastream: Array<any>;
+  public watcher: any;
   private counter: number;
 
   constructor(userData: UserData, platform: Platform, events: Events, public nav: NavController) {
@@ -53,7 +53,7 @@ export class Page4 {
       var devices = [
         {id: '73:08:19:71:8C:9B', name: 'Sensor 1'},
         {id: '73:08:19:71:8C:9C', name: 'Sensor 2'},
-        {id: '73:08:19:71:8C:9D', name: 'Sensor 2'}
+        {id: '73:08:19:71:8C:9D', name: 'Sensor 3'}
       ]; 
       //devices = [];
       if (devices.length > 0) {

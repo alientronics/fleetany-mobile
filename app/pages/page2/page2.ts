@@ -14,12 +14,13 @@ export class Page2 {
   private gpstracking: boolean;
   private latitude: number;
   private longitude: number;
-  private watcher: any;
+  public watcher: any;
   private app: IonicApp;
   private userData: UserData;
   private platform: Platform;
   private bgGeo: any;
   private http: Http;
+  private lastPosition: any;
 
   constructor(app: IonicApp, userData: UserData, platform: Platform, events: Events, http: Http, public nav: NavController) {
     this.app = app;
@@ -27,7 +28,7 @@ export class Page2 {
     this.events = events;
     this.http = http;
     this.platform = platform;
-
+    this.lastPosition = {};
     //if (this.platform.is('mobile')) {
       //this.bgGeo = window.plugins.backgroundGeoLocation;
     //}
@@ -59,33 +60,41 @@ export class Page2 {
   gpsToggleBrowser(value) {
     if (value) {
 
-      let options = { maximumAge:0, timeout:Infinity, enableHighAccuracy:false};
+      let options = { maximumAge:100, timeout:Infinity, enableHighAccuracy:false};
       
       this.watcher = Geolocation.watchPosition(options).subscribe((data) => {
         
         this.userData.getBluetoothData().then((bluetoothData) => {
-          let postData = data.coords;
+          let postData: any = data.coords;
           postData.json = bluetoothData;
           
-          this.userData.postApi('gps', postData).subscribe(
-            res => {
-              this.latitude = postData.latitude;
-              this.longitude = postData.longitude;
-              this.app.getComponent('tab2').tabBadge++;
-            },
-            error => {
-              alert('Error sending data: ' + error.statusText);
-              console.log(error);
-            }
-          );
+          if ( JSON.stringify(data.coords) != JSON.stringify(this.lastPosition) ) {
+            //only send if 
+            this.userData.postApi('gps', postData).subscribe(
+              res => {
+                this.latitude = postData.latitude;
+                this.longitude = postData.longitude;
+                this.app.getComponent('tab2').tabBadge++;
+                this.lastPosition = data.coords;
+              },
+              error => {
+                alert('Error sending data: ' + error.statusText);
+                console.log(error);
+              }
+            );
+
+          }
         });
       })
 
     } else {
 
-      if (this.watcher) {
+      try {
         this.watcher.unsubscribe();
         this.watcher = null;
+      } catch (e) {
+        alert('Error unsubscribe: ' + e.statusText);
+        console.log(e);
       }
 
     }
