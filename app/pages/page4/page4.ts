@@ -166,7 +166,7 @@ export class Page4 {
         }
       );
     } else {
-      var data = '{\"id\":0000000001,\"pr\":127,\"tp\":22.0,\"ba\":2.95}\r\n';
+      var data = '{\"id\":\"0000000001\",\"pr\":127,\"tp\":22.0,\"ba\":2.95}\r\n';
       this.datastream.push(JSON.stringify(data));
       this.userData.setBluetoothData(data);
     }

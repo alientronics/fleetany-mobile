@@ -21,6 +21,7 @@ export class Page2 {
   private bgGeo: any;
   private http: Http;
   private lastPosition: any;
+  private jsondata: any;
 
   constructor(app: IonicApp, userData: UserData, platform: Platform, events: Events, http: Http, public nav: NavController) {
     this.app = app;
@@ -77,6 +78,7 @@ export class Page2 {
                 this.jsondata = postData.json;
                 this.app.getComponent('tab2').tabBadge++;
                 this.lastPosition = data.coords;
+                this.userData.setBluetoothData(null);
               },
               error => {
                 alert('Error sending data: ' + error.statusText);
