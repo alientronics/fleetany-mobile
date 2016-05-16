@@ -74,6 +74,7 @@ export class Page2 {
               res => {
                 this.latitude = postData.latitude;
                 this.longitude = postData.longitude;
+                this.jsondata = postData.json;
                 this.app.getComponent('tab2').tabBadge++;
                 this.lastPosition = data.coords;
               },

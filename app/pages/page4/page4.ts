@@ -166,13 +166,9 @@ export class Page4 {
         }
       );
     } else {
-      var data =  [
-        { id: 123456, ts: "2016-01-02 10:13:14", temp: 35.40, press: 105.27 },
-        { id: 123457, ts: "2016-03-04 11:13:14", temp: 80.26, press: 40.46 },
-        { id: 123458, ts: "2016-05-06 12:13:14", temp: 90.27, press: 50.47 }
-       ];
+      var data = '{\"id\":0000000001,\"pr\":127,\"tp\":22.0,\"ba\":2.95}\r\n';
       this.datastream.push(JSON.stringify(data));
-      this.userData.setBluetoothData(data[0]);
+      this.userData.setBluetoothData(data);
     }
   }
 
