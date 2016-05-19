@@ -6,9 +6,9 @@ import {BLE, BluetoothSerial} from 'ionic-native';
 import {Observable} from "rxjs/Observable";
 
 @Page({
-  templateUrl: 'build/pages/page4/page4.html'
+  templateUrl: 'build/pages/bluetooth/bluetooth.html'
 })
-export class Page4 {
+export class Bluetooth {
 
   public events: Events;
   private blescan: boolean;

@@ -6,10 +6,10 @@ import {UserData} from '../../providers/user-data';
 import {About} from '../about/about';
 
 @Page({
-  templateUrl: 'build/pages/page1/page1.html',
+  templateUrl: 'build/pages/login/login.html',
 })
 
-export class Page1 {
+export class Login {
 
   private nav: NavController;
   private platform: Platform;
@@ -48,7 +48,7 @@ export class Page1 {
     this.events.subscribe('user:login', () => {
       this.loggedIn = true;
       if (this.nav) {
-        this.nav.push(Page1).then( () => { //force page reload
+        this.nav.push(Login).then( () => { //force page reload
           this.nav.popToRoot();
         });
       }

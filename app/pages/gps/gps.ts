@@ -6,9 +6,9 @@ import {UserData} from '../../providers/user-data';
 import {Geolocation, Toast} from 'ionic-native';
 
 @Page({
-  templateUrl: 'build/pages/page2/page2.html'
+  templateUrl: 'build/pages/gps/gps.html'
 })
-export class Page2 {
+export class Gps {
 
   private events: Events;
   private gpstracking: boolean;

@@ -6,10 +6,10 @@ import {Toast} from 'ionic-native';
 import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl } from 'angular2/common';
 
 @Page({
-  templateUrl: 'build/pages/page3/page3.html',
+  templateUrl: 'build/pages/fuel/fuel.html',
   directives: [FORM_DIRECTIVES]
 })
-export class Page3 {
+export class Fuel {
 
   public fuelForm: ControlGroup;
   public userData: UserData;

@@ -1,4 +1,4 @@
-import { Page2 } from './page2';
+import { Gps } from './gps';
 import { Geolocation, Toast } from 'ionic-native';
 import { IonicApp, Platform } from 'ionic-angular';
 import { Events }   from 'ionic-angular';
@@ -6,7 +6,7 @@ import { UserData } from '../../providers/user-data';
 import { Http, BaseRequestOptions } from 'angular2/http';
 import { MockBackend } from 'angular2/http/testing'
 
-let page2: Page2 = null;
+let gps: Gps = null;
 
 class MockClass {
   public backButton = { subscribe : () => {} }
@@ -55,7 +55,7 @@ function getBluetoothDataStub(): any {
   return promise;
 }
 
-describe('Page2', () => {
+describe('Gps', () => {
 
   beforeEach(() => {   
     let mockClass: any = (<any>new MockClass());
@@ -68,33 +68,33 @@ describe('Page2', () => {
     spyOn(userData, 'getBluetoothData').and.callFake(getBluetoothDataStub); 
     spyOn(Geolocation, 'watchPosition').and.callFake(watchPositionStub); 
     spyOn(mockClass, 'getComponent').and.returnValue({ tabBadge: 0});
-    page2 = new Page2(mockClass, userData, platform, events, http, mockClass);
+    gps = new Gps(mockClass, userData, platform, events, http, mockClass);
   });
 
   it('initialises', () => {
-    expect(page2).not.toBeNull();
+    expect(gps).not.toBeNull();
   });
   
   it('should start gps tracking', () => {
-    page2.gpsToggle(true);
+    gps.gpsToggle(true);
     expect(Geolocation.watchPosition).toHaveBeenCalled();
   });
 
   it('should subscribe gps location', () => {
-    page2.gpsToggle(true);
-    expect(page2['latitude']).toBe(30.03);
-    expect(page2['longitude']).toBe(51.22);
+    gps.gpsToggle(true);
+    expect(gps['latitude']).toBe(30.03);
+    expect(gps['longitude']).toBe(51.22);
   });
 
   it('should increment tab badge', () => {
-    page2.gpsToggle(true);
-    expect(page2['app'].getComponent).toHaveBeenCalledWith('tab2');
+    gps.gpsToggle(true);
+    expect(gps['app'].getComponent).toHaveBeenCalledWith('tab2');
   });
 
   it('should unsubscribe watcher', () => {
-    page2.watcher = new MockClass();
-    page2.gpsToggleBrowser(false);
-    expect(page2.watcher).toBeNull();
+    gps.watcher = new MockClass();
+    gps.gpsToggleBrowser(false);
+    expect(gps.watcher).toBeNull();
   });
   
 });
