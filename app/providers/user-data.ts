@@ -54,13 +54,18 @@ export class UserData {
   }
 
   setBluetoothData(data) {
-    /*
-    var arrayData = [];
-    arrayData = JSON.parse(localStorage.getItem(this.BLUETOOTH_DATA));
-    arrayData.push(data);
-    this.storage.set(this.BLUETOOTH_DATA, (JSON.stringify(arrayData)));
-    */
-    this.storage.set(this.BLUETOOTH_DATA, data);
+
+    if(data == null) {
+      var arrayData = [];
+      this.storage.set(this.BLUETOOTH_DATA, (JSON.stringify(arrayData)));
+    } else {
+      var arrayData = [];
+      arrayData = JSON.parse(localStorage.getItem(this.BLUETOOTH_DATA));
+      arrayData.push(JSON.parse(data));
+      this.storage.set(this.BLUETOOTH_DATA, (JSON.stringify(arrayData).replace(/[\\]/g, '')));
+    }
+    
+    //this.storage.set(this.BLUETOOTH_DATA, data);
   }
 
   getBluetoothData() {

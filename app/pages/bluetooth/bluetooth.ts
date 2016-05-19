@@ -131,11 +131,16 @@ export class Bluetooth {
       BluetoothSerial.isConnected().then((result) => {
           var counter = (this.counter++).toString() + '\n';
           BluetoothSerial.write(counter).then((data) => {
+            this.datastream.push(JSON.stringify(data));
+            this.userData.setBluetoothData(data);
             this.datastream.push("write data:" + JSON.stringify(data) + this.counter);
             console.log("write data" + data);
           });
       });
     } else {
+      var data = '{\"id\":\"0000000001\",\"pr\":127,\"tp\":22.0,\"ba\":2.95}\r\n';
+      this.datastream.push(JSON.stringify(data));
+      this.userData.setBluetoothData(data);
       this.datastream.push("write data:" + this.counter++);
     }
   }
