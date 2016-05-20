@@ -67,7 +67,8 @@
     "cordova-plugin-mauron85-background-geolocation",
     "cordova-plugin-x-toast",
     "cordova-plugin-ble-central",
-    "cordova-plugin-bluetooth-serial"
+    "cordova-plugin-bluetooth-serial",
+    "org.apache.cordova.network-information"
   ],
   "cordovaPlatforms": [
     "android",

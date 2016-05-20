@@ -1,8 +1,8 @@
 'use strict';
 
 import {Injectable, Inject} from 'angular2/core';
-import {Storage, LocalStorage, Events, Alert} from 'ionic-angular';
-import {Toast} from 'ionic-native';
+import {Storage, Platform, LocalStorage, Events, Alert} from 'ionic-angular';
+import {Geolocation, Toast, Network, Connection} from 'ionic-native';
 import {Http, Headers} from 'angular2/http';
 import {Settings} from '../config/settings';
 
@@ -17,22 +17,26 @@ export class UserData {
   private PLATE: string;
   private RAW_DATA: string;
   private BLUETOOTH_DATA: string;
+  private GPS_DATA: string;
   public data: any;
   public email: string;
   public plate: number;
 
   constructor(
       @Inject(Events) public events: Events,
-      @Inject(Http) public http: Http
+      @Inject(Http) public http: Http,
+      @Inject(Platform) public platform: Platform
   ) {
     this.storage = new Storage(LocalStorage);
     this.events = events;
     this.http = http;
+    this.platform = platform;
     this.HAS_LOGGED_IN = 'hasLoggedIn';
     this.JSON_OBJECT = 'jsonObject';
     this.PLATE = 'plate';
     this.RAW_DATA = 'rawdata';
     this.BLUETOOTH_DATA = 'bluetoothdata';
+    this.GPS_DATA = 'gpsdata';
   }
 
   login(userObjet) {
@@ -49,6 +53,7 @@ export class UserData {
     this.storage.remove(this.PLATE);
     this.storage.remove(this.RAW_DATA);
     this.storage.remove(this.BLUETOOTH_DATA);
+    this.storage.remove(this.GPS_DATA);
     this.data = null;
     this.events.publish('user:logout');
   }
@@ -70,6 +75,25 @@ export class UserData {
 
   getBluetoothData() {
     return this.storage.get(this.BLUETOOTH_DATA).then((value) => {
+      return value;
+    });
+  }
+
+  setGpsData(data) {
+
+    if(data == null) {
+      var arrayData = [];
+      this.storage.set(this.GPS_DATA, (JSON.stringify(arrayData)));
+    } else {
+      var arrayData = [];
+      arrayData = JSON.parse(localStorage.getItem(this.GPS_DATA));
+      arrayData.push(JSON.parse(data));
+      this.storage.set(this.GPS_DATA, (JSON.stringify(arrayData).replace(/[\\]/g, '')));
+    }
+  }
+
+  getGpsData() {
+    return this.storage.get(this.GPS_DATA).then((value) => {
       return value;
     });
   }
@@ -179,6 +203,27 @@ export class UserData {
         buttons: ['Ok']
       });
      nav.present(alert);
+    }
+  }
+
+
+   checkConnection() {
+    if (this.platform.is('mobile')) {
+      var networkState = navigator.connection.type;
+
+      var states = {};
+      states[Connection.UNKNOWN]  = 'unknown';
+      states[Connection.ETHERNET] = 'ethernet';
+      states[Connection.WIFI]     = 'wifi';
+      states[Connection.CELL_2G]  = '2g';
+      states[Connection.CELL_3G]  = '3g';
+      states[Connection.CELL_4G]  = '4g';
+      states[Connection.CELL]     = 'cell';
+      states[Connection.NONE]     = 'none';
+
+      return states[networkState];
+    } else {
+      return 'wifi';
     }
   }
 
