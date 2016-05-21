@@ -80,7 +80,7 @@ export class UserData {
         let postData: any = [];
         postData.json = bluetoothData;
 
-        this.postApi('bluetooth', postData).subscribe(
+        this.postApi('tiresensor', postData).subscribe(
           res => {
             this.setBluetoothData(null);
           },
@@ -91,8 +91,6 @@ export class UserData {
         );
       });
     }
-
-    //this.storage.set(this.BLUETOOTH_DATA, data);
   }
 
   getBluetoothData() {
@@ -107,10 +105,30 @@ export class UserData {
       var arrayData = [];
       this.storage.set(this.GPS_DATA, (JSON.stringify(arrayData)));
     } else {
+      data = JSON.parse(data);
+      this.lastPosition.latitude = data.latitude;
+      this.lastPosition.longitude = data.longitude;
       var arrayData = [];
       arrayData = JSON.parse(localStorage.getItem(this.GPS_DATA));
-      arrayData.push(JSON.parse(data));
+      arrayData.push(data);
       this.storage.set(this.GPS_DATA, (JSON.stringify(arrayData).replace(/[\\]/g, '')));
+    }
+
+    if(data != null && this.checkConnection()) {
+      this.getGpsData().then((gpsData) => {
+        let postData: any = [];
+        postData.json = gpsData;
+
+        this.postApi('gps', postData).subscribe(
+          res => {
+            this.setGpsData(null); 
+          },
+          error => {
+            alert('Error sending data: ' + error.statusText);
+            console.log(error);
+          }
+        );
+      });
     }
   }
 
@@ -123,10 +141,6 @@ export class UserData {
   setPlate(plate) {
     this.storage.set(this.PLATE, plate);
     this.plate = plate;
-  }
-
-  setLastPosition(lastPosition) {
-    this.lastPosition = lastPosition;
   }
 
   getPlate() {
@@ -234,7 +248,7 @@ export class UserData {
 
 
    checkConnection() {
-    if (this.platform.is('mobile') && navigator.connection.type == Connection.NONE) {
+    if (this.platform.is('mobile') && navigator.connection.type === Connection.NONE) {
       return false;
     } else {
       return true;

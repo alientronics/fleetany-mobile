@@ -65,29 +65,23 @@ export class Gps {
       
       this.watcher = Geolocation.watchPosition(options).subscribe((data) => {
         
-        this.userData.getBluetoothData().then((bluetoothData) => {
-          let postData: any = data.coords;
-          postData.json = bluetoothData;
-          
-          if ( JSON.stringify(data.coords) != JSON.stringify(this.lastPosition) ) {
-            //only send if 
-            this.userData.postApi('gps', postData).subscribe(
-              res => {
-                this.latitude = postData.latitude;
-                this.longitude = postData.longitude;
-                this.jsondata = postData.json;
-                this.app.getComponent('tab2').tabBadge++;
-                this.lastPosition = data.coords;
-                this.userData.setBluetoothData(null);
-              },
-              error => {
-                alert('Error sending data: ' + error.statusText);
-                console.log(error);
-              }
-            );
+        var obj = new Object();
+        obj.accuracy = data.coords.accuracy;
+        obj.altitude = data.coords.altitude;
+        obj.altitudeAccuracy = data.coords.altitudeAccuracy;
+        obj.heading = data.coords.heading;
+        obj.latitude = data.coords.latitude;
+        obj.longitude = data.coords.longitude;
+        obj.speed = data.coords.speed;
 
-          }
-        });
+        let postData: any = JSON.stringify(obj);
+
+        this.userData.setGpsData(postData);
+        this.latitude = data.coords.latitude;
+        this.longitude = data.coords.longitude;
+        this.app.getComponent('tab2').tabBadge++;
+        this.lastPosition = data.coords;
+ 
       })
 
     } else {
