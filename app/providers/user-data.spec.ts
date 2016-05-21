@@ -1,5 +1,5 @@
 import { UserData } from './user-data';
-import { Events, Alert } from 'ionic-angular';
+import { Events, Platform, Alert } from 'ionic-angular';
 import { Http, BaseRequestOptions } from 'angular2/http';
 import { MockBackend } from 'angular2/http/testing'
 import { Toast } from 'ionic-native';
@@ -46,9 +46,10 @@ describe('UserData', () => {
 
   beforeEach(() => {
     let events: Events = new Events();
+    let platform: Platform = new Platform();
     let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
     spyOn(events, 'publish').and.callFake(publishStub);
-    userData = new UserData(events, http);
+    userData = new UserData(events, http, platform);
   });
 
   it('initialises', () => {

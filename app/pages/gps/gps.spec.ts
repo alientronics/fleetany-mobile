@@ -62,7 +62,7 @@ describe('Gps', () => {
     let platform: Platform = new Platform();
     let events: Events = new Events();
     let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
-    let userData: UserData = new UserData(events, http);
+    let userData: UserData = new UserData(events, http, platform);
     userData.plate = 1;
     spyOn(userData, 'postApi').and.callFake(postApiStub);
     spyOn(userData, 'getBluetoothData').and.callFake(getBluetoothDataStub); 

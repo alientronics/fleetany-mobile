@@ -248,7 +248,7 @@ export class UserData {
 
 
    checkConnection() {
-    if (this.platform.is('mobile') && navigator.connection.type === Connection.NONE) {
+    if (this.platform.is('mobile') && Network.connection === Connection.NONE) {
       return false;
     } else {
       return true;

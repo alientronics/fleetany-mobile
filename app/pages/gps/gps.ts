@@ -65,7 +65,7 @@ export class Gps {
       
       this.watcher = Geolocation.watchPosition(options).subscribe((data) => {
         
-        var obj = new Object();
+        var obj: any = new Object();
         obj.accuracy = data.coords.accuracy;
         obj.altitude = data.coords.altitude;
         obj.altitudeAccuracy = data.coords.altitudeAccuracy;

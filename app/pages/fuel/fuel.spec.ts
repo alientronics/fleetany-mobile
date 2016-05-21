@@ -1,6 +1,6 @@
 import { Fuel } from './fuel';
 import { FormBuilder } from 'angular2/common';
-import { Events, NavController }   from 'ionic-angular';
+import { Events, Platform, NavController }   from 'ionic-angular';
 import { UserData } from '../../providers/user-data';
 import { Http, BaseRequestOptions } from 'angular2/http';
 import { MockBackend } from 'angular2/http/testing'
@@ -38,8 +38,9 @@ describe('Fuel', () => {
 
   beforeEach(() => {     
     let events: Events = new Events();
+    let platform: Platform = new Platform();
     let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
-    let userData: UserData = new UserData(events, http);
+    let userData: UserData = new UserData(events, http, platform);
     spyOn(userData, 'showToast').and.callFake(showToastStub);
     fuel = new Fuel(new FormBuilder(), userData, null);
     let fb = new FormBuilder();
