@@ -21,6 +21,7 @@ export class UserData {
   public data: any;
   public email: string;
   public plate: number;
+  private lastPosition: any;
 
   constructor(
       @Inject(Events) public events: Events,
@@ -37,6 +38,7 @@ export class UserData {
     this.RAW_DATA = 'rawdata';
     this.BLUETOOTH_DATA = 'bluetoothdata';
     this.GPS_DATA = 'gpsdata';
+    this.lastPosition = {"latitude": null, "longitude": null};
   }
 
   login(userObjet) {
@@ -66,10 +68,30 @@ export class UserData {
     } else {
       var arrayData = [];
       arrayData = JSON.parse(localStorage.getItem(this.BLUETOOTH_DATA));
-      arrayData.push(JSON.parse(data));
+      data = JSON.parse(data);
+      data.latitude = this.lastPosition.latitude
+      data.longitude = this.lastPosition.longitude;
+      arrayData.push(data);
       this.storage.set(this.BLUETOOTH_DATA, (JSON.stringify(arrayData).replace(/[\\]/g, '')));
     }
     
+    if(data != null && this.checkConnection()) {
+      this.getBluetoothData().then((bluetoothData) => {
+        let postData: any = [];
+        postData.json = bluetoothData;
+
+        this.postApi('bluetooth', postData).subscribe(
+          res => {
+            this.setBluetoothData(null);
+          },
+          error => {
+            alert('Error sending data: ' + error.statusText);
+            console.log(error);
+          }
+        );
+      });
+    }
+
     //this.storage.set(this.BLUETOOTH_DATA, data);
   }
 
@@ -101,6 +123,10 @@ export class UserData {
   setPlate(plate) {
     this.storage.set(this.PLATE, plate);
     this.plate = plate;
+  }
+
+  setLastPosition(lastPosition) {
+    this.lastPosition = lastPosition;
   }
 
   getPlate() {
@@ -208,22 +234,10 @@ export class UserData {
 
 
    checkConnection() {
-    if (this.platform.is('mobile')) {
-      var networkState = navigator.connection.type;
-
-      var states = {};
-      states[Connection.UNKNOWN]  = 'unknown';
-      states[Connection.ETHERNET] = 'ethernet';
-      states[Connection.WIFI]     = 'wifi';
-      states[Connection.CELL_2G]  = '2g';
-      states[Connection.CELL_3G]  = '3g';
-      states[Connection.CELL_4G]  = '4g';
-      states[Connection.CELL]     = 'cell';
-      states[Connection.NONE]     = 'none';
-
-      return states[networkState];
+    if (this.platform.is('mobile') && navigator.connection.type == Connection.NONE) {
+      return false;
     } else {
-      return 'wifi';
+      return true;
     }
   }
 
