@@ -20,7 +20,6 @@ export class Gps {
   private platform: Platform;
   private bgGeo: any;
   private http: Http;
-  private lastPosition: any;
   private jsondata: any;
 
   constructor(app: IonicApp, userData: UserData, platform: Platform, events: Events, http: Http, public nav: NavController) {
@@ -29,7 +28,6 @@ export class Gps {
     this.events = events;
     this.http = http;
     this.platform = platform;
-    this.lastPosition = {};
     //if (this.platform.is('mobile')) {
       //this.bgGeo = window.plugins.backgroundGeoLocation;
     //}
@@ -80,7 +78,6 @@ export class Gps {
         this.latitude = data.coords.latitude;
         this.longitude = data.coords.longitude;
         this.app.getComponent('tab2').tabBadge++;
-        this.lastPosition = data.coords;
  
       })
 
