@@ -7,6 +7,7 @@ import {Http, Headers} from 'angular2/http';
 import {Settings} from '../config/settings';
 
 let settings: Settings = new Settings();
+var JSZip = require("jszip");
 
 @Injectable()
 export class UserData {
@@ -70,7 +71,7 @@ export class UserData {
       arrayData = JSON.parse(localStorage.getItem(this.BLUETOOTH_DATA));
       data = JSON.parse(data);
       data.latitude = this.lastPosition.latitude
-      data.longitude = this.lastPosition.longitude;
+      data.longitude = this.lastPosition.longitude;    
       arrayData.push(data);
       this.storage.set(this.BLUETOOTH_DATA, (JSON.stringify(arrayData).replace(/[\\]/g, '')));
     }
@@ -78,17 +79,35 @@ export class UserData {
     if(data != null && this.checkConnection()) {
       this.getBluetoothData().then((bluetoothData) => {
         let postData: any = [];
-        postData.json = bluetoothData;
+ 
+        if(bluetoothData.length > 10) {
+          var zip = new JSZip(); 
+          zip.file("postData.json", bluetoothData);
+          zip.generateAsync({type:"base64"}).then((base64) => {
+             postData.json = base64;  
+             this.postApi('tiresensor', postData).subscribe(
+              res => {
+                this.setBluetoothData(null);
+              },
+              error => {
+                alert('Error sending data: ' + error.statusText);
+                console.log(error);
+              }
+             );
+          });
+        } else {
+          postData.json = bluetoothData;  
+           this.postApi('tiresensor', postData).subscribe(
+            res => {
+              this.setBluetoothData(null);
+            },
+            error => {
+              alert('Error sending data: ' + error.statusText);
+              console.log(error);
+            }
+           );
+        }  
 
-        this.postApi('tiresensor', postData).subscribe(
-          res => {
-            this.setBluetoothData(null);
-          },
-          error => {
-            alert('Error sending data: ' + error.statusText);
-            console.log(error);
-          }
-        );
       });
     }
   }
@@ -117,17 +136,35 @@ export class UserData {
     if(data != null && this.checkConnection()) {
       this.getGpsData().then((gpsData) => {
         let postData: any = [];
-        postData.json = gpsData;
+ 
+        if(gpsData.length > 10) {
+          var zip = new JSZip(); 
+          zip.file("postData.json", gpsData);
+          zip.generateAsync({type:"base64"}).then((base64) => {
+             postData.json = base64;  
+             this.postApi('gps', postData).subscribe(
+              res => {
+                this.setGpsData(null);
+              },
+              error => {
+                alert('Error sending data: ' + error.statusText);
+                console.log(error);
+              }
+             );
+          });
+        } else {
+          postData.json = gpsData;  
+           this.postApi('gps', postData).subscribe(
+            res => {
+              this.setGpsData(null);
+            },
+            error => {
+              alert('Error sending data: ' + error.statusText);
+              console.log(error);
+            }
+           );
+        }  
 
-        this.postApi('gps', postData).subscribe(
-          res => {
-            this.setGpsData(null); 
-          },
-          error => {
-            alert('Error sending data: ' + error.statusText);
-            console.log(error);
-          }
-        );
       });
     }
   }
