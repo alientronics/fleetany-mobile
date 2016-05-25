@@ -63,12 +63,15 @@ export class UserData {
 
   setPostData(data, storage, urlApi) {
 
+    var arrayData = [];
+
     if(data == null) {
-      var arrayData = [];
       this.storage.set(storage, (JSON.stringify(arrayData)));
     } else {
-      var arrayData = [];
       arrayData = JSON.parse(localStorage.getItem(storage));
+      if (arrayData == null) {
+        arrayData = [];
+      }
       data = JSON.parse(data); 
 
       if(urlApi == 'gps') {       
@@ -88,7 +91,6 @@ export class UserData {
       this.getPostData(storage).then((dataStorage) => {
 
         let postData: any = [];
- 
         var zip = new JSZip(); 
         zip.file("postData.json", dataStorage);
 
@@ -97,7 +99,7 @@ export class UserData {
           compression: "DEFLATE",
           compressionOptions : {level:6}
         }).then((zipFile) => {
-           postData.json = zipFile;  
+           postData.json = zipFile;
            this.postApi(urlApi, postData).subscribe(
             res => {
               this.setPostData(null, storage, urlApi);
