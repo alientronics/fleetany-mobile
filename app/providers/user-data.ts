@@ -68,7 +68,10 @@ export class UserData {
       this.storage.set(storage, (JSON.stringify(arrayData)));
     } else {
       var arrayData = [];
-      arrayData = JSON.parse(localStorage.getItem(storage));
+      if(localStorage.getItem(storage) != null) {
+        arrayData = JSON.parse(localStorage.getItem(storage));
+      }
+
       data = JSON.parse(data); 
 
       if(urlApi == 'gps') {       
