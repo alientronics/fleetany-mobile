@@ -138,7 +138,7 @@ describe('Bluetooth', () => {
   it('should send data to datastream', () => {
     bluetooth.datastream = [];
     bluetooth.sendData();
-    expect(bluetooth.datastream.length).toBe(1);
+    expect(bluetooth.datastream.length).toBe(2);
   });
 
   it('should send data to datastream', () => {
