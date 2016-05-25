@@ -44,6 +44,17 @@ function listTrueStub(arg: any): any {
   return promise;
 }
 
+function writeStub(arg: any): any {
+  'use strict';
+
+  let promise: Object = {
+    then: function(callback: any): void {
+      return callback('{}'); 
+    }
+  };
+  return promise;
+}
+
 function startScanStub(options: any): any {
   'use strict';
 
@@ -141,13 +152,13 @@ describe('Bluetooth', () => {
     expect(bluetooth.datastream.length).toBe(2);
   });
 
-  it('should send data to datastream', () => {
+  it('should send data to datastream ok', () => {
     spyOn(bluetooth.platform, 'is').and.callFake(isStub);
     spyOn(BluetoothSerial, 'isConnected').and.callFake(listTrueStub);
-    spyOn(BluetoothSerial, 'write').and.callFake(listTrueStub);
+    spyOn(BluetoothSerial, 'write').and.callFake(writeStub);
     bluetooth.datastream = [];
     bluetooth.sendData();
-    expect(bluetooth.datastream.length).toBe(1);
+    expect(bluetooth.datastream.length).toBe(2);
   });
 
   it('should fake device data', () => {
