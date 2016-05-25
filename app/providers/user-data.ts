@@ -61,112 +61,76 @@ export class UserData {
     this.events.publish('user:logout');
   }
 
-  setBluetoothData(data) {
+  setPostData(data, storage, urlApi) {
 
     if(data == null) {
       var arrayData = [];
-      this.storage.set(this.BLUETOOTH_DATA, (JSON.stringify(arrayData)));
+      this.storage.set(storage, (JSON.stringify(arrayData)));
     } else {
       var arrayData = [];
-      arrayData = JSON.parse(localStorage.getItem(this.BLUETOOTH_DATA));
-      data = JSON.parse(data);
-      data.latitude = this.lastPosition.latitude
-      data.longitude = this.lastPosition.longitude;    
+      arrayData = JSON.parse(localStorage.getItem(storage));
+      data = JSON.parse(data); 
+
+      if(urlApi == 'gps') {       
+        this.lastPosition.latitude = data.latitude;
+        this.lastPosition.longitude = data.longitude;
+      } else if(urlApi == 'tiresensor') { 
+        data.latitude = this.lastPosition.latitude
+        data.longitude = this.lastPosition.longitude; 
+      }
+
       arrayData.push(data);
-      this.storage.set(this.BLUETOOTH_DATA, (JSON.stringify(arrayData).replace(/[\\]/g, '')));
+      this.storage.set(storage, (JSON.stringify(arrayData).replace(/[\\]/g, '')));
     }
     
     if(data != null && this.checkConnection()) {
-      this.getBluetoothData().then((bluetoothData) => {
+
+      this.getPostData(storage).then((dataStorage) => {
+
         let postData: any = [];
  
-        if(bluetoothData.length > 10) {
-          var zip = new JSZip(); 
-          zip.file("postData.json", bluetoothData);
-          zip.generateAsync({type:"base64"}).then((base64) => {
-             postData.json = base64;  
-             this.postApi('tiresensor', postData).subscribe(
-              res => {
-                this.setBluetoothData(null);
-              },
-              error => {
-                alert('Error sending data: ' + error.statusText);
-                console.log(error);
-              }
-             );
-          });
-        } else {
-          postData.json = bluetoothData;  
-           this.postApi('tiresensor', postData).subscribe(
+        var zip = new JSZip(); 
+        zip.file("postData.json", dataStorage);
+
+        zip.generateAsync({
+          type: "base64",
+          compression: "DEFLATE",
+          compressionOptions : {level:6}
+        }).then((zipFile) => {
+           postData.json = zipFile;  
+           this.postApi(urlApi, postData).subscribe(
             res => {
-              this.setBluetoothData(null);
+              this.setPostData(null, storage, urlApi);
             },
             error => {
               alert('Error sending data: ' + error.statusText);
               console.log(error);
             }
            );
-        }  
+        });
 
       });
     }
+  }
+
+  setBluetoothData(data) {
+    this.setPostData(data, this.BLUETOOTH_DATA, 'tiresensor');
+  }
+
+  setGpsData(data) {
+    this.setPostData(data, this.GPS_DATA, 'gps');
+  }
+
+  getPostData(storage) {
+    return this.storage.get(storage).then((value) => {
+      return value;
+    });
   }
 
   getBluetoothData() {
     return this.storage.get(this.BLUETOOTH_DATA).then((value) => {
       return value;
     });
-  }
-
-  setGpsData(data) {
-
-    if(data == null) {
-      var arrayData = [];
-      this.storage.set(this.GPS_DATA, (JSON.stringify(arrayData)));
-    } else {
-      data = JSON.parse(data);
-      this.lastPosition.latitude = data.latitude;
-      this.lastPosition.longitude = data.longitude;
-      var arrayData = [];
-      arrayData = JSON.parse(localStorage.getItem(this.GPS_DATA));
-      arrayData.push(data);
-      this.storage.set(this.GPS_DATA, (JSON.stringify(arrayData).replace(/[\\]/g, '')));
-    }
-
-    if(data != null && this.checkConnection()) {
-      this.getGpsData().then((gpsData) => {
-        let postData: any = [];
- 
-        if(gpsData.length > 10) {
-          var zip = new JSZip(); 
-          zip.file("postData.json", gpsData);
-          zip.generateAsync({type:"base64"}).then((base64) => {
-             postData.json = base64;  
-             this.postApi('gps', postData).subscribe(
-              res => {
-                this.setGpsData(null);
-              },
-              error => {
-                alert('Error sending data: ' + error.statusText);
-                console.log(error);
-              }
-             );
-          });
-        } else {
-          postData.json = gpsData;  
-           this.postApi('gps', postData).subscribe(
-            res => {
-              this.setGpsData(null);
-            },
-            error => {
-              alert('Error sending data: ' + error.statusText);
-              console.log(error);
-            }
-           );
-        }  
-
-      });
-    }
   }
 
   getGpsData() {
