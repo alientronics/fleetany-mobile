@@ -102,10 +102,10 @@ export class UserData {
 
            if(dataStorage.length > 180) {
             postData.json = zipFile;
-            postData.dataIsCompress = 1;
+            postData.dataIsCompressed = 1;
            } else {
             postData.json = dataStorage;
-            postData.dataIsCompress = 0;
+            postData.dataIsCompressed = 0;
            }
 
            this.postApi(urlApi, postData).subscribe(
