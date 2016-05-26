@@ -99,7 +99,15 @@ export class UserData {
           compression: "DEFLATE",
           compressionOptions : {level:6}
         }).then((zipFile) => {
-           postData.json = zipFile;
+
+           if(dataStorage.length > 180) {
+            postData.json = zipFile;
+            postData.dataIsCompress = 1;
+           } else {
+            postData.json = dataStorage;
+            postData.dataIsCompress = 0;
+           }
+
            this.postApi(urlApi, postData).subscribe(
             res => {
               this.setPostData(null, storage, urlApi);
