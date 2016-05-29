@@ -1,9 +1,17 @@
 'use strict';
 
-import {App, Platform} from 'ionic-angular';
+import {ViewChild} from 'angular2/core';
+import {App, Platform, Events, Nav, MenuController} from 'ionic-angular';
 import {TabsPage} from './pages/tabs/tabs';
 import {UserData} from './providers/user-data';
 import {Type} from 'angular2/core';
+
+interface PageObj {
+  title: string;
+  component: any;
+  icon: string;
+  index?: number;
+}
 
 @App({
   templateUrl: 'build/app.html',
@@ -12,10 +20,30 @@ import {Type} from 'angular2/core';
 })
 export class FleetanyApp {
 
+  @ViewChild(Nav) nav: Nav;
+
   private rootPage: Type;
   private platform: Platform;
 
-  constructor(platform: Platform) {
+  appLoggedInPages: PageObj[] = [
+    { title: 'GPS', component: TabsPage, index: 1, icon: 'compass' },
+    { title: 'BLE', component: TabsPage, index: 3, icon: 'bluetooth' },
+    { title: 'About', component: TabsPage, index: 2, icon: 'information-circle' },
+  ];
+  appLoggedOutPages: PageObj[] = [
+    { title: 'About', component: TabsPage, index: 2, icon: 'information-circle' },
+  ];
+  loggedInPages: PageObj[] = [
+    { title: 'Logout', component: TabsPage, icon: 'log-out' }
+  ];
+  loggedOutPages: PageObj[] = [
+    { title: 'Login', component: TabsPage, icon: 'log-in' }
+  ];
+
+  constructor(platform: Platform, 
+    private events: Events,
+    private userData: UserData,
+    private menu: MenuController) {
     this.rootPage = TabsPage;
     this.platform = platform;
 
@@ -38,6 +66,46 @@ export class FleetanyApp {
       // Disable BACK button on home
     });
 
+    this.userData.hasLoggedIn().then((hasLoggedIn) => {
+      this.enableMenu(hasLoggedIn === 'true');
+    });
+
+    this.listenToLoginEvents();
+
   }
+
+  openPage(page: PageObj) {
+    // the nav component was found using @ViewChild(Nav)
+    // reset the nav to remove previous pages and only have this page
+    // we wouldn't want the back button to show in this scenario
+    if (page.index) {
+      this.nav.setRoot(page.component, {tabIndex: page.index});
+
+    } else {
+      this.nav.setRoot(page.component);
+    }
+
+    if (page.title === 'Logout') {
+      // Give the menu time to close before changing to logged out
+      setTimeout(() => {
+        this.userData.logout();
+      }, 1000);
+    }
+  }
+
+  listenToLoginEvents() {
+    this.events.subscribe('user:login', () => {
+      this.enableMenu(true);
+    });
+
+    this.events.subscribe('user:logout', () => {
+      this.enableMenu(false);
+    });
+  }
+
+  enableMenu(loggedIn) {
+    this.menu.enable(loggedIn, 'loggedInMenu');
+    this.menu.enable(!loggedIn, 'loggedOutMenu');
+  }  
 
 }
