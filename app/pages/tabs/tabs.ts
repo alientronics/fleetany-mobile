@@ -1,6 +1,6 @@
 'use strict';
 
-import {Page, Platform, NavController, Alert} from 'ionic-angular';
+import {Page, Platform, NavController, Alert, NavParams} from 'ionic-angular';
 import {Login} from '../login/login';
 import {Gps} from '../gps/gps';
 import {Fuel} from '../fuel/fuel';
@@ -17,8 +17,10 @@ export class TabsPage {
   private tab4Root;
   private platform: Platform;
   public nav: NavController;
+  mySelectedIndex: number;
 
-  constructor(platform: Platform, nav: NavController) {
+
+  constructor(platform: Platform, nav: NavController, navParams: NavParams) {
     // this tells the tabs component which Pages
     // should be each tab's root Page
     this.tab1Root = Login;
@@ -27,6 +29,7 @@ export class TabsPage {
     this.tab4Root = Bluetooth;
     this.platform = platform;
     this.nav = nav;
+    this.mySelectedIndex = navParams.data.tabIndex || 0;
 
     //this.platform.registerBackButtonAction(e => this.checkBack(e), 100); //not working ionic 2
     //if (this.platform.is('android')) {

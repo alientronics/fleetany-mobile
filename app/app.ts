@@ -5,6 +5,7 @@ import {App, Platform, Events, Nav, MenuController} from 'ionic-angular';
 import {TabsPage} from './pages/tabs/tabs';
 import {UserData} from './providers/user-data';
 import {Type} from 'angular2/core';
+import {About} from './pages/about/about';
 
 interface PageObj {
   title: string;
@@ -28,10 +29,10 @@ export class FleetanyApp {
   appLoggedInPages: PageObj[] = [
     { title: 'GPS', component: TabsPage, index: 1, icon: 'compass' },
     { title: 'BLE', component: TabsPage, index: 3, icon: 'bluetooth' },
-    { title: 'About', component: TabsPage, index: 2, icon: 'information-circle' },
+    { title: 'About', component: About, icon: 'information-circle' },
   ];
   appLoggedOutPages: PageObj[] = [
-    { title: 'About', component: TabsPage, index: 2, icon: 'information-circle' },
+    { title: 'About', component: About, icon: 'information-circle' },
   ];
   loggedInPages: PageObj[] = [
     { title: 'Logout', component: TabsPage, icon: 'log-out' }
@@ -43,7 +44,9 @@ export class FleetanyApp {
   constructor(platform: Platform, 
     private events: Events,
     private userData: UserData,
-    private menu: MenuController) {
+    private menu: MenuController
+  ) {
+
     this.rootPage = TabsPage;
     this.platform = platform;
 
