@@ -6,6 +6,8 @@ import {TabsPage} from './pages/tabs/tabs';
 import {UserData} from './providers/user-data';
 import {Type} from 'angular2/core';
 import {About} from './pages/about/about';
+import {Gps} from './pages/gps/gps';
+import {Bluetooth} from './pages/bluetooth/bluetooth';
 
 interface PageObj {
   title: string;
@@ -27,8 +29,8 @@ export class FleetanyApp {
   private platform: Platform;
 
   appLoggedInPages: PageObj[] = [
-    { title: 'GPS', component: TabsPage, index: 1, icon: 'compass' },
-    { title: 'BLE', component: TabsPage, index: 3, icon: 'bluetooth' },
+    { title: 'GPS', component: Gps, icon: 'compass' },
+    { title: 'BLE', component: Bluetooth, icon: 'bluetooth' },
     { title: 'About', component: About, icon: 'information-circle' },
   ];
   appLoggedOutPages: PageObj[] = [

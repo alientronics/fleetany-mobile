@@ -2,9 +2,7 @@
 
 import {Page, Platform, NavController, Alert, NavParams} from 'ionic-angular';
 import {Login} from '../login/login';
-import {Gps} from '../gps/gps';
 import {Fuel} from '../fuel/fuel';
-import {Bluetooth} from '../bluetooth/bluetooth';
 
 @Page({
   templateUrl: 'build/pages/tabs/tabs.html'
@@ -13,8 +11,6 @@ export class TabsPage {
 
   private tab1Root;
   private tab2Root;
-  private tab3Root;
-  private tab4Root;
   private platform: Platform;
   public nav: NavController;
   mySelectedIndex: number;
@@ -24,9 +20,7 @@ export class TabsPage {
     // this tells the tabs component which Pages
     // should be each tab's root Page
     this.tab1Root = Login;
-    this.tab2Root = Gps;
-    this.tab3Root = Fuel;
-    this.tab4Root = Bluetooth;
+    this.tab2Root = Fuel;
     this.platform = platform;
     this.nav = nav;
     this.mySelectedIndex = navParams.data.tabIndex || 0;
