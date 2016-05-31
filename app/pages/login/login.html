@@ -27,15 +27,14 @@
     <p>{{welcome}}</p>
   </div>
 
-  <ion-list [hidden]="!loggedIn">
-    <ion-item>
-      <ion-label>Select your car</ion-label>
-      <ion-select [disabled]="gpstracking" [(ngModel)]="plate" (ngModelChange)="plateChange($event)">
-        <ion-option *ngFor="#vehicle of vehicles" value="{{vehicle.key}}">
-          {{vehicle.value}}
-        </ion-option>
-      </ion-select>
-    </ion-item>
+  <ion-list [disabled]="gpstracking" [(ngModel)]="plate" (ngModelChange)="plateChange($event)" radio-group [hidden]="!loggedIn">
+      <ion-list-header>Select your car</ion-list-header>
+
+      <ion-item *ngFor="#vehicle of vehicles" value="{{vehicle.key}}">
+        <ion-label>{{vehicle.value}}</ion-label>
+        <ion-radio value="{{vehicle.key}}"></ion-radio>
+      </ion-item>
+
   </ion-list>
 
 </ion-content>
