@@ -8,15 +8,16 @@
 
 </ion-navbar>
 
-<ion-content padding class="login">
+<ion-content padding class="alerts">
 
-  <ion-card>
-    <ion-card-header>
-      Nova pagina de alerts!
-    </ion-card-header>
-    <ion-card-content>
-      Nova pagina de alerts!
-    </ion-card-content>
-  </ion-card>
+    <ion-card *ngFor="#alert of alerts">
+      <ion-card-header>
+        Sensor ID: {{alert.sensorName}}
+      </ion-card-header>
+      <ion-card-content class="alert-card">
+        Temperature: {{alert.temperature}} <br>
+        Pressure: {{alert.pressure}}
+      </ion-card-content>
+    </ion-card>
 
 </ion-content>
