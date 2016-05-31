@@ -30,7 +30,7 @@ export class FleetanyApp {
   private platform: Platform;
 
   appLoggedInPages: PageObj[] = [
-    { title: 'Vehicles', component: Login, icon: 'car' },
+    { title: 'Home', component: Login, icon: 'home' },
     { title: 'Alerts', component: TabsPage, icon: 'alert' },
     { title: 'Fuel Tracking', component: TabsPage, index: 1, icon: 'color-fill' },
     { title: 'GPS', component: Gps, icon: 'compass' },

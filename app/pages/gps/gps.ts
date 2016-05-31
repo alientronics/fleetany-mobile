@@ -40,10 +40,8 @@ export class Gps {
     } else {
     	if (value) {
         this.events.publish('gps:on');
-	      this.app.getComponent('tab2').tabBadge = 0;
 	    } else {
         this.events.publish('gps:off');
-	      this.app.getComponent('tab2').tabBadge = '';
 	      this.latitude = null;
 	      this.longitude = null;
       }
@@ -77,7 +75,6 @@ export class Gps {
         this.userData.setGpsData(postData);
         this.latitude = data.coords.latitude;
         this.longitude = data.coords.longitude;
-        this.app.getComponent('tab2').tabBadge++;
  
       })
 
