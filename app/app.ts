@@ -73,10 +73,10 @@ export class FleetanyApp {
       // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
 
       // Disable BACK button on home
-    });
-
-    this.userData.hasLoggedIn().then((hasLoggedIn) => {
-      this.enableMenu(hasLoggedIn !== null);
+      this.userData.hasLoggedIn().then((hasLoggedIn) => {
+        this.enableMenu(hasLoggedIn !== null);
+      });
+    
     });
 
     this.listenToLoginEvents();
