@@ -1,0 +1,35 @@
+<ion-navbar *navbar>
+
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+
+  <ion-title>fleetany</ion-title>
+  <ion-buttons start>
+    <button (click)="googleLogin()" [hidden]="loggedIn">
+      <ion-icon name="log-in"></ion-icon>
+    </button>
+    <button (click)="confirmLogout()" [hidden]="!loggedIn">
+      <ion-icon name="log-out"></ion-icon>
+    </button>
+  </ion-buttons>
+
+  <ion-buttons end>
+    <button (click)="onAbout()">
+      <ion-icon name="help-circle"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-navbar>
+
+<ion-content padding class="login">
+
+  <ion-card>
+    <ion-card-header>
+      Nova pagina de alerts!
+    </ion-card-header>
+    <ion-card-content>
+      Nova pagina de alerts!
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

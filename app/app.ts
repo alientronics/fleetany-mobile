@@ -8,6 +8,7 @@ import {Type} from 'angular2/core';
 import {About} from './pages/about/about';
 import {Gps} from './pages/gps/gps';
 import {Bluetooth} from './pages/bluetooth/bluetooth';
+import {Login} from './pages/login/login';
 
 interface PageObj {
   title: string;
@@ -29,18 +30,21 @@ export class FleetanyApp {
   private platform: Platform;
 
   appLoggedInPages: PageObj[] = [
+    { title: 'Home', component: TabsPage, icon: 'home' },
     { title: 'GPS', component: Gps, icon: 'compass' },
     { title: 'BLE', component: Bluetooth, icon: 'bluetooth' },
+    { title: 'Alerts', component: TabsPage, icon: 'alert' },
+    { title: 'Fuel Tracking', component: TabsPage, index: 1, icon: 'color-fill' },
     { title: 'About', component: About, icon: 'information-circle' },
   ];
   appLoggedOutPages: PageObj[] = [
     { title: 'About', component: About, icon: 'information-circle' },
   ];
   loggedInPages: PageObj[] = [
-    { title: 'Logout', component: TabsPage, icon: 'log-out' }
+    { title: 'Logout', component: Login, icon: 'log-out' }
   ];
   loggedOutPages: PageObj[] = [
-    { title: 'Login', component: TabsPage, icon: 'log-in' }
+    { title: 'Login', component: Login, icon: 'log-in' }
   ];
 
   constructor(platform: Platform, 
@@ -49,7 +53,7 @@ export class FleetanyApp {
     private menu: MenuController
   ) {
 
-    this.rootPage = TabsPage;
+    this.rootPage = Login;
     this.platform = platform;
 
     this.platform.ready().then(() => {
@@ -72,7 +76,7 @@ export class FleetanyApp {
     });
 
     this.userData.hasLoggedIn().then((hasLoggedIn) => {
-      this.enableMenu(hasLoggedIn === 'true');
+      this.enableMenu(hasLoggedIn !== null);
     });
 
     this.listenToLoginEvents();
@@ -101,6 +105,11 @@ export class FleetanyApp {
   listenToLoginEvents() {
     this.events.subscribe('user:login', () => {
       this.enableMenu(true);
+      if (this.nav) {
+        this.nav.push(TabsPage).then( () => { //force page reload
+          this.nav.popToRoot();
+        });
+      }
     });
 
     this.events.subscribe('user:logout', () => {

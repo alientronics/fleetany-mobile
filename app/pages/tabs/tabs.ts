@@ -1,7 +1,7 @@
 'use strict';
 
 import {Page, Platform, NavController, Alert, NavParams} from 'ionic-angular';
-import {Login} from '../login/login';
+import {Alerts} from '../alerts/alerts';
 import {Fuel} from '../fuel/fuel';
 
 @Page({
@@ -19,7 +19,7 @@ export class TabsPage {
   constructor(platform: Platform, nav: NavController, navParams: NavParams) {
     // this tells the tabs component which Pages
     // should be each tab's root Page
-    this.tab1Root = Login;
+    this.tab1Root = Alerts;
     this.tab2Root = Fuel;
     this.platform = platform;
     this.nav = nav;
