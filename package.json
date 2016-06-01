@@ -69,7 +69,8 @@
     "cordova-plugin-x-toast",
     "cordova-plugin-ble-central",
     "cordova-plugin-bluetooth-serial",
-    "cordova-plugin-network-information"
+    "cordova-plugin-network-information",
+    "cordova-plugin-globalization"
   ],
   "cordovaPlatforms": [
     "android",

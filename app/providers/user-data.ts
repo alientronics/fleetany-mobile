@@ -2,7 +2,7 @@
 
 import {Injectable, Inject} from 'angular2/core';
 import {Storage, Platform, LocalStorage, Events, Alert} from 'ionic-angular';
-import {Geolocation, Toast, Network, Connection} from 'ionic-native';
+import {Geolocation, Toast, Network, Connection, Globalization} from 'ionic-native';
 import {Http, Headers} from 'angular2/http';
 import {Settings} from '../config/settings';
 
@@ -21,6 +21,7 @@ export class UserData {
   private GPS_DATA: string;
   public data: any;
   public email: string;
+  public userLang: string;
   public plate: number;
   private lastPosition: any;
 
@@ -40,6 +41,16 @@ export class UserData {
     this.BLUETOOTH_DATA = 'bluetoothdata';
     this.GPS_DATA = 'gpsdata';
     this.lastPosition = {"latitude": null, "longitude": null};
+
+    platform.ready().then(() => {
+      if (this.platform.is('mobile')) {
+        Globalization.getPreferredLanguage().then((language) => {
+            this.userLang = language.value;
+        });
+      } else {
+        this.userLang = 'en';
+      }
+    }); 
   }
 
   login(userObjet) {
@@ -231,6 +242,7 @@ export class UserData {
     var headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     data['email'] = this.email;
+    data['lang'] = this.userLang;
     data['api_token'] = settings.api_token;
     if (this.plate) data['vehicle_id'] = this.plate;
     var query = "";
