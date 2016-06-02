@@ -51,11 +51,11 @@
         "Faqs": "FAQs",
         "q1": "Como posso adicionar veículos?",
         "r1": "Vá até a aplicação Fleetany Web para ter acesso a outras funcionalidades.",
-        "q2": "What is the use of GPS location?",
-        "r2": "You can access your vehicle location at Fleetany Web App.",
-        "q3": "What is the url to Fleetany Web App?",
+        "q2": "Para que serve a utilização do GPS?",
+        "r2": "Você pode acessar a localização de seu veículo no Fleetany Web App.",
+        "q3": "Qual o endereço para o Fleetany Web App?",
         "r3": "http://www.fleetany.com",
-        "q4": "About Fleetany",
-        "r4": "Fleetany is a freemiun open source fleet management system."
+        "q4": "Sobre Fleetany",
+        "r4": "Fleetany é um sistema de gerenciamento de frotas freemiun open source."
     }
 }
