@@ -86,11 +86,6 @@ describe('Gps', () => {
     expect(gps['longitude']).toBe(51.22);
   });
 
-  it('should increment tab badge', () => {
-    gps.gpsToggle(true);
-    expect(gps['app'].getComponent).toHaveBeenCalledWith('tab2');
-  });
-
   it('should unsubscribe watcher', () => {
     gps.watcher = new MockClass();
     gps.gpsToggleBrowser(false);

@@ -1,12 +1,12 @@
-import { Login } from './login';
+/*import { Alerts } from './alerts';
 import { Events, Platform }   from 'ionic-angular';
 import { UserData } from '../../providers/user-data';
 import { Http, BaseRequestOptions } from 'angular2/http';
 import { MockBackend } from 'angular2/http/testing'
 
-let login: Login = null;
+let alerts: Alerts = null;
 
-describe('Login', () => {
+describe('Alerts', () => {
 
   beforeEach(() => {
     let events: Events = new Events();
@@ -79,3 +79,4 @@ describe('Login', () => {
   });
 
 });
+*/

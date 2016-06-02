@@ -1,5 +1,5 @@
 import { TabsPage } from './tabs';
-import { Platform, NavController, Alert } from 'ionic-angular';
+import { Platform, NavController, Alert, NavParams } from 'ionic-angular';
 
 let tabs: TabsPage = null;
 
@@ -17,8 +17,9 @@ describe('TabsPage', () => {
   beforeEach(() => {     
     let platform = new Platform();
     let nav:any = new MockClass();
+    let navParams:any = new NavParams();
     spyOn(nav, 'present').and.callFake(createStub);
-    tabs = new TabsPage(platform, nav);
+    tabs = new TabsPage(platform, nav, navParams);
   });
 
   it('initialises', () => {
