@@ -7,7 +7,6 @@
     "ionic-native": "^1.2.0",
     "ionicons": "3.0.0",
     "jszip": "^3.0.0",
-    "ng2-translate": "^2.1.0",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
     "zone.js": "^0.6.10"
