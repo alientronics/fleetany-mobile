@@ -89,7 +89,7 @@ export class FleetanyApp {
     });
 
     this.listenToLoginEvents();
-    //this.initializeTranslateServiceConfig();
+    this.initializeTranslateServiceConfig();
 
   }
 

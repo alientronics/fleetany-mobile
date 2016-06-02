@@ -5,17 +5,12 @@ import { Platform, Events, MenuController }   from 'ionic-angular';
 import { FleetanyApp } from './app';
 import { UserData } from './providers/user-data';
 import { MockBackend } from 'angular2/http/testing'
+import { TranslateService, TranslateStaticLoader, TranslateLoader } from 'ng2-translate/ng2-translate';
 
 // this needs doing _once_ for the entire test suite, hence it's here
 setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
 
 let fleetanyApp: FleetanyApp = null;
-
-class MockTranslateService {
-  public setDefaultLang(): any { return true; }
-  public use(): any { return true; }
-  private http: any;
-}
 
 describe('FleetanyApp', () => {
 
@@ -25,7 +20,9 @@ describe('FleetanyApp', () => {
     let menu: MenuController = new MenuController();
     let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
     let userData: UserData = new UserData(events, http, platform);
-    fleetanyApp = new FleetanyApp(platform, events, userData, menu, new MockTranslateService() );
+    let translateLoad: TranslateLoader = new TranslateStaticLoader(http, 'assets/i18n', '.json');
+    let translate: TranslateService = new TranslateService(http, translateLoad, null);
+    fleetanyApp = new FleetanyApp(platform, events, userData, menu, translate);
   });
 
   it('initialises with a root page', () => {

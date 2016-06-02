@@ -19,6 +19,7 @@ module.exports = function(config) {
       {pattern: 'www/build/test/test.bundle.js', included: true},
       {pattern: 'www/build/test/test.bundle.js.map', included: false},
       {pattern: 'www/build/**/*.html', included: false},
+      {pattern: 'www/assets/**/*.json', watched: false, included: false, served: true, nocache: false}
     ],
 
     // list of files to exclude
