@@ -18,7 +18,6 @@ before_install:
 install:
   - npm install
   - ionic platform add android
-  - cordova platform add android
   - cordova prepare
   - npm run webdriver-update
 
