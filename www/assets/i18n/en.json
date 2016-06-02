@@ -1,0 +1,61 @@
+{
+    "title" : "fleetany",   
+    "menu": {    
+        "Home": "Home",
+        "Alerts": "Alerts",
+        "FuelTracking": "Fuel Tracking",
+        "GPS": "GPS",
+        "BLE": "BLE",
+        "About": "About",
+        "Logout": "Logout",
+        "Login": "Login"
+    },   
+    "tabs": {    
+        "Alerts": "ALERTS",
+        "Fuel": "FUEL"
+    },    
+    "home": {    
+        "welcome": "Welcome to Fleetany Mobile!",
+        "fleetanyDescription": "Fleetany is a freemiun open source fleet management system.",
+        "selectCar": "Select your car",
+        "PleaseLogin": "Please, log in before use Fleetany",
+        "GoogleLogin": "Log In with Google"
+    },   
+    "alerts": {    
+        "SensorId": "Sensor ID",
+        "Temperature": "Temperature",
+        "Pressure": "Pressure"
+    },   
+    "fuel": {    
+        "Price": "Price",
+        "Amount": "Amount",
+        "Miliage": "Miliage",
+        "Type": "Type",
+        "TankFillUp": "Tank Fill Up",
+        "SendFuel": "Send Fuel"
+    },   
+    "gps": {    
+        "Options": "Options",
+        "GpsTracking": "GPS Tracking",
+        "Latitude": "Latitude",
+        "Longitude": "Longitude",
+        "JsonData": "JsonData"
+    },  
+    "ble": {    
+        "ScanDevices": "Scan devices",
+        "SelectedDevice": "Selected device",
+        "SendData": "Send Data",
+        "SelectDevice": "Select device to pair"
+    },  
+    "about": {    
+        "Faqs": "FAQs",
+        "q1": "How can I add more vehicles?",
+        "r1": "Go to Fleetany Web application to access more features.",
+        "q2": "What is the use of GPS location?",
+        "r2": "You can access your vehicle location at Fleetany Web App.",
+        "q3": "What is the url to Fleetany Web App?",
+        "r3": "http://www.fleetany.com",
+        "q4": "About Fleetany",
+        "r4": "Fleetany is a freemiun open source fleet management system."
+    }
+}

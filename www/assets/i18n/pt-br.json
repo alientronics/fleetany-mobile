@@ -1,0 +1,61 @@
+{
+    "title" : "fleetany",   
+    "menu": {    
+        "Home": "Início",
+        "Alerts": "Alertas",
+        "FuelTracking": "Rastreamento de Combustível",
+        "GPS": "GPS",
+        "BLE": "BLE",
+        "About": "Sobre",
+        "Logout": "Logout",
+        "Login": "Login"
+    },   
+    "tabs": {    
+        "Alerts": "ALERTAS",
+        "Fuel": "COMBUSTÍVEL"
+    },    
+    "home": {    
+        "welcome": "Bem-vindo ao Fleetany Mobile!",
+        "fleetanyDescription": "Fleetany é um sistema de gerenciamento de frotas freemiun open source.",
+        "selectCar": "Selecione seu veículo",
+        "PleaseLogin": "Por favor, faça log in antes de usar o Fleetany",
+        "GoogleLogin": "Log In com Google"
+    },   
+    "alerts": {    
+        "SensorId": "Sensor ID",
+        "Temperature": "Temperatura",
+        "Pressure": "Pressão"
+    },   
+    "fuel": {    
+        "Price": "Custo",
+        "Amount": "Quantidade",
+        "Miliage": "Quilometragem",
+        "Type": "Tipo",
+        "TankFillUp": "Tanque Completo",
+        "SendFuel": "Enviar Combustível"
+    },   
+    "gps": {    
+        "Options": "Opções",
+        "GpsTracking": "Rastreamento por GPS",
+        "Latitude": "Latitude",
+        "Longitude": "Longitude",
+        "JsonData": "JsonData"
+    },  
+    "ble": {    
+        "ScanDevices": "Examinar dispositivos",
+        "SelectedDevice": "Dispositivo selecionado",
+        "SendData": "Enviar dados",
+        "SelectDevice": "Selecione um dispositivo para parear"
+    },  
+    "about": {    
+        "Faqs": "FAQs",
+        "q1": "Como posso adicionar veículos?",
+        "r1": "Vá até a aplicação Fleetany Web para ter acesso a outras funcionalidades.",
+        "q2": "What is the use of GPS location?",
+        "r2": "You can access your vehicle location at Fleetany Web App.",
+        "q3": "What is the url to Fleetany Web App?",
+        "r3": "http://www.fleetany.com",
+        "q4": "About Fleetany",
+        "r4": "Fleetany is a freemiun open source fleet management system."
+    }
+}
