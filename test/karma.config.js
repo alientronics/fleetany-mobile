@@ -54,7 +54,8 @@ module.exports = function(config) {
     // GOTCHA -- Karma proxies _everything_ through base first..
     //           Also any files you want to serve need to be in the files array above with serverd: true
     proxies: {
-      '/build': '/base/www/build'
+      '/build': '/base/www/build',
+      '/assets': '/base/www/assets'
     },
 
     // level of logging

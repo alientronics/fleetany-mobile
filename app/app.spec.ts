@@ -2,15 +2,20 @@ import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS} fr
 import { setBaseTestProviders } from 'angular2/testing';
 import { Http, BaseRequestOptions } from 'angular2/http';
 import { Platform, Events, MenuController }   from 'ionic-angular';
-import { FleetanyApp }           from './app';
+import { FleetanyApp } from './app';
 import { UserData } from './providers/user-data';
 import { MockBackend } from 'angular2/http/testing'
-
 
 // this needs doing _once_ for the entire test suite, hence it's here
 setBaseTestProviders(TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS);
 
 let fleetanyApp: FleetanyApp = null;
+
+class MockTranslateService {
+  public setDefaultLang(): any { return true; }
+  public use(): any { return true; }
+  private http: any;
+}
 
 describe('FleetanyApp', () => {
 
@@ -20,7 +25,7 @@ describe('FleetanyApp', () => {
     let menu: MenuController = new MenuController();
     let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
     let userData: UserData = new UserData(events, http, platform);
-    fleetanyApp = new FleetanyApp(platform, events, userData, menu);
+    fleetanyApp = new FleetanyApp(platform, events, userData, menu, new MockTranslateService() );
   });
 
   it('initialises with a root page', () => {

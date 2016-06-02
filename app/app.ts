@@ -1,15 +1,15 @@
 'use strict';
 
-import {ViewChild} from 'angular2/core';
 import {App, Platform, Events, Nav, MenuController} from 'ionic-angular';
-//import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {TabsPage} from './pages/tabs/tabs';
 import {UserData} from './providers/user-data';
-import {Type} from 'angular2/core';
 import {About} from './pages/about/about';
 import {Gps} from './pages/gps/gps';
 import {Bluetooth} from './pages/bluetooth/bluetooth';
 import {Login} from './pages/login/login';
+import {provide, ViewChild, Type} from 'angular2/core';
+import {Http} from 'angular2/http';
+import {TranslateService, TranslateStaticLoader, TranslateLoader} from 'ng2-translate/ng2-translate';
 
 interface PageObj {
   title: string;
@@ -21,8 +21,14 @@ interface PageObj {
 @App({
   templateUrl: 'build/app.html',
   config: {},
-  providers: [UserData]// providers: [UserData, TranslateService],
-  //pipes: [TranslatePipe]
+  providers: [
+    UserData,
+    provide(TranslateLoader, {
+      useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18n', '.json'),
+      deps: [Http]
+    }),
+    TranslateService
+  ]
 })
 export class FleetanyApp {
 
@@ -52,7 +58,8 @@ export class FleetanyApp {
   constructor(platform: Platform, 
     private events: Events,
     private userData: UserData,
-    private menu: MenuController
+    private menu: MenuController,
+    private translate: TranslateService
   ) {
 
     this.rootPage = Login;
@@ -124,12 +131,8 @@ export class FleetanyApp {
     this.menu.enable(loggedIn, 'loggedInMenu');
     this.menu.enable(!loggedIn, 'loggedOutMenu');
   }  
-/*
+
   initializeTranslateServiceConfig() {
-    var prefix = 'assets/i18n/';
-    var suffix = '.json';
-    this.translate.useStaticFilesLoader(prefix, suffix);
-   
     var userLang = navigator.language.split('-')[0];
     userLang = /(en|pt-br)/gi.test(userLang) ? userLang : 'en';
    
@@ -137,5 +140,5 @@ export class FleetanyApp {
    
     this.translate.use(userLang);
   }
-*/
+
 }
