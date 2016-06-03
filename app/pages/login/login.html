@@ -4,7 +4,7 @@
     <ion-icon name="menu"></ion-icon>
   </button>
 
-  <ion-title>fleetany</ion-title>
+  <ion-title>{{ "title" | translate }}</ion-title>
 
 </ion-navbar>
 
@@ -12,15 +12,15 @@
 
   <ion-card>
     <ion-card-header>
-      Welcome to Fleetany Mobile!
+      {{ "home.welcome" | translate }}
     </ion-card-header>
     <ion-card-content>
-      Fleetany is a freemiun open source fleet management system.
+      {{ "home.fleetanyDescription" | translate }}
     </ion-card-content>
   </ion-card>
 
-  <p [hidden]="loggedIn">Please, log in before use Fleetany</p>
-  <button primary block (click)="googleLogin()" [hidden]="loggedIn">Log In with Google</button>
+  <p [hidden]="loggedIn">{{ "home.PleaseLogin" | translate }}</p>
+  <button primary block (click)="googleLogin()" [hidden]="loggedIn">{{ "home.GoogleLogin" | translate }}</button>
 
   <div [hidden]="!loggedIn">
     <img [src]="userImage" class="image"/>
@@ -28,7 +28,7 @@
   </div>
 
   <ion-list [disabled]="gpstracking" [(ngModel)]="plate" (ngModelChange)="plateChange($event)" radio-group [hidden]="!loggedIn">
-      <ion-list-header>Select your car</ion-list-header>
+      <ion-list-header>{{ "home.selectCar" | translate }}</ion-list-header>
 
       <ion-item *ngFor="#vehicle of vehicles" value="{{vehicle.key}}">
         <ion-label>{{vehicle.value}}</ion-label>

@@ -7,6 +7,8 @@ import { MockBackend } from 'angular2/http/testing'
 
 let fuel: Fuel = null;
 
+class MockClass {}
+
 function postApiSuccessStub(options: any): any {
   'use strict';
 
@@ -37,12 +39,13 @@ function showToastStub(message: string, title: string, nav: NavController): any 
 describe('Fuel', () => {
 
   beforeEach(() => {     
+    let mockClass: any = (<any>new MockClass());
     let events: Events = new Events();
     let platform: Platform = new Platform();
     let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
     let userData: UserData = new UserData(events, http, platform);
     spyOn(userData, 'showToast').and.callFake(showToastStub);
-    fuel = new Fuel(new FormBuilder(), userData, null);
+    fuel = new Fuel(new FormBuilder(), userData, null, mockClass);
     let fb = new FormBuilder();
     fuel.fuelForm = fb.group({
         'type':     ['', ],

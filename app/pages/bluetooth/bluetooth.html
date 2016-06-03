@@ -6,7 +6,7 @@
   </button>
 
   <ion-title>
-    fleetany
+    {{ "title" | translate }}
   </ion-title>
 </ion-navbar>
 
@@ -14,14 +14,14 @@
 
   <ion-list>
     <ion-item>
-      <ion-label>Scan devices</ion-label>
+      <ion-label>{{ "ble.ScanDevices" | translate }}</ion-label>
       <ion-toggle [(ngModel)]="blescan" (ngModelChange)="bleToggle($event)"></ion-toggle>
     </ion-item>
   </ion-list>
 
   <ion-list radio-group [hidden]="!blescan" [(ngModel)]="bledevice" (ngModelChange)="bledeviceChanged($event)">
     <ion-list-header>
-      Select device to pair
+      {{ "ble.SelectDevice" | translate }}
     </ion-list-header>
 
     <ion-item *ngFor="#device of devices">
@@ -33,11 +33,11 @@
 
   <ion-list [hidden]="!bledevice || blescan">
     <ion-list-header>
-      Selected device
+      {{ "ble.SelectedDevice" | translate }}
     </ion-list-header>
     <ion-item>{{bledevice}}</ion-item>
     <ion-item>
-      <button primary block (click)="sendData()">Send Data</button>
+      <button primary block (click)="sendData()">{{ "ble.SendData" | translate }}</button>
     </ion-item>
   </ion-list>
 

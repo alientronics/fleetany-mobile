@@ -68,7 +68,7 @@ describe('Gps', () => {
     spyOn(userData, 'getBluetoothData').and.callFake(getBluetoothDataStub); 
     spyOn(Geolocation, 'watchPosition').and.callFake(watchPositionStub); 
     spyOn(mockClass, 'getComponent').and.returnValue({ tabBadge: 0});
-    gps = new Gps(mockClass, userData, platform, events, http, mockClass);
+    gps = new Gps(mockClass, userData, platform, events, http, mockClass, mockClass);
   });
 
   it('initialises', () => {

@@ -1,12 +1,14 @@
 'use strict';
 
 import {Page, Platform, Events, NavController} from 'ionic-angular';
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {UserData} from '../../providers/user-data';
 import {BLE, BluetoothSerial} from 'ionic-native';
 import {Observable} from "rxjs/Observable";
 
 @Page({
-  templateUrl: 'build/pages/bluetooth/bluetooth.html'
+  templateUrl: 'build/pages/bluetooth/bluetooth.html',
+  pipes: [TranslatePipe]
 })
 export class Bluetooth {
 
@@ -21,7 +23,8 @@ export class Bluetooth {
   public watcher: any;
   private counter: number;
 
-  constructor(userData: UserData, platform: Platform, events: Events, public nav: NavController) {
+  constructor(userData: UserData, platform: Platform, events: Events, public nav: NavController, private translate: TranslateService) {
+    this.translate = translate;
     this.userData = userData;
     this.events = events;
     this.platform = platform;

@@ -1,12 +1,14 @@
 'use strict';
 
 import {Page, IonicApp, Platform, Alert, Events, NavController} from 'ionic-angular';
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Http} from 'angular2/http';
 import {UserData} from '../../providers/user-data';
 import {Geolocation, Toast} from 'ionic-native';
 
 @Page({
-  templateUrl: 'build/pages/gps/gps.html'
+  templateUrl: 'build/pages/gps/gps.html',
+  pipes: [TranslatePipe]
 })
 export class Gps {
 
@@ -22,7 +24,8 @@ export class Gps {
   private http: Http;
   private jsondata: any;
 
-  constructor(app: IonicApp, userData: UserData, platform: Platform, events: Events, http: Http, public nav: NavController) {
+  constructor(app: IonicApp, userData: UserData, platform: Platform, events: Events, http: Http, public nav: NavController, private translate: TranslateService) {
+    this.translate = translate;
     this.app = app;
     this.userData = userData;
     this.events = events;

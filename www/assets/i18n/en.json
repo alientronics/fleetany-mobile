@@ -8,7 +8,10 @@
         "BLE": "BLE",
         "About": "About",
         "Logout": "Logout",
-        "Login": "Login"
+        "Login": "Login",
+        "Menu": "Menu",
+        "Navigate": "Navigate",
+        "Account": "Account"
     },   
     "tabs": {    
         "Alerts": "ALERTS",
@@ -32,7 +35,8 @@
         "Miliage": "Miliage",
         "Type": "Type",
         "TankFillUp": "Tank Fill Up",
-        "SendFuel": "Send Fuel"
+        "SendFuel": "Send Fuel",
+		"Vehicle": "Vehicle"
     },   
     "gps": {    
         "Options": "Options",
@@ -57,5 +61,12 @@
         "r3": "http://www.fleetany.com",
         "q4": "About Fleetany",
         "r4": "Fleetany is a freemiun open source fleet management system."
+    },  
+    "validate": {    
+        "Numeric": "should be numeric",
+        "Selected": "should be selected"
+    },  
+    "general": {    
+        "close": "close"
     }
 }

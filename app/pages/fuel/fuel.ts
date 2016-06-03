@@ -1,12 +1,14 @@
 'use strict';
 
 import {Page, Alert, NavController} from 'ionic-angular';
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {UserData} from '../../providers/user-data';
 import {Toast} from 'ionic-native';
 import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl } from 'angular2/common';
 
 @Page({
   templateUrl: 'build/pages/fuel/fuel.html',
+  pipes: [TranslatePipe],
   directives: [FORM_DIRECTIVES]
 })
 export class Fuel {
@@ -22,7 +24,8 @@ export class Fuel {
   private vehiclefailed: boolean;
   private types: Array<any>;
 
-  constructor(fb: FormBuilder, userData: UserData, public nav: NavController) {
+  constructor(fb: FormBuilder, userData: UserData, public nav: NavController, private translate: TranslateService) {
+    this.translate = translate;
     this.userData = userData;
   	this.fuelsent = false;
   	this.vehiclefailed = false;

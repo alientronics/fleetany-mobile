@@ -6,7 +6,7 @@
   </button>
 
   <ion-title>
-    fleetany
+    {{ "title" | translate }}
   </ion-title>
 </ion-navbar>
 
@@ -16,28 +16,28 @@
     <ion-list>
 
       <ion-item>
-        <ion-label>Price</ion-label>
+        <ion-label>{{ "fuel.Price" | translate }}</ion-label>
         <ion-input type="number" [(ngFormControl)]="price"></ion-input>
       </ion-item>
       <div *ngIf="price.hasError('required') && price.touched && false" 
-          class="error">* Price should be numeric!</div>
+          class="error">* {{ "fuel.Price" | translate }} {{ "validate.Numeric" | translate }}!</div>
 
       <ion-item>
-        <ion-label>Amount</ion-label>
+        <ion-label>{{ "fuel.Amount" | translate }}</ion-label>
         <ion-input type="number" [(ngFormControl)]="amount"></ion-input>
       </ion-item>
       <div *ngIf="amount.hasError('required') && amount.touched && false" 
-          class="error">* Amount should be numeric!</div>
+          class="error">* {{ "fuel.Amount" | translate }} {{ "validate.Numeric" | translate }}!</div>
 
       <ion-item>
-        <ion-label>Miliage</ion-label>
+        <ion-label>{{ "fuel.Miliage" | translate }}</ion-label>
         <ion-input type="number" [(ngFormControl)]="miliage"></ion-input>
       </ion-item>
       <div *ngIf="miliage.hasError('required') && miliage.touched && false" 
-          class="error">* Miliage should be numeric!</div>
+          class="error">* {{ "fuel.Miliage" | translate }} {{ "validate.Numeric" | translate }}!</div>
 
       <ion-item>
-        <ion-label>Type</ion-label>
+        <ion-label>{{ "fuel.Type" | translate }}</ion-label>
         <ion-select [(ngFormControl)]="type">
           <ion-option *ngFor="#type of types" value="{{type.key}}">
             {{type.value}}
@@ -46,14 +46,14 @@
       </ion-item>
 
       <ion-item>
-        <ion-label>Tank Fill Up</ion-label>
+        <ion-label>{{ "fuel.TankFillUp" | translate }}</ion-label>
         <ion-toggle [(ngFormControl)]="tankfill" checked="true"></ion-toggle>
       </ion-item>
 
     </ion-list>
     
     <div padding>
-      <button type="submit" primary block [disabled]="!fuelForm.valid" (click)="onSubmit(fuelForm.value)">Send Fuel</button>
+      <button type="submit" primary block [disabled]="!fuelForm.valid" (click)="onSubmit(fuelForm.value)">{{ "fuel.SendFuel" | translate }}</button>
     </div>
   </form>
 
@@ -65,10 +65,10 @@
 
     <ion-card-content>
       <ion-item>
-        Vehicle should be selected!
+        {{ "fuel.Vehicle" | translate }} {{ "validate.Selected" | translate }}!
         <button outline item-right (click)="closeAlert()">
           <ion-icon name='close'></ion-icon>
-          close
+          {{ "general.close" | translate }}
         </button>
       </ion-item>
     </ion-card-content>

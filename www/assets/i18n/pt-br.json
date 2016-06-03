@@ -3,12 +3,15 @@
     "menu": {    
         "Home": "Início",
         "Alerts": "Alertas",
-        "FuelTracking": "Rastreamento de Combustível",
+        "FuelTracking": "Combustível",
         "GPS": "GPS",
         "BLE": "BLE",
         "About": "Sobre",
         "Logout": "Logout",
-        "Login": "Login"
+        "Login": "Login",
+        "Menu": "Menu",
+        "Navigate": "Navegação",
+        "Account": "Conta"
     },   
     "tabs": {    
         "Alerts": "ALERTAS",
@@ -32,7 +35,8 @@
         "Miliage": "Quilometragem",
         "Type": "Tipo",
         "TankFillUp": "Tanque Completo",
-        "SendFuel": "Enviar Combustível"
+        "SendFuel": "Enviar Combustível",
+		"Vehicle": "Veículo"
     },   
     "gps": {    
         "Options": "Opções",
@@ -57,5 +61,12 @@
         "r3": "http://www.fleetany.com",
         "q4": "Sobre Fleetany",
         "r4": "Fleetany é um sistema de gerenciamento de frotas freemiun open source."
+    },  
+    "validate": {    
+        "Numeric": "deve ser um valor numérico",
+        "Selected": "deve ser selecionado"
+    },  
+    "general": {    
+        "close": "fechar"
     }
 }

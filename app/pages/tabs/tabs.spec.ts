@@ -15,11 +15,12 @@ function createStub(options: any): any {
 describe('TabsPage', () => {
 
   beforeEach(() => {     
+    let mockClass: any = (<any>new MockClass());
     let platform = new Platform();
     let nav:any = new MockClass();
     let navParams:any = new NavParams();
     spyOn(nav, 'present').and.callFake(createStub);
-    tabs = new TabsPage(platform, nav, navParams);
+    tabs = new TabsPage(platform, nav, navParams, mockClass);
   });
 
   it('initialises', () => {

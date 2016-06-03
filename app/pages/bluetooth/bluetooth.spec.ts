@@ -76,7 +76,7 @@ describe('Bluetooth', () => {
     let userData: UserData = new UserData(events, http, platform);
     spyOn(userData, 'showToast').and.callFake(showToastStub);
     spyOn(events, 'publish').and.callFake(publishStub);
-    bluetooth = new Bluetooth(userData, platform, events, mockClass);
+    bluetooth = new Bluetooth(userData, platform, events, mockClass, mockClass);
   });
 
   it('initialises', () => {

@@ -4,7 +4,7 @@
     <ion-icon name="menu"></ion-icon>
   </button>
 
-  <ion-title>fleetany</ion-title>
+  <ion-title>{{ "title" | translate }}</ion-title>
 
 </ion-navbar>
 
@@ -12,11 +12,11 @@
 
     <ion-card *ngFor="#alert of alerts">
       <ion-card-header>
-        Sensor ID: {{alert.sensorName}}
+        {{ "alerts.SensorId" | translate }}: {{alert.sensorName}}
       </ion-card-header>
       <ion-card-content class="alert-card">
-        Temperature: {{alert.temperature}} <br>
-        Pressure: {{alert.pressure}}
+        {{ "alerts.Temperature" | translate }}: {{alert.temperature}} <br>
+        {{ "alerts.Pressure" | translate }}: {{alert.pressure}}
       </ion-card-content>
     </ion-card>
 

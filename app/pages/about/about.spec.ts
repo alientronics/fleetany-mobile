@@ -2,10 +2,13 @@ import { About } from './about';
 
 let about: About = null;
 
+class MockClass {}
+
 describe('About', () => {
 
 beforeEach(() => {      
-  about = new About();
+  let mockClass: any = (<any>new MockClass());
+  about = new About(mockClass);
 });
 
 it('initialises', () => {

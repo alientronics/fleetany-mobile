@@ -6,14 +6,17 @@ import { MockBackend } from 'angular2/http/testing'
 
 let login: Login = null;
 
+class MockClass {}
+
 describe('Login', () => {
 
   beforeEach(() => {
+    let mockClass: any = (<any>new MockClass());
     let events: Events = new Events();
     let platform: Platform = new Platform();
     let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
     let userData: UserData = new UserData(events, http, platform);
-    login = new Login(null, userData, events, platform);
+    login = new Login(null, userData, events, platform, mockClass);
 
     // Mock Google Plus Plugin
     let googleplus = jasmine.createSpyObj('googleplus', ['isAvailable', 'login', 'logout']);

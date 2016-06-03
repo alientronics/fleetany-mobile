@@ -1,11 +1,13 @@
 'use strict';
 
 import {Page, Platform, NavController, Alert, NavParams} from 'ionic-angular';
+import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Alerts} from '../alerts/alerts';
 import {Fuel} from '../fuel/fuel';
 
 @Page({
-  templateUrl: 'build/pages/tabs/tabs.html'
+  templateUrl: 'build/pages/tabs/tabs.html',
+  pipes: [TranslatePipe]
 })
 export class TabsPage {
 
@@ -16,7 +18,8 @@ export class TabsPage {
   mySelectedIndex: number;
 
 
-  constructor(platform: Platform, nav: NavController, navParams: NavParams) {
+  constructor(platform: Platform, nav: NavController, navParams: NavParams, private translate: TranslateService) {
+    this.translate = translate;
     // this tells the tabs component which Pages
     // should be each tab's root Page
     this.tab1Root = Alerts;

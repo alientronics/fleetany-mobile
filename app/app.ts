@@ -9,7 +9,7 @@ import {Bluetooth} from './pages/bluetooth/bluetooth';
 import {Login} from './pages/login/login';
 import {provide, ViewChild, Type} from 'angular2/core';
 import {Http} from 'angular2/http';
-import {TranslateService, TranslateStaticLoader, TranslateLoader} from 'ng2-translate/ng2-translate';
+import {TranslateService, TranslateStaticLoader, TranslateLoader, TranslatePipe} from 'ng2-translate/ng2-translate';
 
 interface PageObj {
   title: string;
@@ -20,6 +20,7 @@ interface PageObj {
 
 @App({
   templateUrl: 'build/app.html',
+  pipes: [TranslatePipe],
   config: {},
   providers: [
     UserData,
@@ -38,21 +39,21 @@ export class FleetanyApp {
   private platform: Platform;
 
   appLoggedInPages: PageObj[] = [
-    { title: 'Home', component: Login, icon: 'home' },
-    { title: 'Alerts', component: TabsPage, icon: 'alert' },
-    { title: 'Fuel Tracking', component: TabsPage, index: 1, icon: 'color-fill' },
-    { title: 'GPS', component: Gps, icon: 'compass' },
-    { title: 'BLE', component: Bluetooth, icon: 'bluetooth' },
-    { title: 'About', component: About, icon: 'information-circle' },
+    { title: 'menu.Home', component: Login, icon: 'home' },
+    { title: 'menu.Alerts', component: TabsPage, icon: 'alert' },
+    { title: 'menu.FuelTracking', component: TabsPage, index: 1, icon: 'color-fill' },
+    { title: 'menu.GPS', component: Gps, icon: 'compass' },
+    { title: 'menu.BLE', component: Bluetooth, icon: 'bluetooth' },
+    { title: 'menu.About', component: About, icon: 'information-circle' },
   ];
   appLoggedOutPages: PageObj[] = [
-    { title: 'About', component: About, icon: 'information-circle' },
+    { title: 'menu.About', component: About, icon: 'information-circle' },
   ];
   loggedInPages: PageObj[] = [
-    { title: 'Logout', component: Login, icon: 'log-out' }
+    { title: 'menu.Logout', component: Login, icon: 'log-out' }
   ];
   loggedOutPages: PageObj[] = [
-    { title: 'Login', component: Login, icon: 'log-in' }
+    { title: 'menu.Login', component: Login, icon: 'log-in' }
   ];
 
   constructor(platform: Platform, 
@@ -62,6 +63,7 @@ export class FleetanyApp {
     private translate: TranslateService
   ) {
 
+    this.translate = translate;
     this.rootPage = Login;
     this.platform = platform;
 
@@ -104,7 +106,7 @@ export class FleetanyApp {
       this.nav.setRoot(page.component);
     }
 
-    if (page.title === 'Logout') {
+    if (page.title === 'menu.Logout') {
       // Give the menu time to close before changing to logged out
       setTimeout(() => {
         this.userData.logout();
