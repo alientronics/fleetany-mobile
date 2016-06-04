@@ -118,9 +118,7 @@ export class FleetanyApp {
     this.events.subscribe('user:login', () => {
       this.enableMenu(true);
       if (this.nav) {
-        this.nav.push(TabsPage).then( () => { //force page reload
-          this.nav.popToRoot();
-        });
+        this.nav.setRoot(Login);
       }
     });
 
