@@ -47,6 +47,17 @@ export class UserData {
         Globalization.getPreferredLanguage().then((language) => {
             this.userLang = language.value;
         });
+
+        window.geofence.initialize().then(function () {
+            console.log("Successful initialization");
+        });
+
+        window.geofence.onTransitionReceived = function (geofences) {
+            geofences.forEach(function (geo) {
+                console.log('Geofence transition detected', geo);
+            });
+        };
+
       } else {
         this.userLang = 'en';
       }
@@ -163,6 +174,24 @@ export class UserData {
   setPlate(plate) {
     this.storage.set(this.PLATE, plate);
     this.plate = plate;
+    
+    if (this.platform.is('mobile')) {
+      window.geofence.removeAll().then(() => { 
+        console.log('All geofences successfully removed.');
+      });
+
+      this.getVehicles().then((vehicles) => {
+        vehicles.forEach(function(value, index) {
+          if(value.key == plate) {
+            window.geofence.addOrUpdate(JSON.parse(value.geofence)).then(function () {
+                console.log('Geofence successfully added');
+            }, function (reason) {
+                console.log('Adding geofence failed', reason);
+            });
+          }
+        });
+      });
+    }
   }
 
   getPlate() {
@@ -218,9 +247,9 @@ export class UserData {
       let vehicles = [];
       
       for (var i = 0; i < dataP.vehicles.length; i = i + 1) {
-      vehicles.push({ "key": dataP.vehicles[i].id, "value": dataP.vehicles[i].number });
-    }
-    
+        vehicles.push({ "key": dataP.vehicles[i].id, "value": dataP.vehicles[i].number , "geofence": dataP.vehicles[i].geofence });
+      }
+
       return vehicles.sort();
     });
   }
@@ -270,7 +299,7 @@ export class UserData {
   }
 
 
-   checkConnection() {
+  checkConnection() {
     if (this.platform.is('mobile') && Network.connection === Connection.NONE) {
       return false;
     } else {
