@@ -183,11 +183,14 @@ export class UserData {
       this.getVehicles().then((vehicles) => {
         vehicles.forEach(function(value, index) {
           if(value.key == plate) {
-            window.geofence.addOrUpdate(JSON.parse(value.geofence)).then(function () {
+            let geofence = JSON.parse(value.geofence);
+            if(geofence.latitude != undefined) {
+              window.geofence.addOrUpdate(geofence).then(function () {
                 console.log('Geofence successfully added');
-            }, function (reason) {
-                console.log('Adding geofence failed', reason);
-            });
+              }, function (reason) {
+                  console.log('Adding geofence failed', reason);
+              });
+            }
           }
         });
       });
