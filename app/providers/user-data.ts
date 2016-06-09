@@ -185,6 +185,7 @@ export class UserData {
           if(value.key == plate) {
             let geofence = JSON.parse(value.geofence);
             if(geofence.latitude != undefined) {
+              geofence.id = plate;
               window.geofence.addOrUpdate(geofence).then(function () {
                 console.log('Geofence successfully added');
               }, function (reason) {
