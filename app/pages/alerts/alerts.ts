@@ -1,7 +1,8 @@
 'use strict';
 
-import {Page} from 'ionic-angular';
+import {Page, Events} from 'ionic-angular';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {UserData} from '../../providers/user-data';
 
 @Page({
   templateUrl: 'build/pages/alerts/alerts.html',
@@ -11,18 +12,34 @@ import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 export class Alerts {
 
   public alerts: Array<any>;
+  private userData: UserData;
+  private events: Events;
 
-  constructor(private translate: TranslateService) {
+  constructor(private translate: TranslateService, userData: UserData, events: Events) {
+
     this.translate = translate;
-    var alerts = [
-      {sensorName: 'Sensor 1', temperature: '100', pressure: '80'},
-      {sensorName: 'Sensor 2', temperature: '101', pressure: '82'},
-      {sensorName: 'Sensor 3', temperature: '102', pressure: '83'}
-    ]; 
+    this.userData = userData;
+    this.events = events;
 
-    if (alerts.length > 0) {
-      this.alerts = alerts;
-    }
+    this.userData.getAlertsData().then((alerts) => { 
+      alerts = JSON.parse(alerts);  
+      if (alerts.length > 0) {
+        this.alerts = alerts;
+      } 
+    });
+
+    this.listenToAlertsEvents();
+  }
+
+  listenToAlertsEvents() {
+    this.events.subscribe('alerts:vehicleout', () => {
+      this.userData.getAlertsData().then((alerts) => { 
+        alerts = JSON.parse(alerts);  
+        if (alerts.length > 0) {
+          this.alerts = alerts;
+        } 
+      });
+    });
   }
 
 }

@@ -19,6 +19,7 @@ export class UserData {
   private RAW_DATA: string;
   private BLUETOOTH_DATA: string;
   private GPS_DATA: string;
+  private ALERTS_DATA: string;
   public data: any;
   public email: string;
   public userLang: string;
@@ -40,6 +41,7 @@ export class UserData {
     this.RAW_DATA = 'rawdata';
     this.BLUETOOTH_DATA = 'bluetoothdata';
     this.GPS_DATA = 'gpsdata';
+    this.ALERTS_DATA = 'alertsdata';
     this.lastPosition = {"latitude": null, "longitude": null};
 
     platform.ready().then(() => {
@@ -54,7 +56,8 @@ export class UserData {
 
         window.geofence.onTransitionReceived = function (geofences) {
             geofences.forEach(function (geo) {
-                console.log('Geofence transition detected', geo);
+                this.setAlertsData();
+                this.events.publish('alerts:vehicleout');
             });
         };
 
@@ -70,6 +73,7 @@ export class UserData {
     this.email = userObjet.email;
     this.events.publish('user:login');
     this.load();
+    this.setAlertsData();
   }
 
   logout() {
@@ -153,6 +157,25 @@ export class UserData {
     this.setPostData(data, this.GPS_DATA, 'gps');
   }
 
+  setAlertsData() {
+    var alerts = [
+      {sensorName: 'Sensor 1', temperature: '100', pressure: '80'},
+      {sensorName: 'Sensor 2', temperature: '101', pressure: '82'},
+      {sensorName: 'Sensor 3', temperature: '102', pressure: '83'}
+    ]; 
+
+    if (alerts.length > 0) {
+      if(this.ALERTS_DATA == '' || this.ALERTS_DATA == 'alertsdata') {
+        this.ALERTS_DATA = JSON.stringify(alerts);
+        this.storage.set(this.ALERTS_DATA, JSON.stringify(alerts));
+      } else {
+        let alerts_data = JSON.parse(this.ALERTS_DATA);
+        this.ALERTS_DATA = JSON.stringify(alerts_data.concat(alerts));
+        this.storage.set(this.ALERTS_DATA, JSON.stringify(alerts_data.concat(alerts)));
+      }
+    }
+  }
+
   getPostData(storage) {
     return this.storage.get(storage).then((value) => {
       return value;
@@ -167,6 +190,12 @@ export class UserData {
 
   getGpsData() {
     return this.storage.get(this.GPS_DATA).then((value) => {
+      return value;
+    });
+  }
+
+  getAlertsData() {
+    return this.storage.get(this.ALERTS_DATA).then((value) => {
       return value;
     });
   }
