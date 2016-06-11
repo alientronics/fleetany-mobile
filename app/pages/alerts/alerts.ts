@@ -2,7 +2,7 @@
 
 import {Page, Events} from 'ionic-angular';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
-import {UserData} from '../../providers/user-data';
+import {AlertsProvider} from '../../providers/alerts';
 
 @Page({
   templateUrl: 'build/pages/alerts/alerts.html',
@@ -12,16 +12,16 @@ import {UserData} from '../../providers/user-data';
 export class Alerts {
 
   public alerts: Array<any>;
-  private userData: UserData;
+  private alertsProvider: AlertsProvider;
   private events: Events;
 
-  constructor(private translate: TranslateService, userData: UserData, events: Events) {
+  constructor(private translate: TranslateService, alertsProvider: AlertsProvider, events: Events) {
 
     this.translate = translate;
-    this.userData = userData;
+    this.alertsProvider = alertsProvider;
     this.events = events;
 
-    this.userData.getAlertsData().then((alerts) => { 
+    this.alertsProvider.getAlertsData().then((alerts) => { 
       alerts = JSON.parse(alerts);  
       if (alerts.length > 0) {
         this.alerts = alerts;
@@ -32,8 +32,8 @@ export class Alerts {
   }
 
   listenToAlertsEvents() {
-    this.events.subscribe('alerts:vehicleout', () => {
-      this.userData.getAlertsData().then((alerts) => { 
+    this.events.subscribe('alerts:refresh', () => {
+      this.alertsProvider.getAlertsData().then((alerts) => { 
         alerts = JSON.parse(alerts);  
         if (alerts.length > 0) {
           this.alerts = alerts;

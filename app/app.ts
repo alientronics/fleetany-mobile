@@ -3,6 +3,8 @@
 import {App, Platform, Events, Nav, MenuController} from 'ionic-angular';
 import {TabsPage} from './pages/tabs/tabs';
 import {UserData} from './providers/user-data';
+import {GeofenceProvider} from './providers/geofence';
+import {AlertsProvider} from './providers/alerts';
 import {About} from './pages/about/about';
 import {Gps} from './pages/gps/gps';
 import {Bluetooth} from './pages/bluetooth/bluetooth';
@@ -24,6 +26,8 @@ interface PageObj {
   config: {},
   providers: [
     UserData,
+    GeofenceProvider,
+    AlertsProvider,
     provide(TranslateLoader, {
       useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18n', '.json'),
       deps: [Http]
@@ -59,6 +63,8 @@ export class FleetanyApp {
   constructor(platform: Platform, 
     private events: Events,
     private userData: UserData,
+    private geofenceProvider: GeofenceProvider,
+    private alertsProvider: AlertsProvider,
     private menu: MenuController,
     private translate: TranslateService
   ) {
@@ -92,6 +98,7 @@ export class FleetanyApp {
 
     this.listenToLoginEvents();
     this.initializeTranslateServiceConfig();
+    this.alertsProvider.setAlertsData([]);
 
   }
 
