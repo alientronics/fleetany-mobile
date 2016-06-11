@@ -71,8 +71,11 @@ export class GpsProvider {
           obj.gpstracking = false;
           let gpsCurrentData = JSON.stringify(obj);
           this.storage.set(this.GPS_CURRENT_DATA, gpsCurrentData);
-          this.watcher.unsubscribe();
-          this.watcher = null;
+
+          if(this.watcher != undefined) {
+            this.watcher.unsubscribe();
+            this.watcher = null;  
+          }
           this.events.publish('gps:off');
         } catch (e) {
           alert('Error unsubscribe: ' + e.statusText);
