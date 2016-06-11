@@ -18,7 +18,6 @@ export class UserData {
   private PLATE: string;
   private RAW_DATA: string;
   private BLUETOOTH_DATA: string;
-  private GPS_DATA: string;
   public data: any;
   public email: string;
   public userLang: string;
@@ -39,7 +38,6 @@ export class UserData {
     this.PLATE = 'plate';
     this.RAW_DATA = 'rawdata';
     this.BLUETOOTH_DATA = 'bluetoothdata';
-    this.GPS_DATA = 'gpsdata';
     this.lastPosition = {"latitude": null, "longitude": null};
 
     platform.ready().then(() => {
@@ -67,7 +65,6 @@ export class UserData {
     this.storage.remove(this.PLATE);
     this.storage.remove(this.RAW_DATA);
     this.storage.remove(this.BLUETOOTH_DATA);
-    this.storage.remove(this.GPS_DATA);
     this.data = null;
     this.events.publish('user:logout');
   }
@@ -138,10 +135,6 @@ export class UserData {
     this.setPostData(data, this.BLUETOOTH_DATA, 'tiresensor');
   }
 
-  setGpsData(data) {
-    this.setPostData(data, this.GPS_DATA, 'gps');
-  }
-
   getPostData(storage) {
     return this.storage.get(storage).then((value) => {
       return value;
@@ -150,12 +143,6 @@ export class UserData {
 
   getBluetoothData() {
     return this.storage.get(this.BLUETOOTH_DATA).then((value) => {
-      return value;
-    });
-  }
-
-  getGpsData() {
-    return this.storage.get(this.GPS_DATA).then((value) => {
       return value;
     });
   }

@@ -5,6 +5,7 @@ import {TabsPage} from './pages/tabs/tabs';
 import {UserData} from './providers/user-data';
 import {GeofenceProvider} from './providers/geofence';
 import {AlertsProvider} from './providers/alerts';
+import {GpsProvider} from './providers/gps';
 import {About} from './pages/about/about';
 import {Gps} from './pages/gps/gps';
 import {Bluetooth} from './pages/bluetooth/bluetooth';
@@ -28,6 +29,7 @@ interface PageObj {
     UserData,
     GeofenceProvider,
     AlertsProvider,
+    GpsProvider,
     provide(TranslateLoader, {
       useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18n', '.json'),
       deps: [Http]

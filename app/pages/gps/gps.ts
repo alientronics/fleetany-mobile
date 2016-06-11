@@ -4,6 +4,7 @@ import {Page, IonicApp, Platform, Alert, Events, NavController} from 'ionic-angu
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Http} from 'angular2/http';
 import {UserData} from '../../providers/user-data';
+import {GpsProvider} from '../../providers/gps';
 import {Geolocation, Toast} from 'ionic-native';
 
 @Page({
@@ -19,83 +20,53 @@ export class Gps {
   public watcher: any;
   private app: IonicApp;
   private userData: UserData;
+  private gpsProvider: GpsProvider;
   private platform: Platform;
   private bgGeo: any;
   private http: Http;
-  private jsondata: any;
 
-  constructor(app: IonicApp, userData: UserData, platform: Platform, events: Events, http: Http, public nav: NavController, private translate: TranslateService) {
+  constructor(app: IonicApp, userData: UserData, gpsProvider: GpsProvider, platform: Platform, events: Events, http: Http, public nav: NavController, private translate: TranslateService) {
     this.translate = translate;
     this.app = app;
     this.userData = userData;
+    this.gpsProvider = gpsProvider;
     this.events = events;
     this.http = http;
     this.platform = platform;
-    //if (this.platform.is('mobile')) {
-      //this.bgGeo = window.plugins.backgroundGeoLocation;
-    //}
+    this.latitude = null;
+    this.longitude = null;
 
+    this.setDisplayData();
+    this.listenToGpsEvents();
   }
 
   gpsToggle(value) {
-    if (this.userData.plate == null) {
-      this.userData.showToast('Vehicle should be selected!', 'Error!', this.nav);
-    } else {
-    	if (value) {
-        this.events.publish('gps:on');
-	    } else {
-        this.events.publish('gps:off');
-	      this.latitude = null;
-	      this.longitude = null;
-      }
-
-	    if (this.platform.is('mobile')) {
-	      this.gpsToggleBrowser(value);
-	    } else {
-	      this.gpsToggleBrowser(value);
-	    }
-    }
+    this.gpsProvider.gpsToggle(value);
   }
 
-  gpsToggleBrowser(value) {
-    if (value) {
+  setDisplayData() {
+    this.gpsProvider.getGpsCurrentData().then((data) => { 
+      data = JSON.parse(data);  
 
-      let options = { maximumAge:100, timeout:Infinity, enableHighAccuracy:false};
-      
-      this.watcher = Geolocation.watchPosition(options).subscribe((data) => {
-        
-        var obj: any = new Object();
-        obj.accuracy = data.coords.accuracy;
-        obj.altitude = data.coords.altitude;
-        obj.altitudeAccuracy = data.coords.altitudeAccuracy;
-        obj.heading = data.coords.heading;
-        obj.latitude = data.coords.latitude;
-        obj.longitude = data.coords.longitude;
-        obj.speed = data.coords.speed;
-
-        let postData: any = JSON.stringify(obj);
-
-        this.userData.setGpsData(postData);
-        this.latitude = data.coords.latitude;
-        this.longitude = data.coords.longitude;
  
-      })
+        this.latitude = data.latitude;
+        this.longitude = data.longitude;
+        this.gpstracking = data.gpstracking;
 
-    } else {
-
-      try {
-        this.watcher.unsubscribe();
-        this.watcher = null;
-      } catch (e) {
-        alert('Error unsubscribe: ' + e.statusText);
-        console.log(e);
-      }
-
-    }
+    });
   }
 
-  gpsToggleMobile(value) {
+  listenToGpsEvents() {
+    this.events.subscribe('gps:on', () => {
+      this.setDisplayData();
+    });
 
+    this.events.subscribe('gps:off', () => {
+      this.latitude = null;
+      this.longitude = null;
+      this.gpstracking = false;
+    });
   }
+
   
 }
