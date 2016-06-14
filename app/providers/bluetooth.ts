@@ -21,7 +21,7 @@ export class BluetoothProvider {
   public datastream: Array<any>;
   private counter: number;
   private lastPosition: any;
-  private userData: UserData;
+  public userData: UserData;
   private gpsProvider: GpsProvider;
   private BLUETOOTH_DATA: string;
   private BLUETOOTH_CURRENT_DATA: string;
@@ -29,7 +29,7 @@ export class BluetoothProvider {
   constructor(
       @Inject(Events) public events: Events,
       @Inject(Platform) public platform: Platform,
-      @Inject(Events) public nav: NavController,
+      @Inject(NavController) public nav: NavController,
       userData: UserData,
       gpsProvider: GpsProvider
   ) {

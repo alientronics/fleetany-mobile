@@ -3,9 +3,13 @@ import { BLE, BluetoothSerial } from 'ionic-native';
 import { Events, Platform, NavController }   from 'ionic-angular';
 import { Http, BaseRequestOptions } from 'angular2/http';
 import { MockBackend } from 'angular2/http/testing'
+import { TranslateService, TranslateStaticLoader, TranslateLoader } from 'ng2-translate/ng2-translate';
 import { UserData } from '../../providers/user-data';
+import { GpsProvider } from '../../providers/gps';
+import { BluetoothProvider } from '../../providers/bluetooth';
 
 let bluetooth: Bluetooth = null;
+let bluetoothProvider: BluetoothProvider = null;
 
 class MockClass {
   public present(): any { return true; }
@@ -70,60 +74,64 @@ describe('Bluetooth', () => {
 
   beforeEach(() => {   
     let mockClass: any = (<any>new MockClass());
-    let platform: Platform = new Platform();
     let events: Events = new Events();
+    let platform: Platform = new Platform();
     let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
     let userData: UserData = new UserData(events, http, platform);
     spyOn(userData, 'showToast').and.callFake(showToastStub);
     spyOn(events, 'publish').and.callFake(publishStub);
-    bluetooth = new Bluetooth(userData, platform, events, mockClass, mockClass);
+    let gpsProvider: GpsProvider = new GpsProvider(events, platform, mockClass, userData);
+    bluetoothProvider = new BluetoothProvider(events, platform, mockClass, userData, gpsProvider);
+    let translateLoad: TranslateLoader = new TranslateStaticLoader(http, 'assets/i18n', '.json');
+    let translate: TranslateService = new TranslateService(http, translateLoad, null);
+    bluetooth = new Bluetooth(bluetoothProvider, events, translate);
   });
 
   it('initialises', () => {
-    expect(bluetooth).not.toBeNull();
+    expect(bluetoothProvider).not.toBeNull();
   });
 
   it('should ask for a vehicle', () => {
-    bluetooth.userData.plate = null;
-    bluetooth.bleToggle(true);
-    expect(bluetooth.userData.showToast).toHaveBeenCalled();
+    bluetoothProvider.userData.plate = null;
+    bluetoothProvider.bleToggle(true);
+    expect(bluetoothProvider.userData.showToast).toHaveBeenCalled();
   });
 
   it('should call bleToggleBrowser', () => {
-    bluetooth.userData.plate = 1;
-    spyOn(bluetooth, 'bleToggleBrowser').and.callFake(bleToggleStub);
-    bluetooth.bleToggle(true);
-    expect(bluetooth.bleToggleBrowser).toHaveBeenCalled();
-    expect(bluetooth.events.publish).toHaveBeenCalled();
+    bluetoothProvider.userData.plate = 1;
+    spyOn(bluetoothProvider, 'bleToggleBrowser').and.callFake(bleToggleStub);
+    bluetoothProvider.bleToggle(true);
+    expect(bluetoothProvider.bleToggleBrowser).toHaveBeenCalled();
+    expect(bluetoothProvider.events.publish).toHaveBeenCalled();
   });
 
   it('should have devices', () => {
-    bluetooth.bleToggleBrowser(true);
-    expect(bluetooth.bledevice).toBeNull();
-    expect(bluetooth.devices.length).toBe(3);
+    bluetoothProvider.bleToggleBrowser(true);
+    expect(bluetoothProvider.bledevice).toBeNull();
+    expect(bluetoothProvider.devices.length).toBe(3);
   });
 
   it('should clear devices', () => {
-    bluetooth.bleToggleBrowser(false);
-    expect(bluetooth.devices.length).toBe(0);
+    bluetoothProvider.bleToggleBrowser(false);
+    expect(bluetoothProvider.devices.length).toBe(0);
   });
 
   it('should alert about no devices', () => {
     spyOn(BluetoothSerial, 'list').and.callFake(listFalseStub);
-    bluetooth.bleToggleMobile(true);
-    expect(bluetooth.userData.showToast).toHaveBeenCalled();
+    bluetoothProvider.bleToggleMobile(true);
+    expect(bluetoothProvider.userData.showToast).toHaveBeenCalled();
   });
 
   it('should have ble devices', () => {
     spyOn(BluetoothSerial, 'list').and.callFake(listTrueStub);
-    bluetooth.bleToggleMobile(true);
-    expect(bluetooth.devices.length).toBe(3);
+    bluetoothProvider.bleToggleMobile(true);
+    expect(bluetoothProvider.devices.length).toBe(3);
   });
 
   it('should unsubscribe ble', () => {
-    bluetooth.watcher = new MockClass();
-    bluetooth.bleToggleMobile(false);
-    expect(bluetooth.watcher).toBeNull();
+    bluetoothProvider.watcher = new MockClass();
+    bluetoothProvider.bleToggleMobile(false);
+    expect(bluetoothProvider.watcher).toBeNull();
   });
 
   it('should disconnect ble device', () => {
@@ -133,49 +141,49 @@ describe('Bluetooth', () => {
     spyOn(BLE, 'disconnect').and.callFake(listFalseStub);
     spyOn(BLE, 'startScan').and.callFake(startScanStub);
     spyOn(BLE, 'stopScan').and.callFake(listFalseStub);
-    bluetooth.bleToggleMobileBLE(true);
+    bluetoothProvider.bleToggleMobile(true);
     expect(BLE.disconnect).toHaveBeenCalled();
     expect(bluetooth.datastream.length).toBe(2);
     expect(bluetooth.devices.length).toBe(1);
   });
 
   it('should stop ble scan', () => {
-    bluetooth.datastream = [];
+    bluetoothProvider.datastream = [];
     spyOn(BLE, 'stopScan').and.callFake(listFalseStub);
-    bluetooth.bleToggleMobileBLE(false);
-    expect(bluetooth.datastream.length).toBe(1);
+    bluetoothProvider.bleToggleMobileBLE(false);
+    expect(bluetoothProvider.datastream.length).toBe(1);
   });
 
   it('should send data to datastream', () => {
-    bluetooth.datastream = [];
-    bluetooth.sendData();
-    expect(bluetooth.datastream.length).toBe(2);
+    bluetoothProvider.datastream = [];
+    bluetoothProvider.sendData();
+    expect(bluetoothProvider.datastream.length).toBe(2);
   });
 
   it('should send data to datastream ok', () => {
-    spyOn(bluetooth.platform, 'is').and.callFake(isStub);
+    spyOn(bluetoothProvider.platform, 'is').and.callFake(isStub);
     spyOn(BluetoothSerial, 'isConnected').and.callFake(listTrueStub);
     spyOn(BluetoothSerial, 'write').and.callFake(writeStub);
-    bluetooth.datastream = [];
-    bluetooth.sendData();
-    expect(bluetooth.datastream.length).toBe(2);
+    bluetoothProvider.datastream = [];
+    bluetoothProvider.sendData();
+    expect(bluetoothProvider.datastream.length).toBe(2);
   });
 
   it('should fake device data', () => {
-    spyOn(bluetooth.userData, 'setBluetoothData').and.callFake(isStub);
-    bluetooth.bledeviceChanged('deviceMac');
-    expect(bluetooth.datastream.length).toBe(1);
-    expect(bluetooth.userData.setBluetoothData).toHaveBeenCalled();
+    spyOn(bluetoothProvider, 'setBluetoothData').and.callFake(isStub);
+    bluetoothProvider.bledeviceChanged('deviceMac');
+    expect(bluetoothProvider.datastream.length).toBe(1);
+    expect(bluetoothProvider.setBluetoothData).toHaveBeenCalled();
   });
 
   it('should subscribe device', () => {
-    spyOn(bluetooth.platform, 'is').and.callFake(isStub);
+    spyOn(bluetoothProvider.platform, 'is').and.callFake(isStub);
     spyOn(BluetoothSerial, 'connect').and.callFake(listTrueStub);
     spyOn(BluetoothSerial, 'subscribe').and.callFake(startScanStub);
-    spyOn(bluetooth.userData, 'setBluetoothData').and.callFake(isStub);
-    bluetooth.bledeviceChanged('deviceMac');
-    expect(bluetooth.datastream.length).toBe(2);
-    expect(bluetooth.userData.setBluetoothData).toHaveBeenCalled();
+    spyOn(bluetoothProvider, 'setBluetoothData').and.callFake(isStub);
+    bluetoothProvider.bledeviceChanged('deviceMac');
+    expect(bluetoothProvider.datastream.length).toBe(2);
+    expect(bluetoothProvider.setBluetoothData).toHaveBeenCalled();
   });
 
 });

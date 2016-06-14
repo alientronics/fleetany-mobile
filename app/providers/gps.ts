@@ -15,14 +15,14 @@ export class GpsProvider {
   private latitude: number;
   private longitude: number;
   public watcher: any;
-  private userData: UserData;
+  public userData: UserData;
   private GPS_DATA: string;
   private GPS_CURRENT_DATA: string;
 
   constructor(
       @Inject(Events) public events: Events,
       @Inject(Platform) public platform: Platform,
-      @Inject(Events) public nav: NavController,
+      @Inject(NavController) public nav: NavController,
       userData: UserData
   ) {
     this.storage = new Storage(LocalStorage);
