@@ -18,7 +18,6 @@ export class GpsProvider {
   private userData: UserData;
   private GPS_DATA: string;
   private GPS_CURRENT_DATA: string;
-  private lastPosition: any;
 
   constructor(
       @Inject(Events) public events: Events,
@@ -32,7 +31,8 @@ export class GpsProvider {
     this.userData = userData;
     this.GPS_DATA = 'gpsdata';
     this.GPS_CURRENT_DATA = 'gpscurrentdata';
-    this.lastPosition = {"latitude": null, "longitude": null};
+    this.setDisplayData();
+    this.listenToUserDataEvents();
   }
 
   gpsToggle(value) {
@@ -69,6 +69,8 @@ export class GpsProvider {
         try {
           var obj: any = new Object();
           obj.gpstracking = false;
+          obj.latitude = null;
+          obj.longitude = null;
           let gpsCurrentData = JSON.stringify(obj);
           this.storage.set(this.GPS_CURRENT_DATA, gpsCurrentData);
 
@@ -102,6 +104,15 @@ export class GpsProvider {
     });
   }
 
+  setDisplayData() {
+    this.getGpsCurrentData().then((data) => { 
+      data = JSON.parse(data);  
+      this.latitude = data.latitude;
+      this.longitude = data.longitude;
+      this.gpstracking = data.gpstracking;
+    });
+  }
+
   setPostData(data, storage, urlApi) {
 
     var arrayData = [];
@@ -114,22 +125,13 @@ export class GpsProvider {
         arrayData = [];
       }
       data = JSON.parse(data); 
-
-      if(urlApi == 'gps') {       
-        this.lastPosition.latitude = data.latitude;
-        this.lastPosition.longitude = data.longitude;
-      } else if(urlApi == 'tiresensor') { 
-        data.latitude = this.lastPosition.latitude
-        data.longitude = this.lastPosition.longitude; 
-      }
-
       arrayData.push(data);
       this.storage.set(storage, (JSON.stringify(arrayData).replace(/[\\]/g, '')));
     }
     
     if(data != null && this.userData.checkConnection()) {
 
-      this.userData.getPostData(storage).then((dataStorage) => {
+      this.getPostData(storage).then((dataStorage) => {
 
         let postData: any = [];
         var zip = new JSZip(); 
@@ -162,5 +164,18 @@ export class GpsProvider {
 
       });
     }
+  }
+
+  getPostData(storage) {
+    return this.storage.get(storage).then((value) => {
+      return value;
+    });
+  }
+
+  listenToUserDataEvents() {
+    this.events.subscribe('user:logout', () => {
+      this.storage.remove(this.GPS_DATA);
+      this.storage.remove(this.GPS_CURRENT_DATA);
+    });
   }
 }

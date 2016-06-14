@@ -6,6 +6,7 @@ import {UserData} from './providers/user-data';
 import {GeofenceProvider} from './providers/geofence';
 import {AlertsProvider} from './providers/alerts';
 import {GpsProvider} from './providers/gps';
+import {BluetoothProvider} from './providers/bluetooth';
 import {About} from './pages/about/about';
 import {Gps} from './pages/gps/gps';
 import {Bluetooth} from './pages/bluetooth/bluetooth';
@@ -30,6 +31,7 @@ interface PageObj {
     GeofenceProvider,
     AlertsProvider,
     GpsProvider,
+    BluetoothProvider,
     provide(TranslateLoader, {
       useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18n', '.json'),
       deps: [Http]

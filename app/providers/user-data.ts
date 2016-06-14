@@ -17,7 +17,6 @@ export class UserData {
   private JSON_OBJECT: string;
   private PLATE: string;
   private RAW_DATA: string;
-  private BLUETOOTH_DATA: string;
   public data: any;
   public email: string;
   public userLang: string;
@@ -37,7 +36,6 @@ export class UserData {
     this.JSON_OBJECT = 'jsonObject';
     this.PLATE = 'plate';
     this.RAW_DATA = 'rawdata';
-    this.BLUETOOTH_DATA = 'bluetoothdata';
     this.lastPosition = {"latitude": null, "longitude": null};
 
     platform.ready().then(() => {
@@ -64,87 +62,8 @@ export class UserData {
     this.storage.remove(this.JSON_OBJECT);
     this.storage.remove(this.PLATE);
     this.storage.remove(this.RAW_DATA);
-    this.storage.remove(this.BLUETOOTH_DATA);
     this.data = null;
     this.events.publish('user:logout');
-  }
-
-  setPostData(data, storage, urlApi) {
-
-    var arrayData = [];
-
-    if(data == null) {
-      this.storage.set(storage, (JSON.stringify(arrayData)));
-    } else {
-      arrayData = JSON.parse(localStorage.getItem(storage));
-      if (arrayData == null) {
-        arrayData = [];
-      }
-      data = JSON.parse(data); 
-
-      if(urlApi == 'gps') {       
-        this.lastPosition.latitude = data.latitude;
-        this.lastPosition.longitude = data.longitude;
-      } else if(urlApi == 'tiresensor') { 
-        data.latitude = this.lastPosition.latitude
-        data.longitude = this.lastPosition.longitude; 
-      }
-
-      arrayData.push(data);
-      this.storage.set(storage, (JSON.stringify(arrayData).replace(/[\\]/g, '')));
-    }
-    
-    if(data != null && this.checkConnection()) {
-
-      this.getPostData(storage).then((dataStorage) => {
-
-        let postData: any = [];
-        var zip = new JSZip(); 
-        zip.file("postData.json", dataStorage);
-
-        zip.generateAsync({
-          type: "base64",
-          compression: "DEFLATE",
-          compressionOptions : {level:6}
-        }).then((zipFile) => {
-
-           if(dataStorage.length > 180) {
-            postData.json = zipFile;
-            postData.dataIsCompressed = 1;
-           } else {
-            postData.json = dataStorage;
-            postData.dataIsCompressed = 0;
-           }
-
-           this.postApi(urlApi, postData).subscribe(
-            res => {
-              this.setPostData(null, storage, urlApi);
-            },
-            error => {
-              alert('Error sending data: ' + error.statusText);
-              console.log(error);
-            }
-           );
-        });
-
-      });
-    }
-  }
-
-  setBluetoothData(data) {
-    this.setPostData(data, this.BLUETOOTH_DATA, 'tiresensor');
-  }
-
-  getPostData(storage) {
-    return this.storage.get(storage).then((value) => {
-      return value;
-    });
-  }
-
-  getBluetoothData() {
-    return this.storage.get(this.BLUETOOTH_DATA).then((value) => {
-      return value;
-    });
   }
 
   setPlate(plate) {
