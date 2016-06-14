@@ -136,31 +136,43 @@ export class BluetoothProvider {
     if (value) {
       if (this.bledevice) {
         BLE.disconnect(this.bledevice).then(() => {
-          this.datastream.push('Disconnected');
+          if(this.datastream != undefined) {
+            this.datastream.push('Disconnected');
+          }
           console.log('Disconnected');
         });
       }
       BLE.startScan([]).subscribe(
         device => {
           console.log(device.json());
-          this.datastream.push("subscribe ok:" + JSON.stringify(device.json()));
-          this.devices.push(device.json());
+          if(this.datastream != undefined) {
+            this.datastream.push("subscribe ok:" + JSON.stringify(device.json()));
+          }
+          if(this.datastream != undefined) {
+            this.devices.push(device.json());
+          }
         },
         err => {
-          this.datastream.push("subscribe err:" + JSON.stringify(err));
+          if(this.datastream != undefined) {
+            this.datastream.push("subscribe err:" + JSON.stringify(err));
+          }
           console.error(err);
         }
       );
       setTimeout(() => {
         BLE.stopScan().then(() => { 
           this.blescan = false;
-          this.datastream.push('scan stopped');
+          if(this.datastream != undefined) {
+            this.datastream.push('scan stopped');
+          }
           console.log('scan stopped'); 
         });
       }, 60000);
     } else {
       BLE.stopScan().then(() => { 
-        this.datastream.push('scan stopped');
+        if(this.datastream != undefined) {
+            this.datastream.push('scan stopped');
+          }
         console.log('scan stopped'); 
       });
     }

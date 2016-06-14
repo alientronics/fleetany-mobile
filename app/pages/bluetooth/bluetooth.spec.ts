@@ -141,7 +141,7 @@ describe('Bluetooth', () => {
     spyOn(BLE, 'disconnect').and.callFake(listFalseStub);
     spyOn(BLE, 'startScan').and.callFake(startScanStub);
     spyOn(BLE, 'stopScan').and.callFake(listFalseStub);
-    bluetoothProvider.bleToggleMobile(true);
+    bluetoothProvider.bleToggleMobileBLE(true);
     expect(BLE.disconnect).toHaveBeenCalled();
     expect(bluetooth.datastream.length).toBe(2);
     expect(bluetooth.devices.length).toBe(1);
