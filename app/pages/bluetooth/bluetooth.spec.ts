@@ -135,10 +135,10 @@ describe('Bluetooth', () => {
     expect(bluetooth.datastream.length).toBe(1);
   });
 
-  it('should listen ble:on event', () => {
+  it('should listen to bluetooth events', () => {
     spyOn(bluetooth.events, 'subscribe').and.callFake(publishStub);
-    bluetooth.bleToggle(true);
-    expect(bluetooth.events.subscribe).toHaveBeenCalledWith('ble:on');
+    bluetooth.listenToBluetoothEvents();
+    expect(bluetooth.events.subscribe.calls.count()).toEqual(3);
   });
 
 });

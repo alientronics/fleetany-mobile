@@ -43,7 +43,7 @@ export class GpsProvider {
 
         let options = { maximumAge:100, timeout:Infinity, enableHighAccuracy:false};
         
-        this.watcher = Geolocation.watchPosition(options).subscribe((data) => {
+        this.watcher = Geolocation.watchPosition().subscribe((data) => {
           
           var obj: any = new Object();
           obj.accuracy = data.coords.accuracy;
@@ -110,6 +110,10 @@ export class GpsProvider {
       this.latitude = data.latitude;
       this.longitude = data.longitude;
       this.gpstracking = data.gpstracking;
+
+      if (this.userData.plate != null && this.gpstracking == true) {
+        this.gpsToggle(true);
+      }
     });
   }
 
