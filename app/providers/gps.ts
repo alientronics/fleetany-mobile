@@ -22,7 +22,7 @@ export class GpsProvider {
   constructor(
       @Inject(Events) public events: Events,
       @Inject(Platform) public platform: Platform,
-      @Inject(NavController) public nav: NavController,
+      @Inject(Events) public nav: NavController,
       userData: UserData
   ) {
     this.storage = new Storage(LocalStorage);
