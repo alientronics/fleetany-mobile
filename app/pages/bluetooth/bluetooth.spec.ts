@@ -93,7 +93,7 @@ describe('Bluetooth', () => {
 
   it('should call bleToggle provider', () => {
     bluetoothProvider.userData.plate = 1;
-    spyOn(bluetooth, 'bleToggle').and.callFake(bleToggleStub);
+    spyOn(bluetoothProvider, 'bleToggleBrowser').and.callFake(bleToggleStub);
     bluetooth.bleToggle(true);
     expect(bluetoothProvider.bleToggleBrowser).toHaveBeenCalled();
     expect(bluetoothProvider.events.publish).toHaveBeenCalled();
