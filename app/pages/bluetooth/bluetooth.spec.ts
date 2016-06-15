@@ -24,6 +24,7 @@ function showToastStub(message: string, title: string, nav: NavController): any 
 
 function publishStub(topic: string):any { return null; }
 function bleToggleStub(value: boolean):any { return null; }
+function bleDeviceChangedStub(value: string):any { return null; }
 function isStub(platform: string):any { return true; }
 
 function listFalseStub(arg: any): any {
@@ -54,6 +55,22 @@ function writeStub(arg: any): any {
   let promise: Object = {
     then: function(callback: any): void {
       return callback('{}'); 
+    }
+  };
+  return promise;
+}
+
+function bluetoothCurrentDataStub(arg: any): any {
+  'use strict';
+
+  let promise: Object = {
+    then: function(callback: any): void {
+      return callback('{"blescan":false,"bledevice":"73:08:19:71:8C:9B",'+
+                      '"devices":[{"id":"73:08:19:71:8C:9B","name":"Sensor 1"},'+
+                                  '{"id":"73:08:19:71:8C:9C","name":"Sensor 2"},'+
+                                  '{"id":"73:08:19:71:8C:9D","name":"Sensor 3"}],'+
+                      '"datastream":[{"id":"0000000001","pr":127,"tp":22.0,"ba":2.95}]}'); 
+
     }
   };
   return promise;
@@ -92,11 +109,36 @@ describe('Bluetooth', () => {
   });
 
   it('should call bleToggle provider', () => {
-    bluetoothProvider.userData.plate = 1;
-    spyOn(bluetoothProvider, 'bleToggleBrowser').and.callFake(bleToggleStub);
+    spyOn(bluetoothProvider, 'bleToggle').and.callFake(bleToggleStub);
     bluetooth.bleToggle(true);
-    expect(bluetoothProvider.bleToggleBrowser).toHaveBeenCalled();
-    expect(bluetoothProvider.events.publish).toHaveBeenCalled();
+    expect(bluetoothProvider.bleToggle).toHaveBeenCalled();
+  });
+
+  it('should send data to provider', () => {
+    spyOn(bluetoothProvider, 'sendData').and.callFake(writeStub);
+    bluetooth.sendData();
+    expect(bluetoothProvider.sendData).toHaveBeenCalled();
+  });
+
+  it('should call bledeviceChanged provider', () => {
+    spyOn(bluetoothProvider, 'bledeviceChanged').and.callFake(bleDeviceChangedStub);
+    bluetooth.bledeviceChanged('73:08:19:71:8C:9B');
+    expect(bluetoothProvider.bledeviceChanged).toHaveBeenCalled();
+  });
+
+  it('should set display data', () => {
+    spyOn(bluetoothProvider, 'getBluetoothCurrentData').and.callFake(bluetoothCurrentDataStub);
+    bluetooth.setDisplayData();
+    expect(bluetooth.blescan).toBe(false);
+    expect(bluetooth.bledevice).toBe('73:08:19:71:8C:9B');
+    expect(bluetooth.devices.length).toBe(3);
+    expect(bluetooth.datastream.length).toBe(1);
+  });
+
+  it('should listen ble:on event', () => {
+    spyOn(bluetooth.events, 'subscribe').and.callFake(publishStub);
+    bluetooth.bleToggle(true);
+    expect(bluetooth.events.subscribe).toHaveBeenCalledWith('ble:on');
   });
 
 });

@@ -25,6 +25,20 @@ function showToastStub(message: string, title: string, nav: NavController): any 
 }
 
 function publishStub(topic: string):any { return null; }
+function gpsToggleStub(value: boolean):any { return null; }
+
+function gpsCurrentDataStub(arg: any): any {
+  'use strict';
+
+  let promise: Object = {
+    then: function(callback: any): void {
+      return callback('{"gpstracking":true,"latitude": 30.03,"longitude": 51.22}'); 
+
+    }
+  };
+  return promise;
+}
+
 
 function watchPositionStub(options: any): any {
   'use strict';
@@ -87,21 +101,18 @@ describe('Gps', () => {
     expect(gps).not.toBeNull();
   });
   
-  it('should start gps tracking', () => {
-    gpsProvider.gpsToggle(true);
-    expect(Geolocation.watchPosition).toHaveBeenCalled();
+  it('should call start gps provider', () => {
+    spyOn(gpsProvider, 'gpsToggle').and.callFake(gpsToggleStub);
+    gps.gpsToggle(true);
+    expect(gpsProvider.gpsToggle).toHaveBeenCalled();
   });
 
-  it('should subscribe gps location', () => {
-    gpsProvider.gpsToggle(true);
-    expect(gpsProvider['latitude']).toBe(30.03);
-    expect(gpsProvider['longitude']).toBe(51.22);
+  it('should set display data', () => {
+    spyOn(gpsProvider, 'getGpsCurrentData').and.callFake(gpsCurrentDataStub);
+    gps.setDisplayData();
+    expect(gps.gpstracking).toBe(true);
+    expect(gps.latitude).toBe(30.03);
+    expect(gps.longitude).toBe(51.22);
   });
 
-  it('should unsubscribe watcher', () => {
-    gpsProvider.watcher = new MockClass();
-    gpsProvider.gpsToggle(false);
-    expect(gpsProvider.watcher).toBeNull();
-  });
-  
 });
