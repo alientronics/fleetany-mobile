@@ -8,6 +8,8 @@ import { AlertsProvider } from '../../providers/alerts';
 
 let alerts: Alerts = null;
 
+function publishStub(topic: string):any { return null; }
+
 class MockClass {}
 
 describe('Alerts', () => {
@@ -25,6 +27,12 @@ beforeEach(() => {
 
 it('initialises', () => {
   expect(alerts).not.toBeNull();
+});
+
+it('should listen to geofence events', () => {
+  spyOn(alerts.events, 'subscribe').and.callFake(publishStub);
+  alerts.listenToAlertsEvents();
+  expect(alerts.events.subscribe.calls.count()).toEqual(1);
 });
 
 });

@@ -179,5 +179,11 @@ describe('BluetoothProvider', () => {
     expect(bluetoothProvider.datastream.length).toBe(2);
     expect(bluetoothProvider.setBluetoothData).toHaveBeenCalled();
   });
+  
+  it('should listen to geofence events', () => {
+    spyOn(bluetoothProvider.events, 'subscribe').and.callFake(publishStub);
+    bluetoothProvider.listenToUserDataEvents();
+    expect(bluetoothProvider.events.subscribe.calls.count()).toEqual(1);
+  });
 
 });

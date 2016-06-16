@@ -8,6 +8,19 @@ let geofenceProvider: GeofenceProvider = null;
 
 function publishStub(topic: string):any { return null; }
 
+
+function getGeofenceDataStub(arg: any): any {
+  'use strict';
+
+  let promise: Object = {
+    then: function(callback: any): void {
+      return callback(); 
+
+    }
+  };
+  return promise;
+}
+
 describe('GeofenceProvider', () => {
 
   beforeEach(() => {   
@@ -29,4 +42,10 @@ describe('GeofenceProvider', () => {
     expect(geofenceProvider.events.subscribe.calls.count()).toEqual(1);
   });
    
+
+  it('should geofence data return a promise', () => {
+    spyOn(geofenceProvider, 'getGeofenceData').and.callFake(getGeofenceDataStub);
+    geofenceProvider.setGeofenceData(null);
+    expect(geofenceProvider.getGeofenceData().then).toBeDefined();
+  });
 });
