@@ -1,6 +1,7 @@
 import { Events, Platform, NavController } from 'ionic-angular';
 import { UserData } from './user-data';
 import { AlertsProvider } from './alerts';
+import { GeofenceProvider } from './geofence';
 import { Http, BaseRequestOptions } from 'angular2/http';
 import { MockBackend } from 'angular2/http/testing'
 
@@ -15,8 +16,9 @@ describe('AlertsProvider', () => {
     let platform: Platform = new Platform();
     let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
     let userData: UserData = new UserData(events, http, platform);
+    let geofenceProvider: GeofenceProvider = new GeofenceProvider(events, platform, userData);
     spyOn(events, 'publish').and.callFake(publishStub); 
-    alertsProvider = new AlertsProvider(events, platform, userData);
+    alertsProvider = new AlertsProvider(events, platform, geofenceProvider);
   });
 
   it('initialises', () => {

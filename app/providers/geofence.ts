@@ -20,7 +20,7 @@ export class GeofenceProvider {
     this.events = events;
     this.userData = userData;
     this.platform = platform;
-    this.GEOFENCE_DATA = '';
+    this.GEOFENCE_DATA = 'geofenceData';
 
     platform.ready().then(() => {
       if (this.platform.is('mobile')) {
