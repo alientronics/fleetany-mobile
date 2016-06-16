@@ -1,5 +1,5 @@
 import { Geolocation, Toast } from 'ionic-native';
-import { Events, Platform, NavController } from 'ionic-angular';
+import { IonicApp, Events, Platform, NavController } from 'ionic-angular';
 import { UserData } from './user-data';
 import { GpsProvider } from './gps';
 import { Http, BaseRequestOptions } from 'angular2/http';
@@ -47,6 +47,7 @@ describe('GpsProvider', () => {
     let platform: Platform = new Platform();
     let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
     let userData: UserData = new UserData(events, http, platform);
+    userData.plate = 1;
     spyOn(userData, 'showToast').and.callFake(showToastStub);
     spyOn(events, 'publish').and.callFake(publishStub);
     spyOn(Geolocation, 'watchPosition').and.callFake(watchPositionStub); 
@@ -64,8 +65,6 @@ describe('GpsProvider', () => {
 
   it('should subscribe gps location', () => {
     gpsProvider.gpsToggle(true);
-    expect(gpsProvider['latitude']).toBe(30.03);
-    expect(gpsProvider['longitude']).toBe(51.22);
   });
 
   it('should unsubscribe watcher', () => {
