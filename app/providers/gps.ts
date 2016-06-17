@@ -73,11 +73,9 @@ export class GpsProvider {
           obj.longitude = null;
           let gpsCurrentData = JSON.stringify(obj);
           this.storage.set(this.GPS_CURRENT_DATA, gpsCurrentData);
-
-          if(this.watcher != undefined) {
-            this.watcher.unsubscribe();
-            this.watcher = null;  
-          }
+          this.watcher.unsubscribe();
+          this.watcher = null;  
+    
           this.events.publish('gps:off');
         } catch (e) {
           alert('Error unsubscribe: ' + e.statusText);
@@ -90,12 +88,6 @@ export class GpsProvider {
 
   setGpsData(data) {
     this.setPostData(data, this.GPS_DATA, 'gps');
-  }
-
-  getGpsData() {
-    return this.storage.get(this.GPS_DATA).then((value) => {
-      return value;
-    });
   }
 
   getGpsCurrentData() {

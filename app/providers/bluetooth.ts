@@ -243,12 +243,6 @@ export class BluetoothProvider {
     this.setPostData(data, this.BLUETOOTH_DATA, 'tiresensor');
   }
 
-  getBluetoothData() {
-    return this.storage.get(this.BLUETOOTH_DATA).then((value) => {
-      return value;
-    });
-  }
-
   getBluetoothCurrentData() {
     return this.storage.get(this.BLUETOOTH_CURRENT_DATA).then((value) => {
       return value;

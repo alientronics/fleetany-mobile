@@ -180,9 +180,10 @@ describe('BluetoothProvider', () => {
     expect(bluetoothProvider.setBluetoothData).toHaveBeenCalled();
   });
   
-  it('should listen to geofence events', () => {
+  it('should listen to userData events', () => {
     spyOn(bluetoothProvider.events, 'subscribe').and.callFake(publishStub);
     bluetoothProvider.listenToUserDataEvents();
+    bluetoothProvider.userData.logout();
     expect(bluetoothProvider.events.subscribe.calls.count()).toEqual(1);
   });
 

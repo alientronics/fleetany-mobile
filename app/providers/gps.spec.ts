@@ -57,8 +57,20 @@ describe('GpsProvider', () => {
   it('initialises', () => {
     expect(gpsProvider).not.toBeNull();
   });
+
+  it('should ask for a vehicle', () => {
+    gpsProvider.userData.plate = null;
+    gpsProvider.gpsToggle(true);
+    expect(gpsProvider.userData.showToast).toHaveBeenCalled();
+  });
   
   it('should start gps tracking', () => {
+    gpsProvider.gpsToggle(true);
+    expect(Geolocation.watchPosition).toHaveBeenCalled();
+  });
+  
+  it('should start gps tracking with empty data', () => {
+    gpsProvider.setGpsData(null);
     gpsProvider.gpsToggle(true);
     expect(Geolocation.watchPosition).toHaveBeenCalled();
   });
@@ -72,5 +84,12 @@ describe('GpsProvider', () => {
     gpsProvider.gpsToggle(false);
     expect(gpsProvider.watcher).toBeNull();
   });
-  
+
+  it('should listen to userData events', () => {
+    spyOn(gpsProvider.events, 'subscribe').and.callFake(publishStub);
+    gpsProvider.listenToUserDataEvents();
+    gpsProvider.userData.logout();
+    expect(gpsProvider.events.subscribe.calls.count()).toEqual(1);
+  });
+
 });
