@@ -7,6 +7,7 @@ import { MockBackend } from 'angular2/http/testing'
 let geofenceProvider: GeofenceProvider = null;
 
 function publishStub(topic: string):any { return null; }
+function isStub(platform: string):any { return true; }
 
 
 function getGeofenceDataStub(arg: any): any {
@@ -37,15 +38,27 @@ describe('GeofenceProvider', () => {
   });
 
   it('should listen to userData events', () => {
+    spyOn(geofenceProvider.platform, 'is').and.callFake(isStub);
     spyOn(geofenceProvider.events, 'subscribe').and.callFake(publishStub);
     geofenceProvider.listenToUserDataEvents();
+    geofenceProvider.userData.setPlate(1);
     expect(geofenceProvider.events.subscribe.calls.count()).toEqual(1);
   });
    
-
-  it('should geofence data return a promise', () => {
+  it('should clear storage', () => {
     spyOn(geofenceProvider, 'getGeofenceData').and.callFake(getGeofenceDataStub);
     geofenceProvider.setGeofenceData(null);
+    expect(geofenceProvider.getGeofenceData().then).toBeDefined();
+  });
+
+  it('should set data to storage', () => {
+    spyOn(geofenceProvider, 'getGeofenceData').and.callFake(getGeofenceDataStub);
+    geofenceProvider.setGeofenceData(JSON.stringify({
+            id:             "69ca1b88-6fbe-4e80-a4d4-ff4d3748acdb",
+            latitude:       50.2980049,
+            longitude:      18.6593152,
+            radius:         3000,
+            transitionType: 2}));
     expect(geofenceProvider.getGeofenceData().then).toBeDefined();
   });
 });

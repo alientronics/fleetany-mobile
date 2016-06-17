@@ -22,7 +22,12 @@ export class GeofenceProvider {
     this.platform = platform;
     this.GEOFENCE_DATA = 'geofenceData';
 
-    platform.ready().then(() => {
+    this.initializeGeofence();
+    this.listenToUserDataEvents();
+  }
+
+  initializeGeofence() {
+    this.platform.ready().then(() => {
       if (this.platform.is('mobile')) {
 
         window.geofence.initialize().then(function () {
@@ -36,7 +41,7 @@ export class GeofenceProvider {
             });
         };
 
-        this.listenToUserDataEvents();
+        
       }
     }); 
   }
@@ -57,8 +62,6 @@ export class GeofenceProvider {
                   geofence.id = plate;
                   window.geofence.addOrUpdate(geofence).then(function () {
                     console.log('Geofence successfully added');
-                  }, function (reason) {
-                      console.log('Adding geofence failed', reason);
                   });
                 }
               }
@@ -77,9 +80,6 @@ export class GeofenceProvider {
       this.storage.set(this.GEOFENCE_DATA, (JSON.stringify(arrayData)));
     } else {
       arrayData = JSON.parse(localStorage.getItem(this.GEOFENCE_DATA));
-      if (arrayData == null) {
-        arrayData = [];
-      }
       data = JSON.parse(data); 
       arrayData.push(data);
       this.storage.set(this.GEOFENCE_DATA, (JSON.stringify(arrayData).replace(/[\\]/g, '')));
