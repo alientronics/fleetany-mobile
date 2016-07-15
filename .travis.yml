@@ -19,7 +19,7 @@ install:
   - npm install
   - ionic platform add android
   - cordova prepare
-  - npm run webdriver-update
+  #- npm run webdriver-update
 
 before_script:
   - export DISPLAY=:99.0
