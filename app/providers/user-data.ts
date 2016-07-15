@@ -1,9 +1,9 @@
 'use strict';
 
-import {Injectable, Inject} from 'angular2/core';
+import {Injectable, Inject} from '@angular/core';
 import {Storage, Platform, LocalStorage, Events, Alert} from 'ionic-angular';
-import {Geolocation, Toast, Network, Connection, Globalization} from 'ionic-native';
-import {Http, Headers} from 'angular2/http';
+import {Geolocation, Toast, Network, Globalization} from 'ionic-native';
+import {Http, Headers} from '@angular/http';
 import {Settings} from '../config/settings';
 
 let settings: Settings = new Settings();
@@ -178,7 +178,7 @@ export class UserData {
 
 
   checkConnection() {
-    if (this.platform.is('mobile') && Network.connection === Connection.NONE) {
+    if (this.platform.is('mobile') && Network.connection === 'none') {
       return false;
     } else {
       return true;

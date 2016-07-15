@@ -1,10 +1,11 @@
 'use strict';
 
+import { Component } from '@angular/core';
 import {Page, Events} from 'ionic-angular';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {GpsProvider} from '../../providers/gps';
 
-@Page({
+@Component({
   templateUrl: 'build/pages/gps/gps.html',
   pipes: [TranslatePipe]
 })

@@ -1,8 +1,8 @@
 import { Events, Platform, NavController } from 'ionic-angular';
 import { UserData } from './user-data';
 import { GeofenceProvider } from './geofence';
-import { Http, BaseRequestOptions } from 'angular2/http';
-import { MockBackend } from 'angular2/http/testing'
+import { Http, BaseRequestOptions } from '@angular/http';
+import { MockBackend } from '@angular/http/testing'
 
 let geofenceProvider: GeofenceProvider = null;
 

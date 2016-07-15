@@ -1,7 +1,7 @@
 import { UserData } from './user-data';
 import { Events, Platform, Alert } from 'ionic-angular';
-import { Http, BaseRequestOptions } from 'angular2/http';
-import { MockBackend } from 'angular2/http/testing'
+import { Http, BaseRequestOptions } from '@angular/http';
+import { MockBackend } from '@angular/http/testing'
 import { Toast } from 'ionic-native';
 
 let userData: UserData = null;

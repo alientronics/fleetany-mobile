@@ -3,7 +3,7 @@
 import {App, Platform, Events, Nav, MenuController} from 'ionic-angular';
 import {TabsPage} from './pages/tabs/tabs';
 import {UserData} from './providers/user-data';
-import {GeofenceProvider} from './providers/geofence';
+//import {GeofenceProvider} from './providers/geofence';
 import {AlertsProvider} from './providers/alerts';
 import {GpsProvider} from './providers/gps';
 import {BluetoothProvider} from './providers/bluetooth';
@@ -11,8 +11,8 @@ import {About} from './pages/about/about';
 import {Gps} from './pages/gps/gps';
 import {Bluetooth} from './pages/bluetooth/bluetooth';
 import {Login} from './pages/login/login';
-import {provide, ViewChild, Type} from 'angular2/core';
-import {Http} from 'angular2/http';
+import {Component, provide, ViewChild, Type} from '@angular/core';
+import {Http} from '@angular/http';
 import {TranslateService, TranslateStaticLoader, TranslateLoader, TranslatePipe} from 'ng2-translate/ng2-translate';
 
 interface PageObj {
@@ -22,13 +22,13 @@ interface PageObj {
   index?: number;
 }
 
-@App({
+@Component({
   templateUrl: 'build/app.html',
   pipes: [TranslatePipe],
-  config: {},
+  //config: {},
   providers: [
     UserData,
-    GeofenceProvider,
+    //GeofenceProvider,
     AlertsProvider,
     GpsProvider,
     BluetoothProvider,
@@ -39,7 +39,7 @@ interface PageObj {
     TranslateService
   ]
 })
-export class FleetanyApp {
+class FleetanyApp {
 
   @ViewChild(Nav) nav: Nav;
 
@@ -67,7 +67,7 @@ export class FleetanyApp {
   constructor(platform: Platform, 
     private events: Events,
     private userData: UserData,
-    private geofenceProvider: GeofenceProvider,
+    //private geofenceProvider: GeofenceProvider,
     private alertsProvider: AlertsProvider,
     private menu: MenuController,
     private translate: TranslateService

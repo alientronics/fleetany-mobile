@@ -5,8 +5,8 @@ import { Events }   from 'ionic-angular';
 import { TranslateService, TranslateStaticLoader, TranslateLoader } from 'ng2-translate/ng2-translate';
 import { UserData } from '../../providers/user-data';
 import { GpsProvider } from '../../providers/gps';
-import { Http, BaseRequestOptions } from 'angular2/http';
-import { MockBackend } from 'angular2/http/testing'
+import { Http, BaseRequestOptions } from '@angular/http';
+import { MockBackend } from '@angular/http/testing'
 
 let gps: Gps = null;
 let gpsProvider: GpsProvider = null;

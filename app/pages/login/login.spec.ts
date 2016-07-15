@@ -1,8 +1,8 @@
 import { Login } from './login';
 import { Events, Platform }   from 'ionic-angular';
 import { UserData } from '../../providers/user-data';
-import { Http, BaseRequestOptions } from 'angular2/http';
-import { MockBackend } from 'angular2/http/testing'
+import { Http, BaseRequestOptions } from '@angular/http';
+import { MockBackend } from '@angular/http/testing'
 
 let login: Login = null;
 

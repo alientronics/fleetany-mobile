@@ -1,12 +1,13 @@
 'use strict';
 
+import { Component } from '@angular/core';
 import {Page, Alert, NavController} from 'ionic-angular';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {UserData} from '../../providers/user-data';
 import {Toast} from 'ionic-native';
-import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl } from 'angular2/common';
+import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl } from '@angular/common';
 
-@Page({
+@Component({
   templateUrl: 'build/pages/fuel/fuel.html',
   pipes: [TranslatePipe],
   directives: [FORM_DIRECTIVES]

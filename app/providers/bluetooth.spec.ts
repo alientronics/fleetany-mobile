@@ -1,7 +1,7 @@
 import { BLE, BluetoothSerial } from 'ionic-native';
 import { Events, Platform, NavController }   from 'ionic-angular';
-import { Http, BaseRequestOptions } from 'angular2/http';
-import { MockBackend } from 'angular2/http/testing'
+import { Http, BaseRequestOptions } from '@angular/http';
+import { MockBackend } from '@angular/http/testing'
 import { UserData } from './user-data';
 import { BluetoothProvider } from './bluetooth';
 import { GpsProvider } from './gps';

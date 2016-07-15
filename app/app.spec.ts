@@ -1,13 +1,13 @@
-import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS} from 'angular2/platform/testing/browser';
-import { setBaseTestProviders } from 'angular2/testing';
-import { Http, BaseRequestOptions } from 'angular2/http';
+import { TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS} from '@angular/platform/testing/browser';
+import { setBaseTestProviders } from '@angular/testing';
+import { Http, BaseRequestOptions } from '@angular/http';
 import { Platform, Events, MenuController }   from 'ionic-angular';
 import { FleetanyApp } from './app';
 import { UserData } from './providers/user-data';
 import { AlertsProvider } from './providers/alerts';
 import { GpsProvider } from './providers/gps';
 import { BluetoothProvider } from './providers/bluetooth';
-import { MockBackend } from 'angular2/http/testing'
+import { MockBackend } from '@angular/http/testing'
 import { TranslateService, TranslateStaticLoader, TranslateLoader } from 'ng2-translate/ng2-translate';
 
 class MockClass {}

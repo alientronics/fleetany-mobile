@@ -1,6 +1,6 @@
 'use strict';
 
-import {Injectable, Inject} from 'angular2/core';
+import {Injectable, Inject} from '@angular/core';
 import {Storage, Platform, LocalStorage, Events, NavController} from 'ionic-angular';
 import {UserData} from './user-data';
 import {GpsProvider} from './gps';
@@ -202,8 +202,7 @@ export class BluetoothProvider {
     this.blescan = false;
     this.datastream = [];
     if (this.platform.is('mobile')) {
-      BluetoothSerial.connect(value).then(
-        value => {
+      BluetoothSerial.isConnected().then((value) => {
           this.datastream.push("connect ok:" + JSON.stringify(value));
           console.log(value);
           this.watcher = BluetoothSerial.subscribe('\n').subscribe(

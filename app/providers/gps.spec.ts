@@ -2,8 +2,8 @@ import { Geolocation, Toast } from 'ionic-native';
 import { IonicApp, Events, Platform, NavController } from 'ionic-angular';
 import { UserData } from './user-data';
 import { GpsProvider } from './gps';
-import { Http, BaseRequestOptions } from 'angular2/http';
-import { MockBackend } from 'angular2/http/testing'
+import { Http, BaseRequestOptions } from '@angular/http';
+import { MockBackend } from '@angular/http/testing'
 
 let gpsProvider: GpsProvider = null;
 

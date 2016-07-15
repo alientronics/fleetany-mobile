@@ -1,12 +1,13 @@
 'use strict';
 
+import { Component } from '@angular/core';
 import {Page, Alert, NavController, Events, Platform} from 'ionic-angular';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
-import {forwardRef, Inject, Type} from 'angular2/core';
+import {forwardRef, Inject, Type} from '@angular/core';
 import {UserData} from '../../providers/user-data';
 import {About} from '../about/about';
 
-@Page({
+@Component({
   templateUrl: 'build/pages/login/login.html',
   pipes: [TranslatePipe]
 })

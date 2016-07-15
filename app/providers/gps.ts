@@ -1,6 +1,6 @@
 'use strict';
 
-import {Injectable, Inject} from 'angular2/core';
+import {Injectable, Inject} from '@angular/core';
 import {Storage, Platform, LocalStorage, Events, NavController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import {UserData} from './user-data';
