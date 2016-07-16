@@ -1,16 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ "title" | translate }}</ion-title>
+    <ion-buttons end>
+      <button (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
 
-<ion-navbar *navbar>
-
-  <button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
-
-  <ion-title>
-    {{ "title" | translate }}
-  </ion-title>
-</ion-navbar>
-
-<ion-content class="gps">
+<ion-content class="bluetooth">
 
   <ion-list>
     <ion-item>
@@ -24,7 +26,7 @@
       {{ "ble.SelectDevice" | translate }}
     </ion-list-header>
 
-    <ion-item *ngFor="#device of devices">
+    <ion-item *ngFor="let device of devices">
       <ion-label>{{device.name}}</ion-label>
       <ion-radio value="{{device.id}}"></ion-radio>
     </ion-item>
@@ -41,7 +43,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-card *ngFor="#data of datastream">
+  <ion-card *ngFor="let data of datastream">
     <ion-card-content>
       {{data}}
     </ion-card-content>

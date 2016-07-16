@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import {Page, Platform, NavController, Alert, NavParams} from 'ionic-angular';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Alerts} from '../alerts/alerts';
-//import {Fuel} from '../fuel/fuel';
+import {Fuel} from '../fuel/fuel';
 
 @Component({
   templateUrl: 'build/pages/tabs/tabs.html',
@@ -24,7 +24,7 @@ export class TabsPage {
     // this tells the tabs component which Pages
     // should be each tab's root Page
     this.tab1Root = Alerts;
-    //this.tab2Root = Fuel;
+    this.tab2Root = Fuel;
     this.platform = platform;
     this.nav = nav;
     this.mySelectedIndex = navParams.data.tabIndex || 0;

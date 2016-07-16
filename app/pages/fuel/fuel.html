@@ -1,14 +1,16 @@
-
-<ion-navbar *navbar>
-
-  <button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
-
-  <ion-title>
-    {{ "title" | translate }}
-  </ion-title>
-</ion-navbar>
+<ion-header>
+  <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ "title" | translate }}</ion-title>
+    <ion-buttons end>
+      <button (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
 
 <ion-content class="fuel">
 
@@ -39,7 +41,7 @@
       <ion-item>
         <ion-label>{{ "fuel.Type" | translate }}</ion-label>
         <ion-select [(ngFormControl)]="type">
-          <ion-option *ngFor="#type of types" value="{{type.key}}">
+          <ion-option *ngFor="let type of types" value="{{type.key}}">
             {{type.value}}
           </ion-option>
         </ion-select>

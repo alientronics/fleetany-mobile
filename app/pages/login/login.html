@@ -1,12 +1,16 @@
-<ion-navbar *navbar>
-
-  <button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
-
-  <ion-title>{{ "title" | translate }}</ion-title>
-
-</ion-navbar>
+<ion-header>
+  <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ "title" | translate }}</ion-title>
+    <ion-buttons end>
+      <button (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
 
 <ion-content padding class="login">
 
@@ -30,7 +34,7 @@
   <ion-list [disabled]="gpstracking" [(ngModel)]="plate" (ngModelChange)="plateChange($event)" radio-group [hidden]="!loggedIn">
       <ion-list-header>{{ "home.selectCar" | translate }}</ion-list-header>
 
-      <ion-item *ngFor="#vehicle of vehicles" value="{{vehicle.key}}">
+      <ion-item *ngFor="let vehicle of vehicles" value="{{vehicle.key}}">
         <ion-label>{{vehicle.value}}</ion-label>
         <ion-radio value="{{vehicle.key}}"></ion-radio>
       </ion-item>

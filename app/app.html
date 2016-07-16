@@ -12,7 +12,7 @@
       <ion-list-header>
         {{ "menu.Navigate" | translate }}
       </ion-list-header>
-      <button ion-item menuClose *ngFor="#page of appLoggedOutPages" (click)="openPage(page)">
+      <button ion-item menuClose *ngFor="let page of appLoggedOutPages" (click)="openPage(page)">
         <ion-icon item-left [name]="page.icon"></ion-icon>
         {{ page.title | translate }}
       </button>
@@ -22,7 +22,7 @@
       <ion-list-header>
         {{ "menu.Account" | translate }}
       </ion-list-header>
-      <button ion-item menuClose *ngFor="#page of loggedOutPages" (click)="openPage(page)">
+      <button ion-item menuClose *ngFor="let page of loggedOutPages" (click)="openPage(page)">
         <ion-icon item-left [name]="page.icon"></ion-icon>
         {{ page.title | translate }}
       </button>
@@ -44,7 +44,7 @@
       <ion-list-header>
         {{ "menu.Navigate" | translate }}
       </ion-list-header>
-      <button ion-item menuClose *ngFor="#page of appLoggedInPages" (click)="openPage(page)">
+      <button ion-item menuClose *ngFor="let page of appLoggedInPages" (click)="openPage(page)">
         <ion-icon item-left [name]="page.icon"></ion-icon>
         {{ page.title | translate }}
       </button>
@@ -54,7 +54,7 @@
       <ion-list-header>
         {{ "menu.Account" | translate }}
       </ion-list-header>
-      <button ion-item menuClose *ngFor="#page of loggedInPages" (click)="openPage(page)">
+      <button ion-item menuClose *ngFor="let page of loggedInPages" (click)="openPage(page)">
         <ion-icon item-left [name]="page.icon"></ion-icon>
         {{ page.title | translate }}
       </button>
