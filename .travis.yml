@@ -12,14 +12,14 @@ android:
 
 before_install:
   - nvm install v4
-  - npm i -g npm@^2.0.0
+  - npm install -g npm
   - npm install -g cordova ionic@beta
 
 install:
   - npm install
   - ionic platform add android
   - cordova prepare
-  #- npm run webdriver-update
+  - ionic state restore
 
 before_script:
   - export DISPLAY=:99.0
@@ -28,8 +28,7 @@ before_script:
 script:
   - export TS_NODE_DISABLE_WARNINGS=false
   - ionic build android
-  #- npm test
-  #- npm run coverage
+  - npm test
 
 notifications:
   email:

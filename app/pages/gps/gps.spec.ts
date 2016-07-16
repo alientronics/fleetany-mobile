@@ -1,15 +1,14 @@
 import { Gps } from './gps';
 import { Geolocation, Toast } from 'ionic-native';
-import { IonicApp, Platform, NavController } from 'ionic-angular';
+import { Platform, NavController } from 'ionic-angular';
 import { Events }   from 'ionic-angular';
 import { TranslateService, TranslateStaticLoader, TranslateLoader } from 'ng2-translate/ng2-translate';
 import { UserData } from '../../providers/user-data';
 import { GpsProvider } from '../../providers/gps';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
-
-let gps: Gps = null;
-let gpsProvider: GpsProvider = null;
+import { beforeEachProviders, describe, expect, inject, it } from '@angular/core/testing';
+import { providers }   from '../../../test/diExports';
 
 class MockClass {
   public backButton = { subscribe : () => {} }
@@ -82,43 +81,34 @@ function getBluetoothDataStub(): any {
 
 describe('Gps', () => {
 
-  beforeEach(() => {   
-    let mockClass: any = (<any>new MockClass());
-    let events: Events = new Events();
-    let platform: Platform = new Platform();
-    let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
-    let userData: UserData = new UserData(events, http, platform);
-    spyOn(userData, 'showToast').and.callFake(showToastStub);
-    spyOn(events, 'publish').and.callFake(publishStub);
-    spyOn(Geolocation, 'watchPosition').and.callFake(watchPositionStub); 
-    gpsProvider = new GpsProvider(events, platform, mockClass, userData);
-    let translateLoad: TranslateLoader = new TranslateStaticLoader(http, 'assets/i18n', '.json');
-    let translate: TranslateService = new TranslateService(http, translateLoad, null);
-    gps = new Gps(gpsProvider, events, translate);
-  });
+  beforeEachProviders(() => providers);
+  beforeEachProviders(() => [
+    GpsProvider,
+    Gps
+  ]);
 
-  it('initialises', () => {
+  it('initialises', inject([ Gps ], (gps) => {
     expect(gps).not.toBeNull();
-  });
+  }));
   
-  it('should call start gps provider', () => {
+  it('should call start gps provider', inject([ Gps, GpsProvider ], (gps, gpsProvider) => {
     spyOn(gpsProvider, 'gpsToggle').and.callFake(gpsToggleStub);
     gps.gpsToggle(true);
     expect(gpsProvider.gpsToggle).toHaveBeenCalled();
-  });
+  }));
 
-  it('should set display data', () => {
+  it('should set display data', inject([ Gps, GpsProvider ], (gps, gpsProvider) => {
     spyOn(gpsProvider, 'getGpsCurrentData').and.callFake(gpsCurrentDataStub);
     gps.setDisplayData();
     expect(gps.gpstracking).toBe(true);
     expect(gps.latitude).toBe(30.03);
     expect(gps.longitude).toBe(51.22);
-  });
+  }));
 
-  it('should listen to gps events', () => {
+  it('should listen to gps events', inject([ Gps ], (gps) => {
     spyOn(gps.events, 'subscribe').and.callFake(publishStub);
     gps.listenToGpsEvents();
     expect(gps.events.subscribe.calls.count()).toEqual(2);
-  });
+  }));
 
 });

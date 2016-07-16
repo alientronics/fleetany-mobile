@@ -2,29 +2,29 @@
 
 import {Injectable, Inject} from '@angular/core';
 import {Storage, Platform, LocalStorage, Events} from 'ionic-angular';
-//import {GeofenceProvider} from './geofence';
+import {GeofenceProvider} from './geofence';
 
 @Injectable()
 export class AlertsProvider {
 
   public storage: Storage;
-  //private geofenceProvider: GeofenceProvider;
+  private geofenceProvider: GeofenceProvider;
   private ALERTS_DATA: string;
 
   constructor(
       @Inject(Events) public events: Events,
-      @Inject(Platform) public platform: Platform
-      //geofenceProvider: GeofenceProvider
+      @Inject(Platform) public platform: Platform,
+      geofenceProvider: GeofenceProvider
   ) {
     this.storage = new Storage(LocalStorage);
     this.events = events;
-    //this.geofenceProvider = geofenceProvider;
+    this.geofenceProvider = geofenceProvider;
     this.platform = platform;
     this.ALERTS_DATA = '';
-    //this.listenToGeofenceEvents();
+    this.listenToGeofenceEvents();
   }
 
-/*
+
   listenToGeofenceEvents() {
     this.events.subscribe('geofence:vehicleout', () => {
       this.geofenceProvider.getGeofenceData().then((geofence) => { 
@@ -35,7 +35,7 @@ export class AlertsProvider {
       });
     });
   }
-*/
+
   setAlertsData(data) {
     var alerts = [
       {sensorName: 'Sensor 1', temperature: '100', pressure: '80'},

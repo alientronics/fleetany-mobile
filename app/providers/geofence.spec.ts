@@ -3,6 +3,7 @@ import { UserData } from './user-data';
 import { GeofenceProvider } from './geofence';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
+import { beforeEachProviders, describe, expect, inject, it } from '@angular/core/testing';
 
 let geofenceProvider: GeofenceProvider = null;
 
@@ -42,7 +43,7 @@ describe('GeofenceProvider', () => {
     spyOn(geofenceProvider.events, 'subscribe').and.callFake(publishStub);
     geofenceProvider.listenToUserDataEvents();
     geofenceProvider.userData.setPlate(1);
-    expect(geofenceProvider.events.subscribe.calls.count()).toEqual(1);
+    expect(geofenceProvider.events.subscribe).toHaveBeenCalled();
   });
    
   it('should clear storage', () => {

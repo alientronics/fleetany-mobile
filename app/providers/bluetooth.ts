@@ -29,7 +29,7 @@ export class BluetoothProvider {
   constructor(
       @Inject(Events) public events: Events,
       @Inject(Platform) public platform: Platform,
-      @Inject(Events) public nav: NavController,
+      @Inject(NavController) public nav: NavController,
       userData: UserData,
       gpsProvider: GpsProvider
   ) {

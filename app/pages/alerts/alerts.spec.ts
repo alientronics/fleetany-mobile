@@ -5,35 +5,29 @@ import { TranslateService, TranslateStaticLoader, TranslateLoader } from 'ng2-tr
 import { Alerts } from './alerts';
 import { UserData } from '../../providers/user-data';
 import { AlertsProvider } from '../../providers/alerts';
-
-let alerts: Alerts = null;
+import { GeofenceProvider } from '../../providers/geofence';
+import { beforeEachProviders, describe, expect, inject, it } from '@angular/core/testing';
+import { providers }   from '../../../test/diExports';
 
 function publishStub(topic: string):any { return null; }
 
-class MockClass {}
-
 describe('Alerts', () => {
 
-beforeEach(() => {      
-  let mockClass: any = (<any>new MockClass());
-  let platform: Platform = new Platform();
-  let events: Events = new Events();
-  let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
-  let alertsProvider: AlertsProvider = new AlertsProvider(events, platform, mockClass);
-  alertsProvider.setAlertsData(null);
-  let translateLoad: TranslateLoader = new TranslateStaticLoader(http, 'assets/i18n', '.json');
-  let translate: TranslateService = new TranslateService(http, translateLoad, null);
-  alerts = new Alerts(translate, alertsProvider, events);
-});
+  beforeEachProviders(() => providers);
+  beforeEachProviders(() => [
+    AlertsProvider,
+    GeofenceProvider,
+    Alerts
+  ]);
 
-it('initialises', () => {
-  expect(alerts).not.toBeNull();
-});
+  it('initialises', inject([ Alerts ], (alerts) => {
+    expect(alerts).not.toBeNull();
+  }));
 
-it('should listen to alerts events', () => {
-  spyOn(alerts.events, 'subscribe').and.callFake(publishStub);
-  alerts.listenToAlertsEvents();
-  expect(alerts.events.subscribe.calls.count()).toEqual(1);
-});
+  it('should listen to alerts events', inject([ Alerts ], (alerts) => {
+    spyOn(alerts.events, 'subscribe').and.callFake(publishStub);
+    alerts.listenToAlertsEvents();
+    expect(alerts.events.subscribe.calls.count()).toEqual(1);
+  }));
 
 });

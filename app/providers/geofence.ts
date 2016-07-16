@@ -8,7 +8,7 @@ import {UserData} from './user-data';
 export class GeofenceProvider {
 
   public storage: Storage;
-  private userData: UserData;
+  public userData: UserData;
   private GEOFENCE_DATA: string;
 
   constructor(
@@ -39,9 +39,7 @@ export class GeofenceProvider {
                 this.setGeofenceData(geo);
                 this.events.publish('geofence:vehicleout');
             });
-        };
-
-        
+        };        
       }
     }); 
   }

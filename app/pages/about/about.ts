@@ -1,10 +1,7 @@
-'use strict';
-
 import { Component } from '@angular/core';
-import {Page} from 'ionic-angular';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
 
-@Page({
+@Component({
   templateUrl: 'build/pages/about/about.html',
   pipes: [TranslatePipe]
 })

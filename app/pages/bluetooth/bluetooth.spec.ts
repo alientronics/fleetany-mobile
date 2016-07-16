@@ -7,9 +7,8 @@ import { TranslateService, TranslateStaticLoader, TranslateLoader } from 'ng2-tr
 import { UserData } from '../../providers/user-data';
 import { GpsProvider } from '../../providers/gps';
 import { BluetoothProvider } from '../../providers/bluetooth';
-
-let bluetooth: Bluetooth = null;
-let bluetoothProvider: BluetoothProvider = null;
+import { beforeEachProviders, describe, expect, inject, it } from '@angular/core/testing';
+import { providers }   from '../../../test/diExports';
 
 class MockClass {
   public present(): any { return true; }
@@ -89,56 +88,48 @@ function startScanStub(options: any): any {
 
 describe('Bluetooth', () => {
 
-  beforeEach(() => {   
-    let mockClass: any = (<any>new MockClass());
-    let events: Events = new Events();
-    let platform: Platform = new Platform();
-    let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
-    let userData: UserData = new UserData(events, http, platform);
-    spyOn(userData, 'showToast').and.callFake(showToastStub);
-    spyOn(events, 'publish').and.callFake(publishStub);
-    let gpsProvider: GpsProvider = new GpsProvider(events, platform, mockClass, userData);
-    bluetoothProvider = new BluetoothProvider(events, platform, mockClass, userData, gpsProvider);
-    let translateLoad: TranslateLoader = new TranslateStaticLoader(http, 'assets/i18n', '.json');
-    let translate: TranslateService = new TranslateService(http, translateLoad, null);
-    bluetooth = new Bluetooth(bluetoothProvider, events, translate);
-  });
+  beforeEachProviders(() => providers);
+  beforeEachProviders(() => [
+    GpsProvider,
+    BluetoothProvider,
+    Bluetooth
+  ]);
 
-  it('initialises', () => {
+  it('initialises', inject([ Bluetooth ], (bluetooth) => {
     expect(bluetooth).not.toBeNull();
-  });
+  }));
 
-  it('should call bleToggle provider', () => {
+  it('should call bleToggle provider', inject([ Bluetooth, BluetoothProvider ], (bluetooth, bluetoothProvider) => {
     spyOn(bluetoothProvider, 'bleToggle').and.callFake(bleToggleStub);
     bluetooth.bleToggle(true);
     expect(bluetoothProvider.bleToggle).toHaveBeenCalled();
-  });
+  }));
 
-  it('should send data to provider', () => {
+  it('should send data to provider', inject([ Bluetooth, BluetoothProvider ], (bluetooth, bluetoothProvider) => {
     spyOn(bluetoothProvider, 'sendData').and.callFake(writeStub);
     bluetooth.sendData();
     expect(bluetoothProvider.sendData).toHaveBeenCalled();
-  });
+  }));
 
-  it('should call bledeviceChanged provider', () => {
+  it('should call bledeviceChanged provider', inject([ Bluetooth, BluetoothProvider ], (bluetooth, bluetoothProvider) => {
     spyOn(bluetoothProvider, 'bledeviceChanged').and.callFake(bleDeviceChangedStub);
     bluetooth.bledeviceChanged('73:08:19:71:8C:9B');
     expect(bluetoothProvider.bledeviceChanged).toHaveBeenCalled();
-  });
+  }));
 
-  it('should set display data', () => {
+  it('should set display data', inject([ Bluetooth, BluetoothProvider ], (bluetooth, bluetoothProvider) => {
     spyOn(bluetoothProvider, 'getBluetoothCurrentData').and.callFake(bluetoothCurrentDataStub);
     bluetooth.setDisplayData();
     expect(bluetooth.blescan).toBe(false);
     expect(bluetooth.bledevice).toBe('73:08:19:71:8C:9B');
     expect(bluetooth.devices.length).toBe(3);
     expect(bluetooth.datastream.length).toBe(1);
-  });
+  }));
 
-  it('should listen to bluetooth events', () => {
+  it('should listen to bluetooth events', inject([ Bluetooth, BluetoothProvider ], (bluetooth, bluetoothProvider) => {
     spyOn(bluetooth.events, 'subscribe').and.callFake(publishStub);
     bluetooth.listenToBluetoothEvents();
     expect(bluetooth.events.subscribe.calls.count()).toEqual(3);
-  });
+  }));
 
 });

@@ -1,9 +1,7 @@
-'use strict';
-
-import {App, Platform, Events, Nav, MenuController} from 'ionic-angular';
+import {App, Platform, Events, Nav, MenuController, ionicBootstrap} from 'ionic-angular';
 import {TabsPage} from './pages/tabs/tabs';
 import {UserData} from './providers/user-data';
-//import {GeofenceProvider} from './providers/geofence';
+import {GeofenceProvider} from './providers/geofence';
 import {AlertsProvider} from './providers/alerts';
 import {GpsProvider} from './providers/gps';
 import {BluetoothProvider} from './providers/bluetooth';
@@ -25,10 +23,9 @@ interface PageObj {
 @Component({
   templateUrl: 'build/app.html',
   pipes: [TranslatePipe],
-  //config: {},
   providers: [
     UserData,
-    //GeofenceProvider,
+    GeofenceProvider,
     AlertsProvider,
     GpsProvider,
     BluetoothProvider,
@@ -39,7 +36,7 @@ interface PageObj {
     TranslateService
   ]
 })
-class FleetanyApp {
+export class FleetanyApp {
 
   @ViewChild(Nav) nav: Nav;
 
@@ -153,3 +150,7 @@ class FleetanyApp {
   }
 
 }
+
+ionicBootstrap(FleetanyApp, [], {
+  tabbarPlacement: 'top'
+});

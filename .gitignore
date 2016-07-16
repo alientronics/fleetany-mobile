@@ -24,6 +24,7 @@ platforms/
 plugins/
 typings/
 coverage/
+bower_components/
 
 .DS_Store
 Thumbs.db

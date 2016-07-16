@@ -11,6 +11,13 @@ interface IBackgroundGeolocation {
     finish(): void;
 }
 
+interface IGeofence {
+	addOrUpdate(geofence: any): Promise<any>;
+    initialize(): Promise<any>;
+    removeAll(): Promise<any>;
+    onTransitionReceived: any;
+}
+
 interface IPlugins {
     googleplus: IGooglePlus;
     backgroundGeoLocation: IBackgroundGeolocation;
@@ -18,7 +25,6 @@ interface IPlugins {
 
 interface Window {    
     plugins: IPlugins;
+    geofence: IGeofence;
     cordova: boolean;
 }
-
-declare var window: Window;

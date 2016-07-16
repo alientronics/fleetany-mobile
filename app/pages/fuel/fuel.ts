@@ -5,7 +5,7 @@ import {Page, Alert, NavController} from 'ionic-angular';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {UserData} from '../../providers/user-data';
 import {Toast} from 'ionic-native';
-import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, AbstractControl } from '@angular/common';
+import { FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators, AbstractControl } from '@angular/common';
 
 @Component({
   templateUrl: 'build/pages/fuel/fuel.html',
@@ -48,8 +48,8 @@ export class Fuel {
       this.types = types;
     });
     
-    this.fuelForm.controls['type'].updateValue('regular');
-    this.fuelForm.controls['tankfill'].updateValue(true);
+    (<Control>this.fuelForm.controls['type']).updateValue('regular');
+    (<Control>this.fuelForm.controls['tankfill']).updateValue(true);
   }
 
   onSubmit(value: any): void { 
@@ -70,11 +70,11 @@ export class Fuel {
               res => {
 
                 for(let field in this.fuelForm.controls) {
-                  this.fuelForm.controls[field].updateValue('');
+                  (<Control>this.fuelForm.controls[field]).updateValue('');
                 };
 
-                this.fuelForm.controls['type'].updateValue('regular');
-                this.fuelForm.controls['tankfill'].updateValue(true);
+                (<Control>this.fuelForm.controls['type']).updateValue('regular');
+                (<Control>this.fuelForm.controls['tankfill']).updateValue(true);
 
                 this.userData.showToast('Fuel sent successfully!', 'Success!', this.nav);
             

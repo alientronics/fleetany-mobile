@@ -1,34 +1,30 @@
 import { Events, Platform, NavController } from 'ionic-angular';
 import { UserData } from './user-data';
 import { AlertsProvider } from './alerts';
-//import { GeofenceProvider } from './geofence';
+import { GeofenceProvider } from './geofence';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
-
-let alertsProvider: AlertsProvider = null;
+import { beforeEachProviders, describe, expect, inject, it } from '@angular/core/testing';
+import { providers }   from '../../test/diExports';
 
 function publishStub(topic: string):any { return null; }
 
 describe('AlertsProvider', () => {
 
-  beforeEach(() => {   
-    let events: Events = new Events();
-    let platform: Platform = new Platform();
-    let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
-    let userData: UserData = new UserData(events, http, platform);
-    //let geofenceProvider: GeofenceProvider = new GeofenceProvider(events, platform, userData);
-    spyOn(events, 'publish').and.callFake(publishStub); 
-    alertsProvider = new AlertsProvider(events, platform, geofenceProvider);
-  });
+  beforeEachProviders(() => providers);
+  beforeEachProviders(() => [
+    GeofenceProvider,
+    AlertsProvider
+  ]);
 
-  it('initialises', () => {
+  it('initialises', inject([ AlertsProvider ], (alertsProvider) => {
     expect(alertsProvider).not.toBeNull();
-  });
+  }));
 
-  it('should listen to geofence events', () => {
+  it('should listen to geofence events', inject([ AlertsProvider ], (alertsProvider) => {
     spyOn(alertsProvider.events, 'subscribe').and.callFake(publishStub);
     alertsProvider.listenToGeofenceEvents();
     expect(alertsProvider.events.subscribe.calls.count()).toEqual(1);
-  });
-   
+  }));
+
 });
