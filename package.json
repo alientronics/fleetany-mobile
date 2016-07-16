@@ -68,7 +68,9 @@
     "cordova-plugin-geofence",
     "cordova-plugin-crosswalk-webview"
   ],
-  "cordovaPlatforms": [ "android" ],
+  "cordovaPlatforms": [
+    "android"
+  ],
   "scripts": {
     "postinstall": "typings install && webdriver-manager update && cp test/karma-static/*.html node_modules/karma/static",
     "build": "gulp --gulpfile test/gulpfile.ts --cwd ./ build-app",

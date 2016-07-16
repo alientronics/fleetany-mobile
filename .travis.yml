@@ -18,15 +18,13 @@ before_install:
 install:
   - npm install
   - ionic platform add android
-  - cordova prepare
-  - ionic state restore
 
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+  - export TS_NODE_DISABLE_WARNINGS=false
 
 script:
-  - export TS_NODE_DISABLE_WARNINGS=false
   - ionic build android
   - npm test
 
