@@ -18,10 +18,21 @@ export class Bluetooth {
   public datastream: Array<any>;
   private bluetoothProvider: BluetoothProvider;
 
+  public position: number;
+  public positions: Array<any>;
+
   constructor(bluetoothProvider: BluetoothProvider, events: Events, private translate: TranslateService) {
     this.translate = translate;
     this.bluetoothProvider = bluetoothProvider;
     this.events = events;
+
+    this.position = 1;
+    this.positions = [
+      {k:1 , v:1}, {k:2 , v:2}, {k:3 , v:3}, {k:4 , v:4},
+      {k:5 , v:5}, {k:6 , v:6}, {k:7 , v:7}, {k:8 , v:8},
+      {k:9 , v:9}, {k:10 , v:10}, {k:11 , v:11}, {k:12 , v:12},
+      {k:13 , v:13}, {k:14 , v:14}, {k:15 , v:15}, {k:16 , v:16},
+    ];
 
     this.setDisplayData();
     this.listenToBluetoothEvents();

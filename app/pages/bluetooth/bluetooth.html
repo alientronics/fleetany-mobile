@@ -32,7 +32,15 @@
     </ion-list-header>
     <ion-item>{{bledevice}}</ion-item>
     <ion-item>
-      <button primary block (click)="sendData()">{{ "ble.SendData" | translate }}</button>
+      <ion-label>{{ "Tire Position" }}</ion-label>
+      <ion-select [(ngModel)]="position">
+        <ion-option *ngFor="let position of positions" value="{{position.k}}">
+          {{position.v}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <button primary block (click)="sendData()">{{ "Inflate Pair" }}</button>
     </ion-item>
   </ion-list>
 
