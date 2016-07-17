@@ -14,26 +14,19 @@
 
 <ion-content class="bluetooth">
 
-  <ion-list>
-    <ion-item>
-      <ion-label>{{ "ble.ScanDevices" | translate }}</ion-label>
-      <ion-toggle [(ngModel)]="blescan" (ngModelChange)="bleToggle($event)"></ion-toggle>
-    </ion-item>
-  </ion-list>
-
-  <ion-list radio-group [hidden]="!blescan" [(ngModel)]="bledevice" (ngModelChange)="bledeviceChanged($event)">
+  <ion-list radio-group [(ngModel)]="bledevice" (ngModelChange)="bledeviceChanged($event)">
     <ion-list-header>
       {{ "ble.SelectDevice" | translate }}
     </ion-list-header>
 
-    <ion-item *ngFor="let device of devices">
+    <ion-item *ngFor="let device of devices" value="{{device.id}}">
       <ion-label>{{device.name}}</ion-label>
       <ion-radio value="{{device.id}}"></ion-radio>
     </ion-item>
 
   </ion-list>
 
-  <ion-list [hidden]="!bledevice || blescan">
+  <ion-list [hidden]="!bledevice">
     <ion-list-header>
       {{ "ble.SelectedDevice" | translate }}
     </ion-list-header>

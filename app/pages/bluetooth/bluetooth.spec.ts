@@ -99,12 +99,6 @@ describe('Bluetooth', () => {
     expect(bluetooth).not.toBeNull();
   }));
 
-  it('should call bleToggle provider', inject([ Bluetooth, BluetoothProvider ], (bluetooth, bluetoothProvider) => {
-    spyOn(bluetoothProvider, 'bleToggle').and.callFake(bleToggleStub);
-    bluetooth.bleToggle(true);
-    expect(bluetoothProvider.bleToggle).toHaveBeenCalled();
-  }));
-
   it('should send data to provider', inject([ Bluetooth, BluetoothProvider ], (bluetooth, bluetoothProvider) => {
     spyOn(bluetoothProvider, 'sendData').and.callFake(writeStub);
     bluetooth.sendData();

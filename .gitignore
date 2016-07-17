@@ -25,6 +25,7 @@ plugins/
 typings/
 coverage/
 bower_components/
+app/pages/uart
 
 .DS_Store
 Thumbs.db

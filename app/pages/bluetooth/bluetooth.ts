@@ -25,10 +25,7 @@ export class Bluetooth {
 
     this.setDisplayData();
     this.listenToBluetoothEvents();
-  }
-
-  bleToggle(value) {
-    this.bluetoothProvider.bleToggle(value);
+    this.bluetoothProvider.bleToggle(true);
   }
 
   sendData() {
