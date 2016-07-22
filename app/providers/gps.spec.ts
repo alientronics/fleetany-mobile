@@ -1,11 +1,15 @@
-import { Geolocation, Toast } from 'ionic-native';
-import { Events, Platform, NavController } from 'ionic-angular';
-import { UserData } from './user-data';
+import { NavController } from 'ionic-angular';
+import { Geolocation } from 'ionic-native';
 import { GpsProvider } from './gps';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
-import { beforeEachProviders, describe, expect, inject, it } from '@angular/core/testing';
+import { beforeEachProviders, beforeEach, describe, expect, inject, it } from '@angular/core/testing';
 import { providers }   from '../../test/diExports';
+import { provide } from '@angular/core'
+
+class GeoLocMock {
+  public watchPosition(options: any): any { return true; }
+}
 
 class MockClass {
   public backButton = { subscribe : () => {} }
@@ -13,7 +17,6 @@ class MockClass {
   public present(): any { return true; }
   public unsubscribe(): any { return true; }
 }
-
 
 function showToastStub(message: string, title: string, nav: NavController): any {
   'use strict';
@@ -41,47 +44,60 @@ function watchPositionStub(options: any): any {
 
 describe('GpsProvider', () => {
 
+  let gpsProvider:GpsProvider;
+
   beforeEachProviders(() => providers);
   beforeEachProviders(() => [
-    GpsProvider
+    GpsProvider,
+    provide(Geolocation, {useClass: GeoLocMock})
   ]);
 
-  it('initialises', inject([ GpsProvider ], (gpsProvider) => {
-    expect(gpsProvider).not.toBeNull();
+  beforeEach( inject([ GpsProvider ], (gpsProv) => {
+    gpsProvider = gpsProv;
+    spyOn(gpsProvider.userData, 'showToast').and.callFake(showToastStub);
+    spyOn(gpsProvider.events, 'publish').and.callFake(publishStub);
+    spyOn(Geolocation, 'watchPosition').and.callFake(watchPositionStub); 
   }));
 
-  it('should ask for a vehicle', inject([ GpsProvider ], (gpsProvider) => {
+  it('initialises', () => {
+    expect(gpsProvider).not.toBeNull();
+  });
+
+  it('should ask for a vehicle', () => {
     gpsProvider.userData.plate = null;
     gpsProvider.gpsToggle(true);
     expect(gpsProvider.userData.showToast).toHaveBeenCalled();
-  }));
+  });
   
-  it('should start gps tracking', inject([ GpsProvider ], (gpsProvider) => {
+  it('should start gps tracking', () => {
+    gpsProvider.userData.plate = 1;
     gpsProvider.gpsToggle(true);
     expect(Geolocation.watchPosition).toHaveBeenCalled();
-  }));
+  });
   
-  it('should start gps tracking with empty data', inject([ GpsProvider ], (gpsProvider) => {
+  it('should start gps tracking with empty data', () => {
+    gpsProvider.userData.plate = 1;
     gpsProvider.setGpsData(null);
     gpsProvider.gpsToggle(true);
     expect(Geolocation.watchPosition).toHaveBeenCalled();
-  }));
+  });
 
-  it('should subscribe gps location', inject([ GpsProvider ], (gpsProvider) => {
+  it('should subscribe gps location', () => {
     gpsProvider.gpsToggle(true);
-  }));
+  });
 
-  it('should unsubscribe watcher', inject([ GpsProvider ], (gpsProvider) => {
+  it('should unsubscribe watcher', () => {
     gpsProvider.watcher = new MockClass();
+    gpsProvider.userData.plate = 1;
     gpsProvider.gpsToggle(false);
     expect(gpsProvider.watcher).toBeNull();
-  }));
+  });
 
-  it('should listen to userData events', inject([ GpsProvider ], (gpsProvider) => {
+  it('should listen to userData events', () => {
     spyOn(gpsProvider.events, 'subscribe').and.callFake(publishStub);
     gpsProvider.listenToUserDataEvents();
     gpsProvider.userData.logout();
-    expect(gpsProvider.events.subscribe.calls.count()).toEqual(1);
-  }));
+    expect(gpsProvider.events.subscribe).toHaveBeenCalled();
+  });
 
 });

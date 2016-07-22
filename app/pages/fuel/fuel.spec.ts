@@ -4,7 +4,7 @@ import { Events, Platform, NavController }   from 'ionic-angular';
 import { UserData } from '../../providers/user-data';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
-import { beforeEachProviders, describe, expect, inject, it } from '@angular/core/testing';
+import { beforeEachProviders, beforeEach, describe, expect, inject, it } from '@angular/core/testing';
 import { providers }   from '../../../test/diExports';
 
 function postApiSuccessStub(options: any): any {
@@ -36,17 +36,29 @@ function showToastStub(message: string, title: string, nav: NavController): any 
 
 describe('Fuel', () => {
 
+  let fuel:Fuel;
+
   beforeEachProviders(() => providers);
   beforeEachProviders(() => [
     FormBuilder,
     Fuel
   ]);
 
-  it('initialises', inject([ Fuel ], (fuel) => {
-    expect(fuel).not.toBeNull();
+  beforeEach( inject([ Fuel ], (f) => {
+    fuel = f;
+    let fb = new FormBuilder()
+    fuel.fuelForm = fb.group({
+        'type':     ['', ],
+        'tankfill': ['', ]
+    });
+    spyOn(fuel.userData, 'showToast').and.callFake(showToastStub);
   }));
 
-  it('should submit form', inject([ Fuel ], (fuel) => {
+  it('initialises', () => {
+    expect(fuel).not.toBeNull();
+  });
+
+  it('should submit form', () => {
     let value: any = {};
     value.price = 12.34;
     value.amount = 12.34;
@@ -58,9 +70,9 @@ describe('Fuel', () => {
     fuel.onSubmit(value);
     expect(fuel.userData.postApi).toHaveBeenCalled();
     expect(fuel.userData.showToast).toHaveBeenCalled();
-  }));
+  });
 
-  it('should ask for a vehicle', inject([ Fuel ], (fuel) => {
+  it('should ask for a vehicle', () => {
     let value: any = {};
     value.price = 12.34;
     value.amount = 12.34;
@@ -71,9 +83,9 @@ describe('Fuel', () => {
     spyOn(fuel.userData, 'postApi').and.callFake(postApiSuccessStub);
     fuel.onSubmit(value);
     expect(fuel.userData.showToast).toHaveBeenCalled();
-  }));
+  });
 
-  it('should throw error', inject([ Fuel ], (fuel) => {
+  it('should throw error', () => {
     let value: any = {};
     value.price = 12.34;
     value.amount = 12.34;
@@ -84,6 +96,6 @@ describe('Fuel', () => {
     spyOn(fuel.userData, 'postApi').and.callFake(postApiErrorStub);
     fuel.onSubmit(value);
     expect(fuel.userData.showToast).toHaveBeenCalled();
-  }));
+  });
 
 });

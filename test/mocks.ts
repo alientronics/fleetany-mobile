@@ -49,4 +49,8 @@ export class PlatformMock {
       resolve();
     });
   }
+
+  public is(platform: string): boolean {
+    return false;
+  }
 }

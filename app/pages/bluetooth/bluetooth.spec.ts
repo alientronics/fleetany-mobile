@@ -1,5 +1,4 @@
 import { Bluetooth } from './bluetooth';
-import { BLE, BluetoothSerial } from 'ionic-native';
 import { Events, Platform, NavController }   from 'ionic-angular';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
@@ -7,13 +6,16 @@ import { TranslateService, TranslateStaticLoader, TranslateLoader } from 'ng2-tr
 import { UserData } from '../../providers/user-data';
 import { GpsProvider } from '../../providers/gps';
 import { BluetoothProvider } from '../../providers/bluetooth';
-import { beforeEachProviders, describe, expect, inject, it } from '@angular/core/testing';
+import { beforeEachProviders, beforeEach, describe, expect, inject, it } from '@angular/core/testing';
 import { providers }   from '../../../test/diExports';
+import { provide } from '@angular/core'
 
 class MockClass {
   public present(): any { return true; }
   public unsubscribe(): any { return true; }
   public json(): any { return true; }
+  public getBluetoothCurrentData(): any { return true; }
+  public bleToggle(): any { return true; }
 }
 
 function showToastStub(message: string, title: string, nav: NavController): any {
@@ -88,42 +90,52 @@ function startScanStub(options: any): any {
 
 describe('Bluetooth', () => {
 
+  let bluetooth: Bluetooth;
+
   beforeEachProviders(() => providers);
   beforeEachProviders(() => [
     GpsProvider,
+    //provide(BluetoothProvider, {useClass: MockClass}),
     BluetoothProvider,
     Bluetooth
   ]);
 
-  it('initialises', inject([ Bluetooth ], (bluetooth) => {
+  beforeEach( inject([ Bluetooth ], (bt) => {
+    bluetooth = bt;
+    //spyOn(bluetooth.userData, 'showToast').and.callFake(showToastStub);
+    spyOn(bluetooth.bluetoothProvider, 'getBluetoothCurrentData').and.callFake(bluetoothCurrentDataStub);
+    spyOn(bluetooth.bluetoothProvider, 'bleToggle').and.callFake(bleToggleStub);
+    spyOn(bluetooth.events, 'publish').and.callFake(publishStub);
+    spyOn(bluetooth.events, 'subscribe').and.callFake(publishStub);
+  }));
+
+  it('initialises', () => {
     expect(bluetooth).not.toBeNull();
-  }));
+  });
 
-  it('should send data to provider', inject([ Bluetooth, BluetoothProvider ], (bluetooth, bluetoothProvider) => {
-    spyOn(bluetoothProvider, 'sendData').and.callFake(writeStub);
+  it('should send data to provider', () => {
+    spyOn(bluetooth.bluetoothProvider, 'sendData').and.callFake(writeStub);
     bluetooth.sendData();
-    expect(bluetoothProvider.sendData).toHaveBeenCalled();
-  }));
+    expect(bluetooth.bluetoothProvider.sendData).toHaveBeenCalled();
+  });
 
-  it('should call bledeviceChanged provider', inject([ Bluetooth, BluetoothProvider ], (bluetooth, bluetoothProvider) => {
-    spyOn(bluetoothProvider, 'bledeviceChanged').and.callFake(bleDeviceChangedStub);
+  it('should call bledeviceChanged provider', () => {
+    spyOn(bluetooth.bluetoothProvider, 'bledeviceChanged').and.callFake(bleDeviceChangedStub);
     bluetooth.bledeviceChanged('73:08:19:71:8C:9B');
-    expect(bluetoothProvider.bledeviceChanged).toHaveBeenCalled();
-  }));
+    expect(bluetooth.bluetoothProvider.bledeviceChanged).toHaveBeenCalled();
+  });
 
-  it('should set display data', inject([ Bluetooth, BluetoothProvider ], (bluetooth, bluetoothProvider) => {
-    spyOn(bluetoothProvider, 'getBluetoothCurrentData').and.callFake(bluetoothCurrentDataStub);
+  it('should set display data', () => {
     bluetooth.setDisplayData();
     expect(bluetooth.blescan).toBe(false);
     expect(bluetooth.bledevice).toBe('73:08:19:71:8C:9B');
     expect(bluetooth.devices.length).toBe(3);
     expect(bluetooth.datastream.length).toBe(1);
-  }));
+  });
 
-  it('should listen to bluetooth events', inject([ Bluetooth, BluetoothProvider ], (bluetooth, bluetoothProvider) => {
-    spyOn(bluetooth.events, 'subscribe').and.callFake(publishStub);
+  it('should listen to bluetooth events', () => {
     bluetooth.listenToBluetoothEvents();
-    expect(bluetooth.events.subscribe.calls.count()).toEqual(3);
-  }));
+    expect(bluetooth.events.subscribe).toHaveBeenCalled();
+  });
 
 });

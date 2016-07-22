@@ -12,11 +12,11 @@ import {BluetoothProvider} from '../../providers/bluetooth';
 export class Bluetooth {
 
   public events: Events;
-  private blescan: boolean;
+  public blescan: boolean;
   public bledevice: string;
   public devices: Array<any>;
   public datastream: Array<any>;
-  private bluetoothProvider: BluetoothProvider;
+  public bluetoothProvider: BluetoothProvider;
 
   public position: number;
   public positions: Array<any>;
@@ -33,10 +33,10 @@ export class Bluetooth {
       {k:9 , v:9}, {k:10 , v:10}, {k:11 , v:11}, {k:12 , v:12},
       {k:13 , v:13}, {k:14 , v:14}, {k:15 , v:15}, {k:16 , v:16},
     ];
-
+    
     this.setDisplayData();
     this.listenToBluetoothEvents();
-    this.bluetoothProvider.bleToggle(true);
+    //this.bluetoothProvider.bleToggle(true);
   }
 
   sendData() {
