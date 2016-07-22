@@ -11,19 +11,20 @@ import {BluetoothProvider} from '../../providers/bluetooth';
 })
 export class Bluetooth {
 
-  public events: Events;
   public blescan: boolean;
   public bledevice: string;
   public devices: Array<any>;
   public datastream: Array<any>;
-  public bluetoothProvider: BluetoothProvider;
 
   public position: number;
   public positions: Array<any>;
 
-  constructor(bluetoothProvider: BluetoothProvider, events: Events, private translate: TranslateService) {
+  constructor(
+      public bluetoothProvider: BluetoothProvider, 
+      public events: Events, 
+      private translate: TranslateService) {
+
     this.translate = translate;
-    this.bluetoothProvider = bluetoothProvider;
     this.events = events;
 
     this.position = 1;
@@ -36,7 +37,7 @@ export class Bluetooth {
     
     this.setDisplayData();
     this.listenToBluetoothEvents();
-    //this.bluetoothProvider.bleToggle(true);
+    this.bluetoothProvider.bleToggle(true);
   }
 
   sendData() {

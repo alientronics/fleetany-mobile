@@ -14,8 +14,7 @@ class MockClass {
   public present(): any { return true; }
   public unsubscribe(): any { return true; }
   public json(): any { return true; }
-  public getBluetoothCurrentData(): any { return true; }
-  public bleToggle(): any { return true; }
+  public showToast(): any { return true; }
 }
 
 function showToastStub(message: string, title: string, nav: NavController): any {
@@ -95,18 +94,18 @@ describe('Bluetooth', () => {
   beforeEachProviders(() => providers);
   beforeEachProviders(() => [
     GpsProvider,
-    //provide(BluetoothProvider, {useClass: MockClass}),
+    provide(UserData, {useClass: MockClass}),
     BluetoothProvider,
     Bluetooth
   ]);
 
   beforeEach( inject([ Bluetooth ], (bt) => {
     bluetooth = bt;
-    //spyOn(bluetooth.userData, 'showToast').and.callFake(showToastStub);
+    spyOn(bluetooth.bluetoothProvider.userData, 'showToast').and.callFake(showToastStub);
     spyOn(bluetooth.bluetoothProvider, 'getBluetoothCurrentData').and.callFake(bluetoothCurrentDataStub);
-    spyOn(bluetooth.bluetoothProvider, 'bleToggle').and.callFake(bleToggleStub);
-    spyOn(bluetooth.events, 'publish').and.callFake(publishStub);
-    spyOn(bluetooth.events, 'subscribe').and.callFake(publishStub);
+    spyOn(bluetooth.bluetoothProvider, 'bleToggle').and.returnValue(true);
+    spyOn(bluetooth.events, 'publish').and.returnValue(true);
+    spyOn(bluetooth.events, 'subscribe').and.returnValue(true);
   }));
 
   it('initialises', () => {
