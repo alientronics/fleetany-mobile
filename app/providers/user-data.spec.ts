@@ -84,14 +84,14 @@ describe('UserData', () => {
   });
 
   it('should call Toast when cordova', () => {
-    window.cordova = true;
+    spyOn(userData.platform, 'is').and.returnValue(true);
     spyOn(Toast, 'show').and.callFake(showStub);
     userData.showToast('','',null);
     expect(Toast.show).toHaveBeenCalled();
   });
 
   it('should call Nav when not cordova', () => {
-    window.cordova = false;
+    spyOn(userData.platform, 'is').and.returnValue(false);
     spyOn(Alert, 'create').and.callFake(createStub);
     let nav = new MockClass();
     spyOn(nav, 'present').and.callFake(publishStub);

@@ -16,7 +16,7 @@ import {About} from '../about/about';
 export class Login {
 
   private nav: NavController;
-  private platform: Platform;
+  public platform: Platform;
   private userData: UserData;
   private events: Events;
   private loggedIn: boolean;
