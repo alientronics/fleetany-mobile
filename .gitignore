@@ -31,5 +31,5 @@ app/pages/uart
 Thumbs.db
 UserInterfaceState.xcuserstate
 
-fleetany.keystore
-fleetany-mobile.apk
+*.keystore
+*.apk
