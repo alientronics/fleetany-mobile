@@ -21,7 +21,7 @@ export class Login {
   private events: Events;
   private loggedIn: boolean;
   private gpstracking: boolean;
-  private userImage: string;
+  //private userImage: string;
   private welcome: string;
   private plate: string;
   private vehicles: Array<any>;
@@ -118,7 +118,7 @@ export class Login {
     if (this.platform.is('mobile')) {
       GooglePlus.logout().then(
           (msg) => {
-            this.userImage = ""
+            //this.userImage = ""
             this.welcome = msg;
             this.plate = '';
           }
@@ -129,7 +129,7 @@ export class Login {
 
   updateUser(obj) {
     if (obj == null) return false;
-    if (obj.imageUrl) { this.userImage = obj.imageUrl; }
+    //if (obj.imageUrl) { this.userImage = obj.imageUrl; }
     this.welcome = "Hi, " + obj.displayName + ", " + obj.email;
     this.userData.email = obj.email;
     this.userData.getVehicles().then((vehicles) => {
