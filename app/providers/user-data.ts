@@ -160,7 +160,7 @@ export class UserData {
   }
 
   showToast(message, title, nav) {
-    if (window.cordova) {
+    if (this.platform.is('mobile')) {
       Toast.show(message, "5000", "center").subscribe(
         toast => {
           console.log(toast);
