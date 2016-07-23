@@ -2,6 +2,7 @@
 
 import { Component } from '@angular/core';
 import {Page, Alert, NavController, Events, Platform} from 'ionic-angular';
+import { GooglePlus } from 'ionic-native';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {forwardRef, Inject, Type} from '@angular/core';
 import {UserData} from '../../providers/user-data';
@@ -51,11 +52,6 @@ export class Login {
   listenToLoginEvents() {
     this.events.subscribe('user:login', () => {
       this.loggedIn = true;
-      if (this.nav) {
-        this.nav.push(Login).then( () => { //force page reload
-          this.nav.popToRoot();
-        });
-      }
     });
 
     this.events.subscribe('user:logout', () => {
@@ -74,21 +70,16 @@ export class Login {
   }
 
   googleLogin() {
-    if (window.plugins) { //if (this.platform.is('mobile')) {
-      window.plugins.googleplus.isAvailable((available) => {
-        if (available) {
-            window.plugins.googleplus.login(
-                {},
-                (obj) => {
-                  this.userData.login(obj);
-                  this.updateUser(obj);
-                },
-                (msg) => {
-                  this.welcome = "error: " + msg;
-                }
-            );
-        }
-      });
+    if (this.platform.is('mobile')) {
+      GooglePlus.login({}).then(
+          (obj) => {
+            this.userData.login(obj);
+            this.updateUser(obj);
+          },
+          (msg) => {
+            this.welcome = "error: " + msg;
+          }
+      );
     } else {
       let dummyUser = {
         imageUrl: "https://github.com/identicons/jasonlong.png",
@@ -124,8 +115,8 @@ export class Login {
   }
 
   googleLogout() {
-    if (window.plugins) {
-      window.plugins.googleplus.logout(
+    if (this.platform.is('mobile')) {
+      GooglePlus.logout().then(
           (msg) => {
             this.userImage = ""
             this.welcome = msg;
