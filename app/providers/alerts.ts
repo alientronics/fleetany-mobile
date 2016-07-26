@@ -20,7 +20,7 @@ export class AlertsProvider {
     this.events = events;
     this.geofenceProvider = geofenceProvider;
     this.platform = platform;
-    this.ALERTS_DATA = '';
+    this.ALERTS_DATA = 'alertdate';
     this.listenToGeofenceEvents();
   }
 
@@ -42,17 +42,18 @@ export class AlertsProvider {
       {sensorName: 'Sensor 2', temperature: '101', pressure: '82'},
       {sensorName: 'Sensor 3', temperature: '102', pressure: '83'}
     ]; 
-
+      /*
     if (alerts.length > 0) {
       if(this.ALERTS_DATA == '' || this.ALERTS_DATA == 'alertsdata') {
         this.ALERTS_DATA = JSON.stringify(alerts);
         this.storage.set(this.ALERTS_DATA, JSON.stringify(alerts));
       } else {
-        let alerts_data = JSON.parse(this.ALERTS_DATA);
+        let alerts_data = JSON.parse(this.alerts);
         this.ALERTS_DATA = JSON.stringify(alerts_data.concat(alerts));
         this.storage.set(this.ALERTS_DATA, JSON.stringify(alerts_data.concat(alerts)));
       }
     }
+      */
     this.events.publish('alerts:refresh');
   }
 

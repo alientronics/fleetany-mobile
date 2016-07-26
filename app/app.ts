@@ -45,8 +45,8 @@ export class FleetanyApp {
 
   appLoggedInPages: PageObj[] = [
     { title: 'menu.Home', component: Login, icon: 'home' },
-    { title: 'menu.Alerts', component: TabsPage, icon: 'alert' },
-    { title: 'menu.FuelTracking', component: TabsPage, index: 1, icon: 'color-fill' },
+    //{ title: 'menu.Alerts', component: TabsPage, icon: 'alert' },
+    //{ title: 'menu.FuelTracking', component: TabsPage, index: 1, icon: 'color-fill' },
     { title: 'menu.GPS', component: Gps, icon: 'compass' },
     { title: 'menu.BLE', component: Bluetooth, icon: 'bluetooth' },
     { title: 'menu.About', component: About, icon: 'information-circle' },
@@ -55,10 +55,10 @@ export class FleetanyApp {
     { title: 'menu.About', component: About, icon: 'information-circle' },
   ];
   loggedInPages: PageObj[] = [
-    { title: 'menu.Logout', component: Login, icon: 'log-out' }
+    //{ title: 'menu.Logout', component: Login, icon: 'log-out' }
   ];
   loggedOutPages: PageObj[] = [
-    { title: 'menu.Login', component: Login, icon: 'log-in' }
+    //{ title: 'menu.Login', component: Login, icon: 'log-in' }
   ];
 
   constructor(platform: Platform, 
