@@ -1,9 +1,10 @@
 'use strict';
 
 import { Component } from '@angular/core';
-import {Page, Events} from 'ionic-angular';
+import {Page, Events, NavController} from 'ionic-angular';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {GpsProvider} from '../../providers/gps';
+import {UserData} from '../../providers/user-data';
 
 @Component({
   templateUrl: 'build/pages/gps/gps.html',
@@ -17,7 +18,13 @@ export class Gps {
   private longitude: number;
   private gpsProvider: GpsProvider;
  
-  constructor(gpsProvider: GpsProvider, events: Events, private translate: TranslateService) {
+  constructor(
+      gpsProvider: GpsProvider, 
+      events: Events, 
+      private translate: TranslateService,
+      private nav: NavController,
+      private userData: UserData
+  ) {
     this.translate = translate;
     this.gpsProvider = gpsProvider;
     this.events = events;
@@ -30,6 +37,7 @@ export class Gps {
 
   gpsToggle(value) {
     this.gpsProvider.gpsToggle(value);
+    this.userData.loading(this.nav);
   }
 
   setDisplayData() {

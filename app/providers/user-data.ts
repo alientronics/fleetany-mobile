@@ -1,7 +1,7 @@
 'use strict';
 
 import {Injectable, Inject} from '@angular/core';
-import {Storage, Platform, LocalStorage, Events, Alert} from 'ionic-angular';
+import {Storage, Platform, LocalStorage, Events, Alert, Loading} from 'ionic-angular';
 import {Geolocation, Toast, Network, Globalization} from 'ionic-native';
 import {Http, Headers} from '@angular/http';
 import {Settings} from '../config/settings';
@@ -47,6 +47,14 @@ export class UserData {
         this.userLang = 'en';
       }
     }); 
+  }
+
+  loading(nav) {
+    let loading = Loading.create({
+      content: "Carregando...",
+      duration: 100
+    });
+    nav.present(loading);
   }
 
   login(userObjet) {

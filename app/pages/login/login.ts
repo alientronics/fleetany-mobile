@@ -26,7 +26,13 @@ export class Login {
   private plate: string;
   private vehicles: Array<any>;
 
-  constructor(nav: NavController, userData: UserData, events: Events, platform: Platform, private translate: TranslateService) {
+  constructor(
+      nav: NavController, 
+      userData: UserData, 
+      events: Events, 
+      platform: Platform, 
+      private translate: TranslateService
+    ) {
     this.translate = translate;
     this.nav = nav;
     this.platform = platform;
@@ -36,6 +42,11 @@ export class Login {
     this.gpstracking = false;
     this.vehicles = []
 
+    this.listenToLoginEvents();
+    this.listenToGpsEvents();
+  }
+
+  ngAfterViewInit() {
     this.userData.hasLoggedIn().then((userObj) => {
       this.loggedIn = (userObj !== null);
       this.updateUser(JSON.parse(userObj));   
@@ -44,9 +55,7 @@ export class Login {
         this.userData.setPlate(value); 
       });
     });
-
-    this.listenToLoginEvents();
-    this.listenToGpsEvents();
+    this.userData.loading(this.nav);
   }
 
   listenToLoginEvents() {

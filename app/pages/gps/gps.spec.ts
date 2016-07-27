@@ -9,14 +9,15 @@ import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
 import { beforeEachProviders, describe, expect, inject, it } from '@angular/core/testing';
 import { providers }   from '../../../test/diExports';
+import { provide } from '@angular/core'
 
 class MockClass {
   public backButton = { subscribe : () => {} }
   public getComponent(): any { return true; }
   public present(): any { return true; }
   public unsubscribe(): any { return true; }
+  public loading(): any { return true; }
 }
-
 
 function showToastStub(message: string, title: string, nav: NavController): any {
   'use strict';
@@ -84,6 +85,7 @@ describe('Gps', () => {
   beforeEachProviders(() => providers);
   beforeEachProviders(() => [
     GpsProvider,
+    provide(UserData, {useClass: MockClass}),
     Gps
   ]);
 
