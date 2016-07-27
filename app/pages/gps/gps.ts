@@ -58,6 +58,7 @@ export class Gps {
       this.latitude = null;
       this.longitude = null;
       this.gpstracking = false;
+      this.userData.loading(this.nav, "GPS");
     });
   }
   
