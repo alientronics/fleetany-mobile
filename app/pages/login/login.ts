@@ -55,7 +55,7 @@ export class Login {
         this.userData.setPlate(value); 
       });
     });
-    this.userData.loading(this.nav);
+    this.userData.loading(this.nav, "Login");
   }
 
   listenToLoginEvents() {

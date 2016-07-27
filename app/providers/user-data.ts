@@ -22,6 +22,7 @@ export class UserData {
   public userLang: string;
   public plate: number;
   private lastPosition: any;
+  private timer: any;
 
   constructor(
       @Inject(Events) public events: Events,
@@ -37,6 +38,7 @@ export class UserData {
     this.PLATE = 'plate';
     this.RAW_DATA = 'rawdata';
     this.lastPosition = {"latitude": null, "longitude": null};
+    this.timer = false;
 
     platform.ready().then(() => {
       if (this.platform.is('mobile')) {
@@ -49,12 +51,18 @@ export class UserData {
     }); 
   }
 
-  loading(nav) {
+  loading(nav, title) {
+    if (this.timer) {
+      return false; 
+    }
+
+    this.timer = true;
     let loading = Loading.create({
-      content: "Carregando...",
+      content: "Carregando " + title + "...",
       duration: 100
     });
     nav.present(loading);
+    setTimeout(() => { this.timer = false; }, 500);
   }
 
   login(userObjet) {

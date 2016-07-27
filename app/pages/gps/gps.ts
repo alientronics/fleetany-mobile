@@ -37,7 +37,6 @@ export class Gps {
 
   gpsToggle(value) {
     this.gpsProvider.gpsToggle(value);
-    this.userData.loading(this.nav);
   }
 
   setDisplayData() {
@@ -46,6 +45,7 @@ export class Gps {
       this.latitude = data.latitude;
       this.longitude = data.longitude;
       this.gpstracking = data.gpstracking;
+      this.userData.loading(this.nav, "GPS");
     });
   }
 
