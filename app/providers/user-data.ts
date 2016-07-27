@@ -62,7 +62,7 @@ export class UserData {
       duration: 100
     });
     nav.present(loading);
-    setTimeout(() => { this.timer = false; }, 500);
+    setTimeout(() => { this.timer = false; }, 1000);
   }
 
   login(userObjet) {
