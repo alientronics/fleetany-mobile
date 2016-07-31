@@ -1,6 +1,6 @@
 'use strict';
 
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import {Page, Alert, NavController, Events, Platform} from 'ionic-angular';
 import { GooglePlus } from 'ionic-native';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
@@ -31,7 +31,8 @@ export class Login {
       userData: UserData, 
       events: Events, 
       platform: Platform, 
-      private translate: TranslateService
+      private translate: TranslateService,
+      private _zone: NgZone
     ) {
     this.translate = translate;
     this.nav = nav;
@@ -52,10 +53,12 @@ export class Login {
       this.updateUser(JSON.parse(userObj));   
 
       this.userData.getPlate().then((value) => {
-        this.userData.setPlate(value); 
+        this._zone.run(() => {
+            this.userData.setPlate(value); 
+        });
       });
     });
-    this.userData.loading(this.nav, "Login");
+    //this.userData.loading(this.nav, "Login");
   }
 
   listenToLoginEvents() {
@@ -142,11 +145,15 @@ export class Login {
     this.welcome = "Hi, " + obj.displayName + ", " + obj.email;
     this.userData.email = obj.email;
     this.userData.getVehicles().then((vehicles) => {
-      this.vehicles = vehicles;
+      this._zone.run(() => {
+        this.vehicles = vehicles;
+      });
     });
 
     this.userData.getPlate().then((plate) => {
-      this.plate = plate;
+      this._zone.run(() => {
+        this.plate = plate;
+      });
     });
   }
 

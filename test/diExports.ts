@@ -1,6 +1,6 @@
-import { provide, Type }                              from '@angular/core';
+import { provide, Type, NgZone }                              from '@angular/core';
 import { ComponentFixture, TestComponentBuilder }     from '@angular/compiler/testing';
-import { injectAsync }                                from '@angular/core/testing';
+import { injectAsync, MockNgZone }                                from '@angular/core/testing';
 import { Control }                                    from '@angular/common';
 import { HTTP_PROVIDERS, BaseRequestOptions, ConnectionBackend, Http } from '@angular/http';
 import { App, Config, Form, NavController, Platform, Events } from 'ionic-angular';
@@ -22,4 +22,5 @@ export let providers: Array<any> = [
   TranslateService,
   Events,
   Http,  HTTP_PROVIDERS, BaseRequestOptions, ConnectionBackend,
+  provide(NgZone, {useClass: MockNgZone}),
 ];
