@@ -143,6 +143,7 @@ export class FleetanyApp {
   initializeTranslateServiceConfig() {
     var userLang = navigator.language.split('-')[0];
     userLang = /(en|pt-br)/gi.test(userLang) ? userLang : 'en';
+    userLang = "pt-br"; //keep language
    
     this.translate.setDefaultLang('en');
    
