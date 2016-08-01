@@ -35,9 +35,11 @@
     <ion-item>{{longitude}}</ion-item>
 
     <ion-list-header>
-      {{ "gps.JsonData" | translate }}
+      Read
     </ion-list-header>
-    <ion-item>{{jsondata}}</ion-item>
+    <ion-item>
+      <ion-badge item-left secondary>{{count}}</ion-badge>
+    </ion-item>
 
   </ion-list>
 

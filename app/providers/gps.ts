@@ -14,6 +14,7 @@ export class GpsProvider {
   private gpstracking: boolean;
   private latitude: number;
   private longitude: number;
+  private count: number;
   public watcher: any;
   public userData: UserData;
   private GPS_DATA: string;
@@ -42,7 +43,9 @@ export class GpsProvider {
       if (value) {
 
         let options = { maximumAge:100, timeout:Infinity, enableHighAccuracy:false};
-        
+        var thing = this;
+        thing.count = 0;
+
         this.watcher = Geolocation.watchPosition().subscribe((data) => {
           
           var obj: any = new Object();
@@ -58,6 +61,8 @@ export class GpsProvider {
           this.setGpsData(postData);
 
           obj.gpstracking = true;
+          thing.count++;
+          obj.count = thing.count;
           let gpsCurrentData = JSON.stringify(obj);
           this.storage.set(this.GPS_CURRENT_DATA, gpsCurrentData);
           this.events.publish('gps:on');
