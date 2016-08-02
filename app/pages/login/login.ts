@@ -142,7 +142,7 @@ export class Login {
   updateUser(obj) {
     if (obj == null) return false;
     //if (obj.imageUrl) { this.userImage = obj.imageUrl; }
-    this.welcome = "Hi, " + obj.displayName + ", " + obj.email;
+    this.welcome = "Oi, " + obj.displayName + ", " + obj.email;
     this.userData.email = obj.email;
     this.userData.getVehicles().then((vehicles) => {
       this._zone.run(() => {

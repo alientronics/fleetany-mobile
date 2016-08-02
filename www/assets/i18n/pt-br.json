@@ -49,7 +49,7 @@
         "ScanDevices": "Examinar dispositivos",
         "SelectedDevice": "Dispositivo selecionado",
         "SendData": "Enviar dados",
-        "SelectDevice": "Selecione um dispositivo para parear"
+        "SelectDevice": "Selecione um dispositivo"
     },  
     "about": {    
         "Faqs": "FAQs",
