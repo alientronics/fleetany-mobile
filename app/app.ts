@@ -95,6 +95,14 @@ export class FleetanyApp {
         this.enableMenu(hasLoggedIn !== null);
       });
     
+      if (this.platform.is('mobile')) {
+        window.powerManagement.dim(function() {
+            //alert('Wakelock acquired');
+        }, function() {
+            //alert('Failed to acquire wakelock');
+        });
+      }
+
     });
 
     this.listenToLoginEvents();

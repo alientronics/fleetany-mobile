@@ -18,6 +18,12 @@ interface IGeofence {
     onTransitionReceived: any;
 }
 
+interface IPowerManagement {
+    acquire( success: (result:any) => void, error: (err:any) => void ): void; 
+    dim( success: (result:any) => void, error: (err:any) => void ): void; 
+    release( success: (result:any) => void, error: (err:any) => void ): void; 
+}
+
 interface IPlugins {
     googleplus: IGooglePlus;
     backgroundGeoLocation: IBackgroundGeolocation;
@@ -26,5 +32,6 @@ interface IPlugins {
 interface Window {    
     plugins: IPlugins;
     geofence: IGeofence;
+    powerManagement: IPowerManagement
     cordova: boolean;
 }

@@ -80,7 +80,7 @@ export class Fuel {
             
               },
               error => {
-                this.userData.showToast('Error sending data: ' + error.statusText, 'Error!', this.nav);
+                //this.userData.showToast('Error sending data: ' + error.statusText, 'Error!', this.nav);
                 console.log(error);
               }
             );

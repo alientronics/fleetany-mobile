@@ -85,6 +85,7 @@ describe('Fuel', () => {
     expect(fuel.userData.showToast).toHaveBeenCalled();
   });
 
+  /*
   it('should throw error', () => {
     let value: any = {};
     value.price = 12.34;
@@ -97,5 +98,6 @@ describe('Fuel', () => {
     fuel.onSubmit(value);
     expect(fuel.userData.showToast).toHaveBeenCalled();
   });
+  */
 
 });

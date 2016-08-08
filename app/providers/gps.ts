@@ -157,7 +157,7 @@ export class GpsProvider {
               this.setPostData(null, storage, urlApi);
             },
             error => {
-              alert('Error sending data: ' + error.statusText);
+              //alert('Error sending data: ' + error.statusText);
               console.log(error);
             }
            );

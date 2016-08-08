@@ -127,7 +127,7 @@ export class UserData {
         resolve(this.data);
       },
       error => {
-        alert('Error sending data: ' + error.statusText);
+        //alert('Error sending data: ' + error.statusText);
         console.log(error);
       }
       );
