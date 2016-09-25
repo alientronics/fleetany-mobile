@@ -1,6 +1,5 @@
 import { provide, Type, NgZone }                              from '@angular/core';
 import { ComponentFixture, TestComponentBuilder }     from '@angular/compiler/testing';
-import { injectAsync, MockNgZone }                                from '@angular/core/testing';
 import { Control }                                    from '@angular/common';
 import { HTTP_PROVIDERS, BaseRequestOptions, ConnectionBackend, Http } from '@angular/http';
 import { App, Config, Form, NavController, Platform, Events } from 'ionic-angular';
@@ -8,6 +7,10 @@ import { ConfigMock, NavMock, PlatformMock }          from './mocks';
 import { TranslateService, TranslateStaticLoader, TranslateLoader } from 'ng2-translate/ng2-translate';
 import { UserData }                                   from '../app/providers/user-data';
 export { TestUtils }                                  from './testUtils';
+
+function createNgZone(): NgZone {
+  return new NgZone({enableLongStackTrace: true});
+}
 
 export let providers: Array<any> = [
   provide(Platform, {useClass: PlatformMock}),
@@ -22,5 +25,5 @@ export let providers: Array<any> = [
   TranslateService,
   Events,
   Http,  HTTP_PROVIDERS, BaseRequestOptions, ConnectionBackend,
-  provide(NgZone, {useClass: MockNgZone}),
+  provide(NgZone, {useFactory: createNgZone}),
 ];
