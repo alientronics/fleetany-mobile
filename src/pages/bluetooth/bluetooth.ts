@@ -6,7 +6,7 @@ import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {BluetoothProvider} from '../../providers/bluetooth';
 
 @Page({
-  templateUrl: 'build/pages/bluetooth/bluetooth.html',
+  templateUrl: 'bluetooth.html',
   pipes: [TranslatePipe]
 })
 export class Bluetooth {

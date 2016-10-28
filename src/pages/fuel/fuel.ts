@@ -8,7 +8,7 @@ import {Toast} from 'ionic-native';
 import { FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators, AbstractControl } from '@angular/common';
 
 @Component({
-  templateUrl: 'build/pages/fuel/fuel.html',
+  templateUrl: 'fuel.html',
   pipes: [TranslatePipe],
   directives: [FORM_DIRECTIVES]
 })

@@ -9,7 +9,7 @@ import {UserData} from '../../providers/user-data';
 import {About} from '../about/about';
 
 @Component({
-  templateUrl: 'build/pages/login/login.html',
+  templateUrl: 'login.html',
   pipes: [TranslatePipe]
 })
 

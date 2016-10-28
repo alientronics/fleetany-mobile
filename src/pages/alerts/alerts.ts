@@ -6,7 +6,7 @@ import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {AlertsProvider} from '../../providers/alerts';
 
 @Page({
-  templateUrl: 'build/pages/alerts/alerts.html',
+  templateUrl: 'alerts.html',
   pipes: [TranslatePipe]
 })
 

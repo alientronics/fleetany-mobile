@@ -7,7 +7,7 @@ import {Alerts} from '../alerts/alerts';
 import {Fuel} from '../fuel/fuel';
 
 @Component({
-  templateUrl: 'build/pages/tabs/tabs.html',
+  templateUrl: 'tabs.html',
   pipes: [TranslatePipe]
 })
 export class TabsPage {
