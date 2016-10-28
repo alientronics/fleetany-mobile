@@ -1,3 +1,6 @@
+sudo: required
+dist: trusty
+
 language: android
 
 node_js:
