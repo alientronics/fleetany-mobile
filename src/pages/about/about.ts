@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 @Component({
-  templateUrl: 'about.html',
-  pipes: [TranslatePipe]
+  templateUrl: 'about.html'
 })
 export class About {
 
   constructor(private translate: TranslateService) {
-  	this.translate = translate;
+  	this.translate = translatem;
   }
 
 }

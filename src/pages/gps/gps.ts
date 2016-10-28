@@ -1,13 +1,13 @@
 'use strict';
 
 import { Component, NgZone } from '@angular/core';
-import {Page, Events, NavController} from 'ionic-angular';
+import { Events, NavController} from 'ionic-angular';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {GpsProvider} from '../../providers/gps';
 import {UserData} from '../../providers/user-data';
 
 @Component({
-  templateUrl: 'build/pages/gps/gps.html',
+  templateUrl: 'gps.html',
   pipes: [TranslatePipe]
 })
 export class Gps {

@@ -1,7 +1,7 @@
 import { NavController } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 import { GpsProvider } from './gps';
-import { Http, BaseRequestOptions } from '@angular/http';
+import { BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
 import { beforeEachProviders, beforeEach, describe, expect, inject, it } from '@angular/core/testing';
 import { providers }   from '../../test/diExports';

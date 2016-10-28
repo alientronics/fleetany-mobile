@@ -1,4 +1,4 @@
-import { Events, Platform, NavController } from 'ionic-angular';
+import { Platform, NavController } from 'ionic-angular';
 import { UserData } from './user-data';
 import { AlertsProvider } from './alerts';
 import { GeofenceProvider } from './geofence';

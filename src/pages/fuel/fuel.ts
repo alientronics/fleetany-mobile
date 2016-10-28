@@ -1,7 +1,7 @@
 'use strict';
 
 import { Component } from '@angular/core';
-import {Page, Alert, NavController} from 'ionic-angular';
+import { Alert, NavController} from 'ionic-angular';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {UserData} from '../../providers/user-data';
 import {Toast} from 'ionic-native';

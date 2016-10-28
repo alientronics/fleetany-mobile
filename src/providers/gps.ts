@@ -42,7 +42,7 @@ export class GpsProvider {
     } else {
       if (value) {
 
-        let options = { maximumAge:100, timeout:Infinity, enableHighAccuracy:false};
+        //let options = { maximumAge:100, timeout:Infinity, enableHighAccuracy:false};
         var thing = this;
         thing.count = 0;
 

@@ -37,11 +37,12 @@ export class AlertsProvider {
   }
 
   setAlertsData(data) {
-    var alerts = [
+    /*var alerts = [
       {sensorName: 'Sensor 1', temperature: '100', pressure: '80'},
       {sensorName: 'Sensor 2', temperature: '101', pressure: '82'},
       {sensorName: 'Sensor 3', temperature: '102', pressure: '83'}
-    ]; 
+    ];
+    */ 
       /*
     if (alerts.length > 0) {
       if(this.ALERTS_DATA == '' || this.ALERTS_DATA == 'alertsdata') {

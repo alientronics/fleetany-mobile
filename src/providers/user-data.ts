@@ -2,7 +2,7 @@
 
 import {Injectable, Inject} from '@angular/core';
 import {Storage, Platform, LocalStorage, Events, Alert, Loading} from 'ionic-angular';
-import {Geolocation, Toast, Network, Globalization} from 'ionic-native';
+import {Toast, Network, Globalization} from 'ionic-native';
 import {Http, Headers} from '@angular/http';
 import {Settings} from '../config/settings';
 

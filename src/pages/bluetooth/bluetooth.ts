@@ -1,6 +1,6 @@
 'use strict';
 
-import { Component } from '@angular/core';
+//import { Component } from '@angular/core';
 import {Page, Events} from 'ionic-angular';
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {BluetoothProvider} from '../../providers/bluetooth';

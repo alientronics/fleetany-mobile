@@ -1,5 +1,5 @@
 import { Gps } from './gps';
-import { Geolocation, Toast } from 'ionic-native';
+import { Toast } from 'ionic-native';
 import { Platform, NavController } from 'ionic-angular';
 import { Events }   from 'ionic-angular';
 import { TranslateService, TranslateStaticLoader, TranslateLoader } from 'ng2-translate/ng2-translate';

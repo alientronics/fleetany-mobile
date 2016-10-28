@@ -1,5 +1,5 @@
 import { Bluetooth } from './bluetooth';
-import { Events, Platform, NavController }   from 'ionic-angular';
+import { Platform, NavController }   from 'ionic-angular';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
 import { TranslateService, TranslateStaticLoader, TranslateLoader } from 'ng2-translate/ng2-translate';

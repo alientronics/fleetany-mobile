@@ -1,4 +1,4 @@
-import { provide, Type, NgZone }                              from '@angular/core';
+import { provide, NgZone }                              from '@angular/core';
 import { ComponentFixture, TestComponentBuilder }     from '@angular/compiler/testing';
 import { Control }                                    from '@angular/common';
 import { HTTP_PROVIDERS, BaseRequestOptions, ConnectionBackend, Http } from '@angular/http';
