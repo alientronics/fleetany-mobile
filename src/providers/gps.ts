@@ -1,16 +1,17 @@
 'use strict';
 
 import {Injectable, Inject} from '@angular/core';
-import {Storage, Platform, LocalStorage, Events, NavController} from 'ionic-angular';
+import {Platform, Events, NavController, AlertController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import {UserData} from './user-data';
+import { Storage } from '@ionic/storage';
+import 'rxjs/add/operator/filter';
 
 var JSZip = require("jszip");
 
 @Injectable()
 export class GpsProvider {
 
-  public storage: Storage;
   private gpstracking: boolean;
   private latitude: number;
   private longitude: number;
@@ -24,9 +25,10 @@ export class GpsProvider {
       @Inject(Events) public events: Events,
       @Inject(Platform) public platform: Platform,
       @Inject(Events) public nav: NavController,
-      userData: UserData
+      userData: UserData,
+      public alertCtrl: AlertController,
+      public storage: Storage
   ) {
-    this.storage = new Storage(LocalStorage);
     this.events = events;
     this.platform = platform;
     this.userData = userData;
@@ -38,7 +40,7 @@ export class GpsProvider {
 
   gpsToggle(value) {
     if (this.userData.plate == null) {
-      this.userData.showToast('Vehicle should be selected!', 'Error!', this.nav);
+      this.userData.showToast('Vehicle should be selected!', 'Error!', this.alertCtrl);
     } else {
       if (value) {
 
@@ -46,28 +48,30 @@ export class GpsProvider {
         var thing = this;
         thing.count = 0;
 
-        this.watcher = Geolocation.watchPosition().subscribe((data) => {
-          
-          var obj: any = new Object();
-          obj.accuracy = data.coords.accuracy;
-          obj.altitude = data.coords.altitude;
-          obj.altitudeAccuracy = data.coords.altitudeAccuracy;
-          obj.heading = data.coords.heading;
-          obj.latitude = data.coords.latitude;
-          obj.longitude = data.coords.longitude;
-          obj.speed = data.coords.speed;
+        this.watcher = Geolocation.watchPosition()
+          .filter((p) => p.code === undefined)
+          .subscribe(data => {
+            
+            var obj: any = new Object();
+            obj.accuracy = data.coords.accuracy;
+            obj.altitude = data.coords.altitude;
+            obj.altitudeAccuracy = data.coords.altitudeAccuracy;
+            obj.heading = data.coords.heading;
+            obj.latitude = data.coords.latitude;
+            obj.longitude = data.coords.longitude;
+            obj.speed = data.coords.speed;
 
-          let postData: any = JSON.stringify(obj);
-          this.setGpsData(postData);
+            let postData: any = JSON.stringify(obj);
+            this.setGpsData(postData);
 
-          obj.gpstracking = true;
-          thing.count++;
-          obj.count = thing.count;
-          let gpsCurrentData = JSON.stringify(obj);
-          this.storage.set(this.GPS_CURRENT_DATA, gpsCurrentData);
-          this.events.publish('gps:on');
-          
-        })
+            obj.gpstracking = true;
+            thing.count++;
+            obj.count = thing.count;
+            let gpsCurrentData = JSON.stringify(obj);
+            this.storage.set(this.GPS_CURRENT_DATA, gpsCurrentData);
+            this.events.publish('gps:on');
+            
+          })
 
       } else {
 

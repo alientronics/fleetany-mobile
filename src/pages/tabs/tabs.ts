@@ -1,7 +1,7 @@
 'use strict';
 
 import { Component } from '@angular/core';
-import { Platform, NavController, Alert, NavParams} from 'ionic-angular';
+import { Platform, NavController, AlertController, NavParams} from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import {Alerts} from '../alerts/alerts';
 import {Fuel} from '../fuel/fuel';
@@ -18,7 +18,13 @@ export class TabsPage {
   mySelectedIndex: number;
 
 
-  constructor(platform: Platform, nav: NavController, navParams: NavParams, private translate: TranslateService) {
+  constructor(
+      platform: Platform, 
+      nav: NavController, 
+      navParams: NavParams, 
+      private translate: TranslateService,
+      public alertCtrl: AlertController 
+  ) {
     this.translate = translate;
     // this tells the tabs component which Pages
     // should be each tab's root Page
@@ -37,7 +43,7 @@ export class TabsPage {
   checkBack() {
     if (true) {
 
-      let confirmAlert = Alert.create({
+      let confirmAlert = this.alertCtrl.create({
         title: 'Confirm quit',
         message: 'Do you really want to quit?',
         buttons: [
@@ -57,7 +63,7 @@ export class TabsPage {
         ]
       });
 
-      this.nav.present(confirmAlert);
+      confirmAlert.present();
 
     }
   }

@@ -1,7 +1,7 @@
 'use strict';
 
 import { Component, NgZone } from '@angular/core';
-import { Alert, NavController, Events, Platform} from 'ionic-angular';
+import { AlertController, NavController, Events, Platform} from 'ionic-angular';
 import { GooglePlus } from 'ionic-native';
 import {TranslateService} from 'ng2-translate/ng2-translate';
 import {forwardRef, Inject, Type} from '@angular/core';
@@ -31,7 +31,8 @@ export class Login {
       events: Events, 
       platform: Platform, 
       private translate: TranslateService,
-      private _zone: NgZone
+      private _zone: NgZone,
+      public alertCtrl: AlertController 
     ) {
     this.translate = translate;
     this.nav = nav;
@@ -103,7 +104,7 @@ export class Login {
   }
 
   confirmLogout() {
-    let confirmAlert = Alert.create({
+    let confirmAlert = this.alertCtrl.create({
       title: 'Confirm logout',
       message: 'Do you really want to logout?',
       buttons: [
@@ -122,7 +123,7 @@ export class Login {
         }
       ]
     });
-    this.nav.present(confirmAlert);
+    confirmAlert.present();
   }
 
   googleLogout() {
@@ -162,7 +163,7 @@ export class Login {
 
   plateChange(value) {
     if(this.gpstracking) {
-      this.userData.showToast('Vehicle can not be changed while gps is on!', 'Error!', this.nav);
+      this.userData.showToast('Vehicle can not be changed while gps is on!', 'Error!', this.alertCtrl);
     } else {
       this.userData.setPlate(value); 
     }

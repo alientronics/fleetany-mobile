@@ -4,6 +4,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {TranslateModule, TranslateStaticLoader, TranslateLoader} from 'ng2-translate';
 
 import { IonicApp, IonicModule } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 import { FleetanyApp } from './app.components';
 
@@ -57,7 +58,8 @@ export function createTranslateLoader(http: Http) {
     GeofenceProvider,
     AlertsProvider,
     GpsProvider,
-    BluetoothProvider
+    BluetoothProvider,
+    Storage
   ]
 })
 export class AppModule {}

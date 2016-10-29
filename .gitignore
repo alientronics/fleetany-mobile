@@ -28,6 +28,7 @@ bower_components/
 src/pages/uart/
 src/**/*.d.ts
 src/**/*.js
+src/**/*.js.map
 
 .DS_Store
 Thumbs.db

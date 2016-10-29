@@ -1,22 +1,22 @@
 'use strict';
 
 import {Injectable, Inject} from '@angular/core';
-import {Storage, Platform, LocalStorage, Events} from 'ionic-angular';
+import {Platform, Events} from 'ionic-angular';
 import {UserData} from './user-data';
+import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class GeofenceProvider {
 
-  public storage: Storage;
   public userData: UserData;
   private GEOFENCE_DATA: string;
 
   constructor(
       @Inject(Events) public events: Events,
       @Inject(Platform) public platform: Platform,
-      userData: UserData
+      userData: UserData,
+      public storage: Storage
   ) {
-    this.storage = new Storage(LocalStorage);
     this.events = events;
     this.userData = userData;
     this.platform = platform;

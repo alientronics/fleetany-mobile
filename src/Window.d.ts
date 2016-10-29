@@ -35,3 +35,5 @@ interface Window {
     powerManagement: IPowerManagement
     cordova: boolean;
 }
+
+declare var require: any

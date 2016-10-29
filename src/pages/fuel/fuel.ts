@@ -1,7 +1,7 @@
 'use strict';
 
 import { Component } from '@angular/core';
-import { Alert, NavController} from 'ionic-angular';
+import { AlertController, NavController} from 'ionic-angular';
 import {TranslateService} from 'ng2-translate/ng2-translate';
 import {UserData} from '../../providers/user-data';
 import {Toast} from 'ionic-native';
@@ -23,7 +23,13 @@ export class Fuel {
   private vehiclefailed: boolean;
   private types: Array<any>;
 
-  constructor(fb: FormBuilder, userData: UserData, public nav: NavController, private translate: TranslateService) {
+  constructor(
+      fb: FormBuilder, 
+      userData: UserData, 
+      public nav: NavController, 
+      private translate: TranslateService,
+      public alertCtrl: AlertController 
+  ) {
     this.translate = translate;
     this.userData = userData;
   	this.fuelsent = false;
@@ -62,7 +68,7 @@ export class Fuel {
           params.tank_fill_up = value.tankfill ? 1 : 0;			
            
           if (this.userData.plate == null) {
-            this.userData.showToast('Vehicle should be selected!', 'Error!', this.nav);			    
+            this.userData.showToast('Vehicle should be selected!', 'Error!', this.alertCtrl);			    
           } else {
             this.userData.postApi('trip', params).subscribe(
               res => {
@@ -74,7 +80,7 @@ export class Fuel {
                 (<Control>this.fuelForm.controls['type']).updateValue('regular');
                 (<Control>this.fuelForm.controls['tankfill']).updateValue(true);
 
-                this.userData.showToast('Fuel sent successfully!', 'Success!', this.nav);
+                this.userData.showToast('Fuel sent successfully!', 'Success!', this.alertCtrl);
             
               },
               error => {

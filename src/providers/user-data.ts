@@ -1,10 +1,13 @@
 'use strict';
 
 import {Injectable, Inject} from '@angular/core';
-import {Storage, Platform, LocalStorage, Events, Alert, Loading} from 'ionic-angular';
+import {Platform, Events, LoadingController} from 'ionic-angular';
 import {Toast, Network, Globalization} from 'ionic-native';
-import {Http, Headers} from '@angular/http';
-import {Settings} from '../config/settings';
+import {Http, Headers, Response} from '@angular/http';
+import {Settings} from '../app/config/settings';
+import { Storage } from '@ionic/storage';
+import { Observable } from "rxjs/Observable";
+
 
 let settings: Settings = new Settings();
 var JSZip = require("jszip");
@@ -12,7 +15,6 @@ var JSZip = require("jszip");
 @Injectable()
 export class UserData {
 
-  public storage: Storage;
   private HAS_LOGGED_IN: string;
   private JSON_OBJECT: string;
   private PLATE: string;
@@ -27,9 +29,10 @@ export class UserData {
   constructor(
       @Inject(Events) public events: Events,
       @Inject(Http) public http: Http,
-      @Inject(Platform) public platform: Platform
+      @Inject(Platform) public platform: Platform,
+      public storage: Storage,
+      public loadingCtrl: LoadingController
   ) {
-    this.storage = new Storage(LocalStorage);
     this.events = events;
     this.http = http;
     this.platform = platform;
@@ -57,11 +60,11 @@ export class UserData {
     }
 
     this.timer = true;
-    let loading = Loading.create({
+    let loading = this.loadingCtrl.create({
       content: "Carregando " + title + "...",
       duration: 100
     });
-    nav.present(loading);
+    loading.present();
     setTimeout(() => { this.timer = false; }, 1000);
   }
 
@@ -175,7 +178,7 @@ export class UserData {
     return this.http.post(settings.base_path + url, query , { headers} );
   }
 
-  showToast(message, title, nav) {
+  showToast(message, title, alertCtrl) {
     if (this.platform.is('mobile')) {
       Toast.show(message, "5000", "center").subscribe(
         toast => {
@@ -183,12 +186,12 @@ export class UserData {
         }
       );
     } else {
-      let alert = Alert.create({
+      let alert = alertCtrl.create({
         title: title,
         message: message,
         buttons: ['Ok']
       });
-     nav.present(alert);
+     alert.present();
     }
   }
 

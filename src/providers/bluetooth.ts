@@ -1,18 +1,18 @@
 'use strict';
 
 import {Injectable, Inject} from '@angular/core';
-import {Storage, Platform, LocalStorage, Events, NavController} from 'ionic-angular';
+import {Platform, Events, NavController, AlertController} from 'ionic-angular';
 import {UserData} from './user-data';
 import {GpsProvider} from './gps';
 import {BLE, BluetoothSerial} from 'ionic-native';
 import {Observable} from "rxjs/Observable";
+import { Storage } from '@ionic/storage';
 
 var JSZip = require("jszip");
 
 @Injectable()
 export class BluetoothProvider {
 
-  public storage: Storage;
   public watcher: any;
   private blescan: boolean;
   public bledevice: string;
@@ -31,9 +31,10 @@ export class BluetoothProvider {
       @Inject(Platform) public platform: Platform,
       @Inject(NavController) public nav: NavController,
       userData: UserData,
-      gpsProvider: GpsProvider
+      gpsProvider: GpsProvider,
+      public alertCtrl: AlertController,
+      public storage: Storage
   ) {
-    this.storage = new Storage(LocalStorage);
     this.events = events;
     this.platform = platform;
     this.userData = userData;
@@ -48,7 +49,7 @@ export class BluetoothProvider {
 
   bleToggle(value) {
     if (this.userData.plate == null) {
-      this.userData.showToast('Vehicle should be selected!', 'Error!', this.nav);
+      this.userData.showToast('Vehicle should be selected!', 'Error!', this.alertCtrl);
     } else {
       if (value) {
         this.datastream = [];
@@ -100,7 +101,7 @@ export class BluetoothProvider {
       if (devices.length > 0) {
         this.devices = devices;
       } else {
-        this.userData.showToast('No bluetooth device paired!', 'Error!', this.nav);
+        this.userData.showToast('No bluetooth device paired!', 'Error!', this.alertCtrl);
       }   
     } else {
       this.devices = [];
@@ -114,7 +115,7 @@ export class BluetoothProvider {
           if (value.length > 0) {
             this.devices = value;
           } else {
-            this.userData.showToast('No bluetooth device paired!', 'Error!', this.nav);
+            this.userData.showToast('No bluetooth device paired!', 'Error!', this.alertCtrl);
           }
           //this.datastream.push("list ok:" + JSON.stringify(value));
           console.log(value);
