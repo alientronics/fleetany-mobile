@@ -6,7 +6,7 @@ import {AlertsProvider} from '../providers/alerts';
 import {GpsProvider} from '../providers/gps';
 import {BluetoothProvider} from '../providers/bluetooth';
 import {Gps} from '../pages/gps/gps';
-import {Bluetooth} from '../pages/bluetooth';
+import {Bluetooth} from '../pages/bluetooth/bluetooth';
 import {Login} from '../pages/login/login';
 
 import {TabsPage} from '../pages/tabs/tabs';

@@ -3,7 +3,11 @@ import { Events, Platform, Alert } from 'ionic-angular';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
 import { Toast } from 'ionic-native';
+import { ComponentFixture, TestBed }  from '@angular/core/testing';
+import { TestUtils } from '../../test';
 
+let fixture: ComponentFixture<UserData> = null;
+let instance: any = null;
 let userData: UserData = null;
 
 class MockClass {
@@ -45,11 +49,9 @@ function createStub(options: any): any {
 describe('UserData', () => {
 
   beforeEach(() => {
-    let events: Events = new Events();
-    let platform: Platform = new Platform();
-    let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
-    spyOn(events, 'publish').and.callFake(publishStub);
-    userData = new UserData(events, http, platform);
+    TestUtils.configureIonicTestingModule([UserData]);
+    fixture = TestBed.createComponent(UserData);
+    userData = fixture.debugElement.componentInstance;
   });
 
   it('initialises', () => {

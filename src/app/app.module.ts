@@ -11,13 +11,13 @@ import { FleetanyApp } from './app.components';
 import {TabsPage} from '../pages/tabs/tabs';
 import {About} from '../pages/about/about';
 import {Gps} from '../pages/gps/gps';
-import {Bluetooth} from '../pages/bluetooth';
+import {Bluetooth} from '../pages/bluetooth/bluetooth';
 import {Login} from '../pages/login/login';
 
 import {GeofenceProvider} from '../providers/geofence';
 import {AlertsProvider} from '../providers/alerts';
 import {GpsProvider} from '../providers/gps';
-import {BluetoothProvider} from './providers/bluetooth';
+import {BluetoothProvider} from '../providers/bluetooth';
 import {UserData} from '../providers/user-data';
 
 export function createTranslateLoader(http: Http) {

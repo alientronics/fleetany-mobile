@@ -7,8 +7,6 @@ import {UserData} from './user-data';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/filter';
 
-var JSZip = require("jszip");
-
 @Injectable()
 export class GpsProvider {
 
@@ -143,9 +141,8 @@ export class GpsProvider {
         zip.file("postData.json", dataStorage);
 
         zip.generateAsync({
-          type: "base64",
-          compression: "DEFLATE",
-          compressionOptions : {level:6}
+          base64: true,
+          compression: "DEFLATE"
         }).then((zipFile) => {
 
            if(dataStorage.length > 180) {

@@ -1,10 +1,11 @@
-import { Events, Platform } from 'ionic-angular';
+import { Events, Platform, LoadingController } from 'ionic-angular';
 import { UserData } from './user-data';
 import { GeofenceProvider } from './geofence';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
 import { ComponentFixture, TestBed }  from '@angular/core/testing';
 import { TestUtils } from '../../test';
+import { Storage } from '@ionic/storage';
 
 let fixture: ComponentFixture<GeofenceProvider> = null;
 let instance: any = null;
@@ -28,13 +29,16 @@ function getGeofenceDataStub(arg: any): any {
 
 describe('GeofenceProvider', () => {
 
+  beforeEach(() => {
+    TestUtils.configureIonicTestingModule([GeofenceProvider]);
+    fixture = TestBed.createComponent(GeofenceProvider);
+    geofenceProvider = fixture.debugElement.componentInstance;
+  });
+
   beforeEach(() => {   
     let events: Events = new Events();
     let platform: Platform = new Platform();
-    let http: Http = new Http(new MockBackend(), new BaseRequestOptions());
-    let userData: UserData = new UserData(events, http, platform);
     spyOn(events, 'publish').and.callFake(publishStub); 
-    geofenceProvider = new GeofenceProvider(events, platform, userData);
   });
 
   it('initialises', () => {

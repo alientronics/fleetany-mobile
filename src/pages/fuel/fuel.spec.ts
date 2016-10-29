@@ -1,5 +1,5 @@
 import { Fuel } from './fuel';
-import { FormBuilder } from '@angular/common';
+import { FormBuilder } from '@angular/forms';
 import { Platform, NavController }   from 'ionic-angular';
 import { UserData } from '../../providers/user-data';
 import { Http, BaseRequestOptions } from '@angular/http';

@@ -11,7 +11,9 @@ import { ComponentFixture, TestBed }  from '@angular/core/testing';
 import { TestUtils } from '../../test';
 
 let fixture: ComponentFixture<Gps> = null;
-let instance: any = null;
+let fixtureProv: ComponentFixture<GpsProvider> = null;
+let gps: any = null;
+let gpsProvider: any=null;
 
 class MockClass {
   public backButton = { subscribe : () => {} }
@@ -87,20 +89,22 @@ describe('Gps', () => {
   beforeEach(() => {
     TestUtils.configureIonicTestingModule([GpsProvider, Gps]);
     fixture = TestBed.createComponent(Gps);
-    instance = fixture.debugElement.componentInstance;
+    gps = fixture.debugElement.componentInstance;
+    fixtureProv = TestBed.createComponent(GpsProvider);
+    gpsProvider = fixture.debugElement.componentInstance;
   });
 
   it('initialises', (gps) => {
     expect(gps).not.toBeNull();
   });
   
-  it('should call start gps provider', (gps, gpsProvider) => {
+  it('should call start gps provider', () => {
     spyOn(gpsProvider, 'gpsToggle').and.callFake(gpsToggleStub);
     gps.gpsToggle(true);
     expect(gpsProvider.gpsToggle).toHaveBeenCalled();
   });
 
-  it('should set display data', (gps, gpsProvider) => {
+  it('should set display data', () => {
     spyOn(gpsProvider, 'getGpsCurrentData').and.callFake(gpsCurrentDataStub);
     gps.setDisplayData();
     expect(gps.gpstracking).toBe(true);

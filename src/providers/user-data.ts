@@ -8,9 +8,7 @@ import {Settings} from '../app/config/settings';
 import { Storage } from '@ionic/storage';
 import { Observable } from "rxjs/Observable";
 
-
 let settings: Settings = new Settings();
-var JSZip = require("jszip");
 
 @Injectable()
 export class UserData {

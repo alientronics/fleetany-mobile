@@ -8,8 +8,6 @@ import {BLE, BluetoothSerial} from 'ionic-native';
 import {Observable} from "rxjs/Observable";
 import { Storage } from '@ionic/storage';
 
-var JSZip = require("jszip");
-
 @Injectable()
 export class BluetoothProvider {
 
@@ -285,9 +283,8 @@ export class BluetoothProvider {
         zip.file("postData.json", dataStorage);
 
         zip.generateAsync({
-          type: "base64",
-          compression: "DEFLATE",
-          compressionOptions : {level:6}
+          base64: true,
+          compression: "DEFLATE"
         }).then((zipFile) => {
 
            if(dataStorage.length > 180) {
