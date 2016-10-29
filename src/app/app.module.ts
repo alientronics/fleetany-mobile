@@ -9,7 +9,6 @@ import { FleetanyApp } from './app.components';
 
 import {TabsPage} from '../pages/tabs/tabs';
 import {About} from '../pages/about/about';
-/*
 import {Gps} from '../pages/gps/gps';
 import {Bluetooth} from '../pages/bluetooth';
 import {Login} from '../pages/login/login';
@@ -19,7 +18,6 @@ import {AlertsProvider} from '../providers/alerts';
 import {GpsProvider} from '../providers/gps';
 import {BluetoothProvider} from './providers/bluetooth';
 import {UserData} from '../providers/user-data';
-*/
 
 export function createTranslateLoader(http: Http) {
     return new TranslateStaticLoader(http, './assets/i18n', '.json');
@@ -30,6 +28,9 @@ export function createTranslateLoader(http: Http) {
     FleetanyApp,
     TabsPage,
     About,
+    Gps,
+    Bluetooth,
+    Login
   ],
   imports: [
     IonicModule.forRoot(FleetanyApp),
@@ -47,6 +48,16 @@ export function createTranslateLoader(http: Http) {
     FleetanyApp,
     TabsPage,
     About,
+    Gps,
+    Bluetooth,
+    Login
+  ],
+  providers: [
+    UserData,
+    GeofenceProvider,
+    AlertsProvider,
+    GpsProvider,
+    BluetoothProvider
   ]
 })
 export class AppModule {}

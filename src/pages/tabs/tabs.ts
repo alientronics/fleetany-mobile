@@ -3,9 +3,8 @@
 import { Component } from '@angular/core';
 import { Platform, NavController, Alert, NavParams} from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
-//import {Alerts} from '../alerts/alerts';
-//import {Fuel} from '../fuel/fuel';
-import {About} from '../about/about';
+import {Alerts} from '../alerts/alerts';
+import {Fuel} from '../fuel/fuel';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -23,8 +22,8 @@ export class TabsPage {
     this.translate = translate;
     // this tells the tabs component which Pages
     // should be each tab's root Page
-    this.tab1Root = About;
-    this.tab2Root = About;
+    this.tab1Root = Alerts;
+    this.tab2Root = Fuel;
     this.platform = platform;
     this.nav = nav;
     this.mySelectedIndex = navParams.data.tabIndex || 0;
@@ -38,7 +37,7 @@ export class TabsPage {
   checkBack() {
     if (true) {
 
-      /*let confirmAlert = Alert.create({
+      let confirmAlert = Alert.create({
         title: 'Confirm quit',
         message: 'Do you really want to quit?',
         buttons: [
@@ -56,9 +55,9 @@ export class TabsPage {
             }
           }
         ]
-      });*/
+      });
 
-      //this.nav.present(confirmAlert);
+      this.nav.present(confirmAlert);
 
     }
   }

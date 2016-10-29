@@ -6,28 +6,30 @@ import { Alerts } from './alerts';
 import { UserData } from '../../providers/user-data';
 import { AlertsProvider } from '../../providers/alerts';
 import { GeofenceProvider } from '../../providers/geofence';
-import { beforeEachProviders, describe, expect, inject, it } from '@angular/core/testing';
-import { providers }   from '../../../test/diExports';
+import { ComponentFixture, TestBed }  from '@angular/core/testing';
+import { TestUtils } from '../../test';
 
 function publishStub(topic: string):any { return null; }
 
+let fixture: ComponentFixture<Alerts> = null;
+let instance: any = null;
+
 describe('Alerts', () => {
 
-  beforeEachProviders(() => providers);
-  beforeEachProviders(() => [
-    AlertsProvider,
-    GeofenceProvider,
-    Alerts
-  ]);
+  beforeEach(() => {
+    TestUtils.configureIonicTestingModule([AlertsProvider, GeofenceProvider, Alerts]);
+    fixture = TestBed.createComponent(Alerts);
+    instance = fixture.debugElement.componentInstance;
+  });
 
-  it('initialises', inject([ Alerts ], (alerts) => {
-    expect(alerts).not.toBeNull();
-  }));
+  it('initialises', () => {
+    expect(instance).not.toBeNull();
+  });
 
-  it('should listen to alerts events', inject([ Alerts ], (alerts) => {
-    spyOn(alerts.events, 'subscribe').and.callFake(publishStub);
-    alerts.listenToAlertsEvents();
-    expect(alerts.events.subscribe.calls.count()).toEqual(1);
-  }));
+  it('should listen to alerts events', () => {
+    spyOn(instance.events, 'subscribe').and.callFake(publishStub);
+    instance.listenToAlertsEvents();
+    expect(instance.events.subscribe.calls.count()).toEqual(1);
+  });
 
 });

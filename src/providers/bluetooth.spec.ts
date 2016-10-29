@@ -5,9 +5,11 @@ import { MockBackend } from '@angular/http/testing'
 import { UserData } from './user-data';
 import { BluetoothProvider } from './bluetooth';
 import { GpsProvider } from './gps';
-import { beforeEachProviders, beforeEach, describe, expect, inject, it } from '@angular/core/testing';
-import { providers }   from '../../test/diExports';
-import { provide } from '@angular/core'
+import { ComponentFixture, TestBed }  from '@angular/core/testing';
+import { TestUtils } from '../../test';
+
+let fixture: ComponentFixture<BluetoothProvider> = null;
+let instance: any = null;
 
 class MockClass {
   public present(): any { return true; }
@@ -86,19 +88,17 @@ describe('BluetoothProvider', () => {
 
   let bluetoothProvider:BluetoothProvider;
 
-  beforeEachProviders(() => providers);
-  beforeEachProviders(() => [
-    GpsProvider,
-    BluetoothProvider,
-    provide(BLE, {useClass: BLEMock}),
-    provide(BluetoothSerial, {useClass: BluetoothSerialMock}),
-  ]);
+  beforeEach(() => {
+    TestUtils.configureIonicTestingModule([GpsProvider, BluetoothProvider]);
+    fixture = TestBed.createComponent(BluetoothProvider);
+    instance = fixture.debugElement.componentInstance;
+  });
 
-  beforeEach( inject([ BluetoothProvider ], (bluetoothProv) => {
+  beforeEach( (bluetoothProv) => {
     bluetoothProvider = bluetoothProv;
     spyOn(bluetoothProvider.userData, 'showToast').and.callFake(showToastStub);
     spyOn(bluetoothProvider.events, 'publish').and.callFake(publishStub);
-  }));
+  });
 
   it('initialises', () => {
     expect(bluetoothProvider).not.toBeNull();

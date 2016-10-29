@@ -7,7 +7,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 export class About {
 
   constructor(private translate: TranslateService) {
-  	this.translate = translatem;
+  	this.translate = translate;
   }
 
 }

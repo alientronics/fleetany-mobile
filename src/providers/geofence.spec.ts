@@ -3,8 +3,11 @@ import { UserData } from './user-data';
 import { GeofenceProvider } from './geofence';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
-import { beforeEachProviders, describe, expect, inject, it } from '@angular/core/testing';
+import { ComponentFixture, TestBed }  from '@angular/core/testing';
+import { TestUtils } from '../../test';
 
+let fixture: ComponentFixture<GeofenceProvider> = null;
+let instance: any = null;
 let geofenceProvider: GeofenceProvider = null;
 
 function publishStub(topic: string):any { return null; }

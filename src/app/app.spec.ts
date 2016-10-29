@@ -12,7 +12,7 @@ let instance: FleetanyApp = null;
 describe('FleetanyApp', () => {
 
   it('should create the app', () => {
-    expect(true).toBeTruthy();
+    expect(FleetanyApp).toBeTruthy();
   });
 
 });

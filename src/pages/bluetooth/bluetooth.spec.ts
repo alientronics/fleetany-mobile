@@ -6,9 +6,11 @@ import { TranslateService, TranslateStaticLoader, TranslateLoader } from 'ng2-tr
 import { UserData } from '../../providers/user-data';
 import { GpsProvider } from '../../providers/gps';
 import { BluetoothProvider } from '../../providers/bluetooth';
-import { beforeEachProviders, beforeEach, describe, expect, inject, it } from '@angular/core/testing';
-import { providers }   from '../../../test/diExports';
-import { provide } from '@angular/core'
+import { ComponentFixture, TestBed }  from '@angular/core/testing';
+import { TestUtils } from '../../test';
+
+let fixture: ComponentFixture<Bluetooth> = null;
+let instance: any = null;
 
 class MockClass {
   public present(): any { return true; }
@@ -91,22 +93,24 @@ describe('Bluetooth', () => {
 
   let bluetooth: Bluetooth;
 
-  beforeEachProviders(() => providers);
-  beforeEachProviders(() => [
-    GpsProvider,
-    provide(UserData, {useClass: MockClass}),
-    BluetoothProvider,
-    Bluetooth
-  ]);
+  beforeEach(() => {
+    TestUtils.configureIonicTestingModule([
+      GpsProvider,
+      BluetoothProvider,
+      Bluetooth
+    ]);
+    fixture = TestBed.createComponent(Bluetooth);
+    instance = fixture.debugElement.componentInstance;
+  });
 
-  beforeEach( inject([ Bluetooth ], (bt) => {
+  beforeEach((bt) => {
     bluetooth = bt;
     spyOn(bluetooth.bluetoothProvider.userData, 'showToast').and.callFake(showToastStub);
     spyOn(bluetooth.bluetoothProvider, 'getBluetoothCurrentData').and.callFake(bluetoothCurrentDataStub);
     spyOn(bluetooth.bluetoothProvider, 'bleToggle').and.returnValue(true);
     spyOn(bluetooth.events, 'publish').and.returnValue(true);
     spyOn(bluetooth.events, 'subscribe').and.returnValue(true);
-  }));
+  });
 
   it('initialises', () => {
     expect(bluetooth).not.toBeNull();

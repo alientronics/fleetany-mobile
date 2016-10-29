@@ -3,9 +3,11 @@ import { Geolocation } from 'ionic-native';
 import { GpsProvider } from './gps';
 import { BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
-import { beforeEachProviders, beforeEach, describe, expect, inject, it } from '@angular/core/testing';
-import { providers }   from '../../test/diExports';
-import { provide } from '@angular/core'
+import { ComponentFixture, TestBed }  from '@angular/core/testing';
+import { TestUtils } from '../../test';
+
+let fixture: ComponentFixture<GpsProvider> = null;
+let instance: any = null;
 
 class GeoLocMock {
   public watchPosition(options: any): any { return true; }
@@ -46,18 +48,18 @@ describe('GpsProvider', () => {
 
   let gpsProvider:GpsProvider;
 
-  beforeEachProviders(() => providers);
-  beforeEachProviders(() => [
-    GpsProvider,
-    provide(Geolocation, {useClass: GeoLocMock})
-  ]);
+  beforeEach(() => {
+    TestUtils.configureIonicTestingModule([GpsProvider]);
+    fixture = TestBed.createComponent(GpsProvider);
+    instance = fixture.debugElement.componentInstance;
+  });
 
-  beforeEach( inject([ GpsProvider ], (gpsProv) => {
+  beforeEach( (gpsProv) => {
     gpsProvider = gpsProv;
     spyOn(gpsProvider.userData, 'showToast').and.callFake(showToastStub);
     spyOn(gpsProvider.events, 'publish').and.callFake(publishStub);
     spyOn(Geolocation, 'watchPosition').and.callFake(watchPositionStub); 
-  }));
+  });
 
   it('initialises', () => {
     expect(gpsProvider).not.toBeNull();

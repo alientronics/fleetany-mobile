@@ -1,5 +1,5 @@
 import {Platform, Events, Nav, MenuController} from 'ionic-angular';
-/*
+
 import {UserData} from '../providers/user-data';
 import {GeofenceProvider} from '../providers/geofence';
 import {AlertsProvider} from '../providers/alerts';
@@ -8,7 +8,7 @@ import {BluetoothProvider} from '../providers/bluetooth';
 import {Gps} from '../pages/gps/gps';
 import {Bluetooth} from '../pages/bluetooth';
 import {Login} from '../pages/login/login';
-*/
+
 import {TabsPage} from '../pages/tabs/tabs';
 import {About} from '../pages/about/about';
 import {Component, ViewChild, Type} from '@angular/core';
@@ -33,11 +33,11 @@ export class FleetanyApp {
   private platform: Platform;
 
   appLoggedInPages: PageObj[] = [
-    { title: 'menu.Home', component: About, icon: 'home' },
+    { title: 'menu.Home', component: Login, icon: 'home' },
     //{ title: 'menu.Alerts', component: TabsPage, icon: 'alert' },
     //{ title: 'menu.FuelTracking', component: TabsPage, index: 1, icon: 'color-fill' },
-    { title: 'menu.GPS', component: About, icon: 'compass' },
-    { title: 'menu.BLE', component: About, icon: 'bluetooth' },
+    { title: 'menu.GPS', component: Gps, icon: 'compass' },
+    { title: 'menu.BLE', component: Bluetooth, icon: 'bluetooth' },
     { title: 'menu.About', component: About, icon: 'information-circle' },
   ];
   appLoggedOutPages: PageObj[] = [
@@ -52,15 +52,15 @@ export class FleetanyApp {
 
   constructor(platform: Platform, 
     private events: Events,
-    //private userData: UserData,
+    private userData: UserData,
     //private geofenceProvider: GeofenceProvider,
-    //private alertsProvider: AlertsProvider,
+    private alertsProvider: AlertsProvider,
     private menu: MenuController,
     private translate: TranslateService
   ) {
 
     this.translate = translate;
-    this.rootPage = About;
+    this.rootPage = Login;
     this.platform = platform;
 
     this.platform.ready().then(() => {
@@ -80,11 +80,11 @@ export class FleetanyApp {
       // StatusBar.setStyle(StatusBar.LIGHT_CONTENT)
 
       // Disable BACK button on home
-      /*
+      
       this.userData.hasLoggedIn().then((hasLoggedIn) => {
         this.enableMenu(hasLoggedIn !== null);
       });
-      */
+      
     
       if (this.platform.is('mobile')) {
         window.powerManagement.dim(function() {
@@ -98,7 +98,7 @@ export class FleetanyApp {
 
     this.listenToLoginEvents();
     this.initializeTranslateServiceConfig();
-    //this.alertsProvider.setAlertsData([]);
+    this.alertsProvider.setAlertsData([]);
 
   }
 
@@ -116,7 +116,7 @@ export class FleetanyApp {
     if (page.title === 'menu.Logout') {
       // Give the menu time to close before changing to logged out
       setTimeout(() => {
-        //this.userData.logout();
+        this.userData.logout();
       }, 1000);
     }
   }

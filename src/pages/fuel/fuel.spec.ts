@@ -4,8 +4,11 @@ import { Platform, NavController }   from 'ionic-angular';
 import { UserData } from '../../providers/user-data';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
-import { beforeEachProviders, beforeEach, describe, expect, inject, it } from '@angular/core/testing';
-import { providers }   from '../../../test/diExports';
+import { ComponentFixture, TestBed }  from '@angular/core/testing';
+import { TestUtils } from '../../test';
+
+let fixture: ComponentFixture<Fuel> = null;
+let instance: any = null;
 
 function postApiSuccessStub(options: any): any {
   'use strict';
@@ -38,13 +41,13 @@ describe('Fuel', () => {
 
   let fuel:Fuel;
 
-  beforeEachProviders(() => providers);
-  beforeEachProviders(() => [
-    FormBuilder,
-    Fuel
-  ]);
+  beforeEach(() => {
+    TestUtils.configureIonicTestingModule([FormBuilder, Fuel]);
+    fixture = TestBed.createComponent(Fuel);
+    instance = fixture.debugElement.componentInstance;
+  });
 
-  beforeEach( inject([ Fuel ], (f) => {
+  beforeEach((f) => {
     fuel = f;
     let fb = new FormBuilder()
     fuel.fuelForm = fb.group({
@@ -52,7 +55,7 @@ describe('Fuel', () => {
         'tankfill': ['', ]
     });
     spyOn(fuel.userData, 'showToast').and.callFake(showToastStub);
-  }));
+  });
 
   it('initialises', () => {
     expect(fuel).not.toBeNull();

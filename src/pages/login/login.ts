@@ -3,14 +3,13 @@
 import { Component, NgZone } from '@angular/core';
 import { Alert, NavController, Events, Platform} from 'ionic-angular';
 import { GooglePlus } from 'ionic-native';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 import {forwardRef, Inject, Type} from '@angular/core';
 import {UserData} from '../../providers/user-data';
 import {About} from '../about/about';
 
 @Component({
-  templateUrl: 'login.html',
-  pipes: [TranslatePipe]
+  templateUrl: 'login.html'
 })
 
 export class Login {

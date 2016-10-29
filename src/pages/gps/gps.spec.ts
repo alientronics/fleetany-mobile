@@ -7,9 +7,11 @@ import { UserData } from '../../providers/user-data';
 import { GpsProvider } from '../../providers/gps';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
-import { beforeEachProviders, describe, expect, inject, it } from '@angular/core/testing';
-import { providers }   from '../../../test/diExports';
-import { provide } from '@angular/core'
+import { ComponentFixture, TestBed }  from '@angular/core/testing';
+import { TestUtils } from '../../test';
+
+let fixture: ComponentFixture<Gps> = null;
+let instance: any = null;
 
 class MockClass {
   public backButton = { subscribe : () => {} }
@@ -82,35 +84,34 @@ function getBluetoothDataStub(): any {
 
 describe('Gps', () => {
 
-  beforeEachProviders(() => providers);
-  beforeEachProviders(() => [
-    GpsProvider,
-    provide(UserData, {useClass: MockClass}),
-    Gps
-  ]);
+  beforeEach(() => {
+    TestUtils.configureIonicTestingModule([GpsProvider, Gps]);
+    fixture = TestBed.createComponent(Gps);
+    instance = fixture.debugElement.componentInstance;
+  });
 
-  it('initialises', inject([ Gps ], (gps) => {
+  it('initialises', (gps) => {
     expect(gps).not.toBeNull();
-  }));
+  });
   
-  it('should call start gps provider', inject([ Gps, GpsProvider ], (gps, gpsProvider) => {
+  it('should call start gps provider', (gps, gpsProvider) => {
     spyOn(gpsProvider, 'gpsToggle').and.callFake(gpsToggleStub);
     gps.gpsToggle(true);
     expect(gpsProvider.gpsToggle).toHaveBeenCalled();
-  }));
+  });
 
-  it('should set display data', inject([ Gps, GpsProvider ], (gps, gpsProvider) => {
+  it('should set display data', (gps, gpsProvider) => {
     spyOn(gpsProvider, 'getGpsCurrentData').and.callFake(gpsCurrentDataStub);
     gps.setDisplayData();
     expect(gps.gpstracking).toBe(true);
     expect(gps.latitude).toBe(30.03);
     expect(gps.longitude).toBe(51.22);
-  }));
+  });
 
-  it('should listen to gps events', inject([ Gps ], (gps) => {
+  it('should listen to gps events', (gps) => {
     spyOn(gps.events, 'subscribe').and.callFake(publishStub);
     gps.listenToGpsEvents();
     expect(gps.events.subscribe.calls.count()).toEqual(2);
-  }));
+  });
 
 });

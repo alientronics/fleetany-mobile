@@ -1,9 +1,10 @@
 import { Login } from './login';
 import { GooglePlus } from 'ionic-native';
-import { beforeEachProviders, beforeEach, describe, expect, inject, it } from '@angular/core/testing';
-import { providers }   from '../../../test/diExports';
-import { provide } from '@angular/core'
+import { ComponentFixture, TestBed }  from '@angular/core/testing';
+import { TestUtils } from '../../test';
 
+let fixture: ComponentFixture<Login> = null;
+let instance: any = null;
 let login: Login = null;
 
 class MockClass {
@@ -26,17 +27,17 @@ describe('Login', () => {
 
   let login: Login;
 
-  beforeEachProviders(() => providers);
-  beforeEachProviders(() => [
-    provide(GooglePlus, {useClass: MockClass}),
-    Login
-  ]);
+  beforeEach(() => {
+    TestUtils.configureIonicTestingModule([Login]);
+    fixture = TestBed.createComponent(Login);
+    instance = fixture.debugElement.componentInstance;
+  });
 
-  beforeEach( inject([ Login ], (lg) => {
+  beforeEach( (lg) => {
     spyOn(GooglePlus, 'login').and.callFake(fakePromise);
     spyOn(GooglePlus, 'logout').and.callFake(fakePromise);
     login = lg;
-  }));
+  });
 
   it('initialises', () => {
     expect(login).not.toBeNull();

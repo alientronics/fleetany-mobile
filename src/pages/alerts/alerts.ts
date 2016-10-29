@@ -1,13 +1,12 @@
 'use strict';
 
-//import { Component } from '@angular/core';
-import {Page, Events} from 'ionic-angular';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import { Component } from '@angular/core';
+import {Events} from 'ionic-angular';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 import {AlertsProvider} from '../../providers/alerts';
 
-@Page({
-  templateUrl: 'alerts.html',
-  pipes: [TranslatePipe]
+@Component({
+  templateUrl: 'alerts.html'
 })
 
 export class Alerts {

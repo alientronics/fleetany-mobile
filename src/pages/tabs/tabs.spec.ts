@@ -30,8 +30,8 @@ describe('TabsPage', () => {
   it('checkBack', () => {
      spyOn(Alert, 'create').and.callFake(createStub);
      tabs.checkBack();
-     //expect(Alert.create).toHaveBeenCalled();
-     //expect(tabs.nav.present).toHaveBeenCalled();
+     expect(Alert.create).toHaveBeenCalled();
+     expect(tabs.nav.present).toHaveBeenCalled();
   });
 
 });

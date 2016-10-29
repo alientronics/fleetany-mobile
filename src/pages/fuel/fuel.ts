@@ -2,15 +2,13 @@
 
 import { Component } from '@angular/core';
 import { Alert, NavController} from 'ionic-angular';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 import {UserData} from '../../providers/user-data';
 import {Toast} from 'ionic-native';
 import { FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators, AbstractControl } from '@angular/common';
 
 @Component({
-  templateUrl: 'fuel.html',
-  pipes: [TranslatePipe],
-  directives: [FORM_DIRECTIVES]
+  templateUrl: 'fuel.html'
 })
 export class Fuel {
 

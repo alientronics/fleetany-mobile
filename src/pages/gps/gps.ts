@@ -2,13 +2,12 @@
 
 import { Component, NgZone } from '@angular/core';
 import { Events, NavController} from 'ionic-angular';
-import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 import {GpsProvider} from '../../providers/gps';
 import {UserData} from '../../providers/user-data';
 
 @Component({
-  templateUrl: 'gps.html',
-  pipes: [TranslatePipe]
+  templateUrl: 'gps.html'
 })
 export class Gps {
 

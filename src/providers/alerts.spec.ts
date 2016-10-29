@@ -4,27 +4,30 @@ import { AlertsProvider } from './alerts';
 import { GeofenceProvider } from './geofence';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
-import { beforeEachProviders, describe, expect, inject, it } from '@angular/core/testing';
-import { providers }   from '../../test/diExports';
+import { ComponentFixture, TestBed }  from '@angular/core/testing';
+import { TestUtils } from '../../test';
+
+let fixture: ComponentFixture<AlertsProvider> = null;
+let instance: any = null;
 
 function publishStub(topic: string):any { return null; }
 
 describe('AlertsProvider', () => {
 
-  beforeEachProviders(() => providers);
-  beforeEachProviders(() => [
-    GeofenceProvider,
-    AlertsProvider
-  ]);
+  beforeEach(() => {
+    TestUtils.configureIonicTestingModule([AlertsProvider, GeofenceProvider]);
+    fixture = TestBed.createComponent(AlertsProvider);
+    instance = fixture.debugElement.componentInstance;
+  });
 
-  it('initialises', inject([ AlertsProvider ], (alertsProvider) => {
+  it('initialises', (alertsProvider) => {
     expect(alertsProvider).not.toBeNull();
-  }));
+  });
 
-  it('should listen to geofence events', inject([ AlertsProvider ], (alertsProvider) => {
+  it('should listen to geofence events', (alertsProvider) => {
     spyOn(alertsProvider.events, 'subscribe').and.callFake(publishStub);
     alertsProvider.listenToGeofenceEvents();
     expect(alertsProvider.events.subscribe.calls.count()).toEqual(1);
-  }));
+  });
 
 });
