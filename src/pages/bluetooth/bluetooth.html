@@ -1,14 +1,9 @@
 <ion-header>
   <ion-navbar>
-    <button menuToggle>
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>{{ "title" | translate }}</ion-title>
-    <ion-buttons end>
-      <button (click)="presentPopover($event)">
-        <ion-icon name="more"></ion-icon>
-      </button>
-    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -19,7 +14,7 @@
       {{ "ble.SelectDevice" | translate }}
     </ion-list-header>
 
-    <ion-item *ngFor="let device of devices" value="{{device.id}}">
+    <ion-item *ngFor="let device of devices">
       <ion-label>{{device.name}}</ion-label>
       <ion-radio value="{{device.id}}"></ion-radio>
     </ion-item>

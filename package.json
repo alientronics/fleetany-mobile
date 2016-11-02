@@ -27,15 +27,15 @@
     "zone.js": "0.6.21"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^0.0.36",
+    "@ionic/app-scripts": "0.0.36",
     "@types/jasmine": "^2.2.30",
     "@types/jszip": "0.0.31",
     "angular-cli": "1.0.0-beta.17",
     "jasmine-core": "2.4.1",
     "jasmine-spec-reporter": "2.5.0",
     "karma": "1.1.0",
-    "karma-cli": "^1.0.1",
     "karma-chrome-launcher": "1.0.1",
+    "karma-cli": "^1.0.1",
     "karma-coverage": "1.0.0",
     "karma-jasmine": "1.0.2",
     "karma-mocha-reporter": "2.0.4",
