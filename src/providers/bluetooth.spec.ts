@@ -91,11 +91,10 @@ describe('BluetoothProvider', () => {
   beforeEach(() => {
     TestUtils.configureIonicTestingModule([GpsProvider, BluetoothProvider]);
     fixture = TestBed.createComponent(BluetoothProvider);
-    instance = fixture.debugElement.componentInstance;
+    bluetoothProvider = fixture.debugElement.componentInstance;
   });
 
-  beforeEach( (bluetoothProv) => {
-    bluetoothProvider = bluetoothProv;
+  beforeEach( () => {
     spyOn(bluetoothProvider.userData, 'showToast').and.callFake(showToastStub);
     spyOn(bluetoothProvider.events, 'publish').and.callFake(publishStub);
   });

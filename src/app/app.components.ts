@@ -29,7 +29,7 @@ export class FleetanyApp {
 
   @ViewChild(Nav) nav: Nav;
 
-  private rootPage: any;
+  public rootPage: any;
   private platform: Platform;
 
   appLoggedInPages: PageObj[] = [

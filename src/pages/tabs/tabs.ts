@@ -11,8 +11,8 @@ import {Fuel} from '../fuel/fuel';
 })
 export class TabsPage {
 
-  private tab1Root;
-  private tab2Root;
+  public tab1Root;
+  public tab2Root;
   private platform: Platform;
   public nav: NavController;
   mySelectedIndex: number;

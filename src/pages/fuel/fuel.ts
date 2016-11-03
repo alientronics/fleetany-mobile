@@ -14,14 +14,14 @@ export class Fuel {
 
   public fuelForm: any;
   public userData: UserData;
-  private price: AbstractControl;
-  private amount: AbstractControl;
-  private type: AbstractControl;
-  private miliage: AbstractControl;
-  private tankfill: AbstractControl;
-  private fuelsent: boolean;
-  private vehiclefailed: boolean;
-  private types: Array<any>;
+  public price: AbstractControl;
+  public amount: AbstractControl;
+  public type: AbstractControl;
+  public miliage: AbstractControl;
+  public tankfill: AbstractControl;
+  public fuelsent: boolean;
+  public vehiclefailed: boolean;
+  public types: Array<any>;
 
   constructor(
       fb: FormBuilder, 
@@ -91,5 +91,9 @@ export class Fuel {
           }
       }
   } 
+
+  closeAlert() {
+    //void
+  }
 
 }

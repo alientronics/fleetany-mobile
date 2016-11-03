@@ -18,12 +18,12 @@ export class Login {
   public platform: Platform;
   private userData: UserData;
   private events: Events;
-  private loggedIn: boolean;
-  private gpstracking: boolean;
+  public loggedIn: boolean;
+  public gpstracking: boolean;
   //private userImage: string;
-  private welcome: string;
-  private plate: string;
-  private vehicles: Array<any>;
+  public welcome: string;
+  public plate: string;
+  public vehicles: Array<any>;
 
   constructor(
       nav: NavController, 

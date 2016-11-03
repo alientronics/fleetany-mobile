@@ -29,7 +29,7 @@ describe('Alerts', () => {
   it('should listen to alerts events', () => {
     spyOn(instance.events, 'subscribe').and.callFake(publishStub);
     instance.listenToAlertsEvents();
-    expect(instance.events.subscribe.calls.count()).toEqual(1);
+    expect(instance.events.subscribe).toHaveBeenCalled();
   });
 
 });

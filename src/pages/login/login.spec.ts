@@ -30,13 +30,12 @@ describe('Login', () => {
   beforeEach(() => {
     TestUtils.configureIonicTestingModule([Login]);
     fixture = TestBed.createComponent(Login);
-    instance = fixture.debugElement.componentInstance;
+    login = fixture.debugElement.componentInstance;
   });
 
-  beforeEach( (lg) => {
+  beforeEach( () => {
     spyOn(GooglePlus, 'login').and.callFake(fakePromise);
     spyOn(GooglePlus, 'logout').and.callFake(fakePromise);
-    login = lg;
   });
 
   it('initialises', () => {

@@ -44,11 +44,10 @@ describe('Fuel', () => {
   beforeEach(() => {
     TestUtils.configureIonicTestingModule([FormBuilder, Fuel]);
     fixture = TestBed.createComponent(Fuel);
-    instance = fixture.debugElement.componentInstance;
+    fuel = fixture.debugElement.componentInstance;
   });
 
-  beforeEach((f) => {
-    fuel = f;
+  beforeEach(() => {
     let fb = new FormBuilder()
     fuel.fuelForm = fb.group({
         'type':     ['', ],

@@ -51,11 +51,10 @@ describe('GpsProvider', () => {
   beforeEach(() => {
     TestUtils.configureIonicTestingModule([GpsProvider]);
     fixture = TestBed.createComponent(GpsProvider);
-    instance = fixture.debugElement.componentInstance;
+    gpsProvider = fixture.debugElement.componentInstance;
   });
 
-  beforeEach( (gpsProv) => {
-    gpsProvider = gpsProv;
+  beforeEach( () => {
     spyOn(gpsProvider.userData, 'showToast').and.callFake(showToastStub);
     spyOn(gpsProvider.events, 'publish').and.callFake(publishStub);
     spyOn(Geolocation, 'watchPosition').and.callFake(watchPositionStub); 

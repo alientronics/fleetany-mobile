@@ -94,7 +94,7 @@ describe('Gps', () => {
     gpsProvider = fixture.debugElement.componentInstance;
   });
 
-  it('initialises', (gps) => {
+  it('initialises', () => {
     expect(gps).not.toBeNull();
   });
   
@@ -112,7 +112,7 @@ describe('Gps', () => {
     expect(gps.longitude).toBe(51.22);
   });
 
-  it('should listen to gps events', (gps) => {
+  it('should listen to gps events', () => {
     spyOn(gps.events, 'subscribe').and.callFake(publishStub);
     gps.listenToGpsEvents();
     expect(gps.events.subscribe.calls.count()).toEqual(2);

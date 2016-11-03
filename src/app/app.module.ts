@@ -12,7 +12,10 @@ import {TabsPage} from '../pages/tabs/tabs';
 import {About} from '../pages/about/about';
 import {Gps} from '../pages/gps/gps';
 import {Bluetooth} from '../pages/bluetooth/bluetooth';
+//import {BluetoothUart} from '../pages/uart/bluetooth';
 import {Login} from '../pages/login/login';
+import {Alerts} from '../pages/alerts/alerts';
+import {Fuel} from '../pages/fuel/fuel';
 
 import {GeofenceProvider} from '../providers/geofence';
 import {AlertsProvider} from '../providers/alerts';
@@ -31,7 +34,10 @@ export function createTranslateLoader(http: Http) {
     About,
     Gps,
     Bluetooth,
-    Login
+    Login,
+    Alerts,
+    Fuel
+    //,BluetoothUart
   ],
   imports: [
     IonicModule.forRoot(FleetanyApp),
@@ -51,7 +57,10 @@ export function createTranslateLoader(http: Http) {
     About,
     Gps,
     Bluetooth,
-    Login
+    Login,
+    Alerts,
+    Fuel
+    //,BluetoothUart
   ],
   providers: [
     UserData,

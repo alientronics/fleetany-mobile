@@ -14,20 +14,22 @@ function publishStub(topic: string):any { return null; }
 
 describe('AlertsProvider', () => {
 
+  let alertsProvider:AlertsProvider;
+
   beforeEach(() => {
     TestUtils.configureIonicTestingModule([AlertsProvider, GeofenceProvider]);
     fixture = TestBed.createComponent(AlertsProvider);
-    instance = fixture.debugElement.componentInstance;
+    alertsProvider = fixture.debugElement.componentInstance;
   });
 
-  it('initialises', (alertsProvider) => {
+  it('initialises', () => {
     expect(alertsProvider).not.toBeNull();
   });
 
-  it('should listen to geofence events', (alertsProvider) => {
+  it('should listen to geofence events', () => {
     spyOn(alertsProvider.events, 'subscribe').and.callFake(publishStub);
     alertsProvider.listenToGeofenceEvents();
-    expect(alertsProvider.events.subscribe.calls.count()).toEqual(1);
+    expect(alertsProvider.events.subscribe).toHaveBeenCalled();
   });
 
 });

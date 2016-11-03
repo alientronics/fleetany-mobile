@@ -12,11 +12,11 @@ import {UserData} from '../../providers/user-data';
 export class Gps {
 
   private events: Events;
-  private gpstracking: boolean;
-  private latitude: number;
-  private longitude: number;
+  public gpstracking: boolean;
+  public latitude: number;
+  public longitude: number;
   private gpsProvider: GpsProvider;
-  private count: number;
+  public count: number;
  
   constructor(
       gpsProvider: GpsProvider, 

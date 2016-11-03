@@ -100,11 +100,10 @@ describe('Bluetooth', () => {
       Bluetooth
     ]);
     fixture = TestBed.createComponent(Bluetooth);
-    instance = fixture.debugElement.componentInstance;
+    bluetooth = fixture.debugElement.componentInstance;
   });
 
-  beforeEach((bt) => {
-    bluetooth = bt;
+  beforeEach(() => {
     spyOn(bluetooth.bluetoothProvider.userData, 'showToast').and.callFake(showToastStub);
     spyOn(bluetooth.bluetoothProvider, 'getBluetoothCurrentData').and.callFake(bluetoothCurrentDataStub);
     spyOn(bluetooth.bluetoothProvider, 'bleToggle').and.returnValue(true);
