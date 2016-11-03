@@ -29,6 +29,7 @@ before_install:
 install:
   - npm install
   - ionic platform add android
+  - ionic state restore
 
 before_script:
   - export DISPLAY=:99.0
