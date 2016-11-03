@@ -22,7 +22,7 @@ android:
   - android-23
 
 before_install:
-  - nvm install v4
+  - nvm install stable
   - npm install -g npm
   - npm install -g cordova ionic
 
@@ -37,7 +37,7 @@ before_script:
 
 script:
   - ionic build android
-  - ng test --watch=false
+#  - npm test --watch=false
 
 notifications:
   email:
