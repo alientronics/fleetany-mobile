@@ -277,35 +277,38 @@ export class BluetoothProvider {
 
       this.getPostData(storage).then((dataStorage) => {
 
-        let postData: any = [];
-        var zip = new JSZip(); 
-        zip.file("postData.json", dataStorage);
+        if (dataStorage) {
 
-        zip.generateAsync({
-          base64: true,
-          compression: "DEFLATE",
-          type: "base64"
-        }).then((zipFile) => {
+          let postData: any = [];
+          var zip = new JSZip(); 
+          zip.file("postData.json", dataStorage);
 
-           if(dataStorage.length > 180) {
-            postData.json = zipFile;
-            postData.dataIsCompressed = 1;
-           } else {
-            postData.json = dataStorage;
-            postData.dataIsCompressed = 0;
-           }
+          zip.generateAsync({
+            base64: true,
+            compression: "DEFLATE",
+            type: "base64"
+          }).then((zipFile) => {
 
-           this.userData.postApi(urlApi, postData).subscribe(
-            res => {
-              this.setPostData(null, storage, urlApi);
-            },
-            error => {
-              //alert('Error sending data: ' + error.statusText);
-              console.log(error);
-            }
-           );
-        });
+             if(dataStorage.length > 180) {
+              postData.json = zipFile;
+              postData.dataIsCompressed = 1;
+             } else {
+              postData.json = dataStorage;
+              postData.dataIsCompressed = 0;
+             }
 
+             this.userData.postApi(urlApi, postData).subscribe(
+              res => {
+                this.setPostData(null, storage, urlApi);
+              },
+              error => {
+                //alert('Error sending data: ' + error.statusText);
+                console.log(error);
+              }
+             );
+          });
+        }
+        
       });
     }
   }
@@ -318,11 +321,13 @@ export class BluetoothProvider {
 
   setDisplayData() {
     this.getBluetoothCurrentData().then((data) => { 
-      data = JSON.parse(data);
-      this.blescan = data.blescan;
-      this.bledevice = data.bledevice;
-      this.devices = data.devices;
-      this.datastream = data.datastream;
+      if (data) {
+        data = JSON.parse(data);
+        this.blescan = data.blescan;
+        this.bledevice = data.bledevice;
+        this.devices = data.devices;
+        this.datastream = data.datastream;
+      }
     });
   }
 

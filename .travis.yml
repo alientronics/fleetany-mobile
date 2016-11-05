@@ -38,7 +38,7 @@ before_script:
 
 script:
   - ionic build android
-#  - npm test
+  - npm test
 
 notifications:
   email:
