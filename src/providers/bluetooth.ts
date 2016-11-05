@@ -1,7 +1,7 @@
 'use strict';
 
 import {Injectable, Inject} from '@angular/core';
-import {Platform, Events, NavController, AlertController} from 'ionic-angular';
+import {Platform, Events, AlertController} from 'ionic-angular';
 import {UserData} from './user-data';
 import {GpsProvider} from './gps';
 import {BLE, BluetoothSerial} from 'ionic-native';
@@ -27,7 +27,6 @@ export class BluetoothProvider {
   constructor(
       @Inject(Events) public events: Events,
       @Inject(Platform) public platform: Platform,
-      @Inject(NavController) public nav: NavController,
       userData: UserData,
       gpsProvider: GpsProvider,
       public alertCtrl: AlertController,
@@ -284,7 +283,8 @@ export class BluetoothProvider {
 
         zip.generateAsync({
           base64: true,
-          compression: "DEFLATE"
+          compression: "DEFLATE",
+          type: "base64"
         }).then((zipFile) => {
 
            if(dataStorage.length > 180) {

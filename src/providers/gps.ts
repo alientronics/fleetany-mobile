@@ -1,7 +1,7 @@
 'use strict';
 
 import {Injectable, Inject} from '@angular/core';
-import {Platform, Events, NavController, AlertController} from 'ionic-angular';
+import {Platform, Events, AlertController} from 'ionic-angular';
 import {Geolocation} from 'ionic-native';
 import {UserData} from './user-data';
 import { Storage } from '@ionic/storage';
@@ -22,7 +22,6 @@ export class GpsProvider {
   constructor(
       @Inject(Events) public events: Events,
       @Inject(Platform) public platform: Platform,
-      @Inject(NavController) public nav: NavController,
       userData: UserData,
       public alertCtrl: AlertController,
       public storage: Storage
@@ -142,7 +141,8 @@ export class GpsProvider {
 
         zip.generateAsync({
           base64: true,
-          compression: "DEFLATE"
+          compression: "DEFLATE",
+          type: "base64"
         }).then((zipFile) => {
 
            if(dataStorage.length > 180) {
