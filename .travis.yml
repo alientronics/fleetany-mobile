@@ -28,21 +28,20 @@ before_install:
 
 install:
   - npm install
-  - ionic platform add android
-  - ionic state restore
 
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - export TS_NODE_DISABLE_WARNINGS=false
 
 script:
+  - ionic platform add android
+  - ionic state restore
   - ionic build android
   - npm test
 
 notifications:
   email:
     recipients:
-      - henrique.dias@alientronics.com.br
+      - henrique@alientronics.com.br
     on_success: change
     on_failure: always

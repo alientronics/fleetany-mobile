@@ -2,7 +2,7 @@
 <widget id="com.alientronics.fleetany" version="0.5.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>fleetany</name>
     <description>fleetany app for gps and fuel tracking</description>
-    <author email="henrique.dias@alientronics.com.br" href="http://www.alientronics.com.br/">Alientronics Team</author>
+    <author email="henrique@alientronics.com.br" href="http://www.alientronics.com.br/">Alientronics Team</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -70,7 +70,7 @@
     <preference name="android-targetSdkVersion" value="23" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="7000" />
+    <preference name="SplashScreenDelay" value="10000" />
     <preference name="Orientation" value="portrait" />
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
