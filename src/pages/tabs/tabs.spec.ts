@@ -5,11 +5,12 @@ let tabs: TabsPage = null;
 
 class MockClass {
   public create(): any { return true; }
+  public present(): any { return true; }
 }
 
 function createStub(options: any): any {
   'use strict';
-  return true;
+  return new MockClass();
 }
 
 describe('TabsPage', () => {
@@ -18,10 +19,10 @@ describe('TabsPage', () => {
     let mockClass: any = (<any>new MockClass());
     let platform = new Platform();
     let nav:any = new MockClass();
-    let alert:any = new MockClass();
+    let alertCtrl:any = new MockClass();
     let navParams:any = new NavParams();
-    spyOn(alert, 'create').and.callFake(createStub);
-    tabs = new TabsPage(platform, nav, navParams, mockClass, alert);
+    spyOn(alertCtrl, 'create').and.callFake(createStub);
+    tabs = new TabsPage(platform, nav, navParams, mockClass, alertCtrl);
   });
 
   it('initialises', () => {
@@ -29,9 +30,8 @@ describe('TabsPage', () => {
   });
 
   it('checkBack', () => {
-     spyOn(alert, 'create').and.callFake(createStub);
      tabs.checkBack();
-     //expect(alert.create).toHaveBeenCalled();
+     expect(tabs.alertCtrl.create).toHaveBeenCalled();
   });
 
 });
