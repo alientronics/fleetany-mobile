@@ -1,26 +1,18 @@
 import { NgModule }                         from '@angular/core';
 import { IonicModule }                      from 'ionic-angular';
 
-import {UserData, GeofenceProvider, AlertsProvider, GpsProvider, BluetoothProvider} from './';
+import {AlertsProvider} from './alerts';
+import {GeofenceProvider} from './geofence';
+import {GpsProvider} from './gps';
+import {BluetoothProvider} from './bluetooth';
+import {UserData} from './user-data';
 
 @NgModule({
-  declarations: [
-   // UserData,
-   // GeofenceProvider,
-   // AlertsProvider,
-   // GpsProvider,
-   // BluetoothProvider
-  ],
+  declarations: [],
   imports: [
     IonicModule,
   ],
-  exports: [
-   // UserData,
-   // GeofenceProvider,
-   // AlertsProvider,
-   // Gp//sProvider,
-   // BluetoothProvider
-  ],
+  exports: [],
   entryComponents: [],
   providers: [ ],
 })

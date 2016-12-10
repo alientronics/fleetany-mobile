@@ -6,6 +6,8 @@ import { Toast } from 'ionic-native';
 import { ComponentFixture, TestBed, async }  from '@angular/core/testing';
 import { TestUtils } from '../test';
 
+import { App, MenuController, NavController, Config, Keyboard, Form, IonicModule }  from 'ionic-angular';
+
 let fixture: ComponentFixture<UserData> = null;
 let instance: any = null;
 let userData: UserData = null;
@@ -48,11 +50,25 @@ function createStub(options: any): any {
 
 describe('UserData', () => {
 
-  beforeEach(async(() => TestUtils.beforeEachCompiler([UserData]).then(compiled => {
-    fixture = compiled.fixture;
-    userData = compiled.instance;
-    fixture.detectChanges();
-  })));
+ //beforeEach(() => {
+ //  TestUtils.configureIonicTestingModule([]);
+ //  fixture = TestBed.createComponent(UserData);
+ //  userData = fixture.debugElement.componentInstance;
+ //});
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        UserData,
+      ],
+      providers: [
+        App, Platform, Form, Keyboard, MenuController, NavController, Events, Alert
+      ],
+      imports: [ IonicModule ],
+    });
+    fixture = TestBed.createComponent(UserData);
+    //userData = fixture.debugElement.componentInstance;
+  });
 
   afterEach(() => {
     fixture.destroy();

@@ -9,8 +9,16 @@ import 'zone.js/dist/fake-async-test';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TestBed } from '@angular/core/testing';
-import { App, MenuController, NavController, Platform, Config, Keyboard, Form, IonicModule }  from 'ionic-angular';
+import { App, MenuController, NavController, Platform, Config, Keyboard, Form, IonicModule, Events, Alert }  from 'ionic-angular';
 import { ConfigMock, NavMock, PlatformMock } from './mocks';
+
+import {TabsPage, About, Gps, Bluetooth, Login, Alerts, Fuel, PagesModule} from './pages';
+
+import {AlertsProvider} from './providers/alerts';
+import {GeofenceProvider} from './providers/geofence';
+import {GpsProvider} from './providers/gps';
+import {BluetoothProvider} from './providers/bluetooth';
+import {UserData} from './providers/user-data';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 declare var __karma__: any;
@@ -56,13 +64,12 @@ export class TestUtils {
         ...components,
       ],
       providers: [
-        App, Platform, Form, Keyboard, MenuController, NavController,
+        App, Platform, Form, Keyboard, MenuController, NavController, Events, Alert,
         {provide: Config, useClass: ConfigMock},
       ],
       imports: [
-        FormsModule,
         IonicModule,
-        ReactiveFormsModule,
+        PagesModule
       ],
     });
   }
