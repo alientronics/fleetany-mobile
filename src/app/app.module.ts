@@ -8,20 +8,9 @@ import { Storage } from '@ionic/storage';
 
 import { FleetanyApp } from './app.components';
 
-import {TabsPage} from '../pages/tabs/tabs';
-import {About} from '../pages/about/about';
-import {Gps} from '../pages/gps/gps';
-import {Bluetooth} from '../pages/bluetooth/bluetooth';
+import {TabsPage, About, Gps, Bluetooth, Login, Alerts, Fuel} from '../pages';
+import {GeofenceProvider, AlertsProvider, GpsProvider, BluetoothProvider, UserData} from '../providers';
 //import {BluetoothUart} from '../pages/uart/bluetooth';
-import {Login} from '../pages/login/login';
-import {Alerts} from '../pages/alerts/alerts';
-import {Fuel} from '../pages/fuel/fuel';
-
-import {GeofenceProvider} from '../providers/geofence';
-import {AlertsProvider} from '../providers/alerts';
-import {GpsProvider} from '../providers/gps';
-import {BluetoothProvider} from '../providers/bluetooth';
-import {UserData} from '../providers/user-data';
 
 export function createTranslateLoader(http: Http) {
     return new TranslateStaticLoader(http, './assets/i18n', '.json');
@@ -60,7 +49,6 @@ export function createTranslateLoader(http: Http) {
     Login,
     Alerts,
     Fuel
-    //,BluetoothUart
   ],
   providers: [
     UserData,

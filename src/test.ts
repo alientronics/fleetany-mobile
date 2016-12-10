@@ -39,19 +39,25 @@ Promise.all([
 
 export class TestUtils {
 
-  public static configureIonicTestingModule(components: Array<any>): void {
-    TestBed.configureTestingModule({
+  public static beforeEachCompiler(components: Array<any>): Promise<{fixture: any, instance: any}> {
+    return TestUtils.configureIonicTestingModule(components)
+      .compileComponents().then(() => {
+        let fixture: any = TestBed.createComponent(components[0]);
+        return {
+          fixture: fixture,
+          instance: fixture.debugElement.componentInstance,
+        };
+      });
+  }
+
+  public static configureIonicTestingModule(components: Array<any>): typeof TestBed {
+    return TestBed.configureTestingModule({
       declarations: [
         ...components,
       ],
       providers: [
-        {provide: App, useClass: ConfigMock},
+        App, Platform, Form, Keyboard, MenuController, NavController,
         {provide: Config, useClass: ConfigMock},
-        Form,
-        {provide: Keyboard, useClass: ConfigMock},
-        {provide: MenuController, useClass: ConfigMock},
-        {provide: NavController, useClass: NavMock},
-        {provide: Platform, useClass: PlatformMock},
       ],
       imports: [
         FormsModule,

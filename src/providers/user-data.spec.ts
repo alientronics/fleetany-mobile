@@ -3,7 +3,7 @@ import { Events, Platform, Alert } from 'ionic-angular';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
 import { Toast } from 'ionic-native';
-import { ComponentFixture, TestBed }  from '@angular/core/testing';
+import { ComponentFixture, TestBed, async }  from '@angular/core/testing';
 import { TestUtils } from '../test';
 
 let fixture: ComponentFixture<UserData> = null;
@@ -48,10 +48,14 @@ function createStub(options: any): any {
 
 describe('UserData', () => {
 
-  beforeEach(() => {
-    TestUtils.configureIonicTestingModule([UserData]);
-    fixture = TestBed.createComponent(UserData);
-    userData = fixture.debugElement.componentInstance;
+  beforeEach(async(() => TestUtils.beforeEachCompiler([UserData]).then(compiled => {
+    fixture = compiled.fixture;
+    userData = compiled.instance;
+    fixture.detectChanges();
+  })));
+
+  afterEach(() => {
+    fixture.destroy();
   });
 
   it('initialises', () => {
