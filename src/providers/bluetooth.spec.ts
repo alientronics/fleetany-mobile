@@ -6,7 +6,7 @@ import { UserData } from './user-data';
 import { BluetoothProvider } from './bluetooth';
 import { GpsProvider } from './gps';
 import { ComponentFixture, TestBed }  from '@angular/core/testing';
-import { TestUtils } from '../../test';
+import { TestUtils } from '../test';
 
 let fixture: ComponentFixture<BluetoothProvider> = null;
 let instance: any = null;

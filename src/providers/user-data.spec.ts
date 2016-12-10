@@ -4,7 +4,7 @@ import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
 import { Toast } from 'ionic-native';
 import { ComponentFixture, TestBed }  from '@angular/core/testing';
-import { TestUtils } from '../../test';
+import { TestUtils } from '../test';
 
 let fixture: ComponentFixture<UserData> = null;
 let instance: any = null;

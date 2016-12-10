@@ -5,7 +5,7 @@ import { GeofenceProvider } from './geofence';
 import { Http, BaseRequestOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing'
 import { ComponentFixture, TestBed }  from '@angular/core/testing';
-import { TestUtils } from '../../test';
+import { TestUtils } from '../test';
 
 let fixture: ComponentFixture<AlertsProvider> = null;
 let instance: any = null;
