@@ -34,6 +34,7 @@ before_script:
   - sh -e /etc/init.d/xvfb start
 
 script:
+  - cordova platform add android
   - ionic platform add android
   - ionic state restore
   - ionic build android
