@@ -23,12 +23,6 @@ let instance: any = null;
 
 describe('Alerts', () => {
 
-  //beforeEach(() => {
-  //  TestUtils.configureIonicTestingModule([Alerts]);
-  //  fixture = TestBed.createComponent(Alerts);
-  //  instance = fixture.debugElement.componentInstance;
-  //});
-
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
@@ -58,7 +52,7 @@ describe('Alerts', () => {
 
   afterEach(() => {
     fixture.destroy();
-  });//
+  });
 
   it('initialises', () => {
     expect(instance).not.toBeNull();
