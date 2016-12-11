@@ -57,6 +57,14 @@ export class PlatformMock {
   }
 }
 
+export class AlertsProviderMock {
+  public getAlertsData(): any {
+    return new Promise((resolve: Function) => {
+      resolve('[1, 5]');
+    });
+  }
+}
+
 export class MenuMock {
   public close(): any {
     return new Promise((resolve: Function) => {
