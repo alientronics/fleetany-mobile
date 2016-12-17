@@ -73,7 +73,7 @@
   ],
   "scripts": {
     "postinstall": "webdriver-manager update",
-    "test": "ng test --code-coverage",
+    "test": "ng test --watch=false  --code-coverage",
     "build": "ionic-app-scripts build",
     "watch": "ionic-app-scripts watch",
     "serve:before": "watch",
