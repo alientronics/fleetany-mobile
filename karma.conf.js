@@ -18,12 +18,18 @@ module.exports = function (config) {
     preprocessors: {
       './src/test.ts': ['angular-cli']
     },
+    remapIstanbulReporter: {
+      reports: {
+        html: 'coverage',
+        lcovonly: './coverage/lcov.info'
+      }
+    },
     angularCli: {
       config: './angular-cli.json',
       environment: 'dev'
     },
     reporters: [
-      'mocha'
+      'mocha', 'karma-remap-istanbul'
     ],
     port: 9876,
     colors: true,

@@ -4,6 +4,9 @@ sudo: required
 node_js:
   -"4.1"
 
+env:
+  CODECLIMATE_REPO_TOKEN: 07f0186ba388873f07c7e0e530c98e720277303f54bbc4f9be87d2f99e203272
+
 addons:
   apt:
     sources:
@@ -39,6 +42,10 @@ script:
   - ionic state restore
   - ionic build android
   - npm test
+
+after_script:
+  - npm install -g codeclimate-test-reporter
+  - codeclimate-test-reporter < coverage/lcov.info
 
 notifications:
   email:

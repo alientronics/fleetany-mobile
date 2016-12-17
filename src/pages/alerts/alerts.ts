@@ -31,7 +31,7 @@ export class Alerts {
     this.listenToAlertsEvents();
   }
 
-  listenToAlertsEvents() {
+  public listenToAlertsEvents() {
     this.events.subscribe('alerts:refresh', () => {
       this.alertsProvider.getAlertsData().then((alerts) => { 
         alerts = JSON.parse(alerts);  
