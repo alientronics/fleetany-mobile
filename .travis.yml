@@ -44,6 +44,7 @@ script:
 
 after_script:
   - npm install -g codeclimate-test-reporter
+  - sed -i - 's/\/home\/travis\/build\/alientronics\/fleetany-mobile\/node_modules\/angular2-template-loader\/index.js!//' coverage/lcov.info 
   - codeclimate-test-reporter < coverage/lcov.info
 
 notifications:
