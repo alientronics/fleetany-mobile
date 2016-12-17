@@ -10,7 +10,7 @@ addons:
       - ubuntu-toolchain-r-test
       - google-chrome
   code_climate:
-     repo_token: 07f0186ba388873f07c7e0e530c98e720277303f54bbc4f9be87d2f99e203272
+    repo_token: 07f0186ba388873f07c7e0e530c98e720277303f54bbc4f9be87d2f99e203272
 
 android:
   components:
