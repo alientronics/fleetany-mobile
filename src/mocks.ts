@@ -1,27 +1,3 @@
-
-// IONIC:
-
-export class ConfigMock {
-
-  public get(): any {
-    return '';
-  }
-
-  public getBoolean(): boolean {
-    return true;
-  }
-
-  public getNumber(): number {
-    return 1;
-  }
-}
-
-export class FormMock {
-  public register(): any {
-    return true;
-  }
-}
-
 export class AlertsProviderMock {
   public getAlertsData(): any {
     return new Promise((resolve: Function) => {
@@ -39,5 +15,46 @@ export class BluetoothProviderMock {
   }
 
   public bleToggle(b:boolean): any {}
+
+}
+
+export class UserDataMock {
+
+  public getFuelTypes(): any {
+    return new Promise((resolve: Function) => {
+      resolve('');
+    });
+  }
+
+  public hasLoggedIn(): any {
+    return new Promise((resolve: Function) => {
+      resolve('[{}]');
+    });
+  }
+
+  public getPlate(): any {
+    return new Promise((resolve: Function) => {
+      resolve('');
+    });
+  }
+
+  public getVehicles(): any {
+    return new Promise((resolve: Function) => {
+      resolve('');
+    });
+  }
+
+  public showToast(s1:string, s2:string, a:any): any {}
+  public setPlate(b:any): any {}
+
+}
+
+export class GpsProviderMock {
+
+  public getGpsCurrentData(): any {
+    return new Promise((resolve: Function) => {
+      resolve('[{\"latitude\":1,\"longitude\":0,\"gpstracking\":1,\"count\":0}]');
+    });
+  }
 
 }

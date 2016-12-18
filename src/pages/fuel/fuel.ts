@@ -52,8 +52,8 @@ export class Fuel {
       this.types = types;
     });
     
-    this.fuelForm.controls['type'].updateValue('regular');
-    this.fuelForm.controls['tankfill'].updateValue(true);
+    //this.fuelForm.controls['type'].updateValue('regular');
+    //this.fuelForm.controls['tankfill'].updateValue(true);
   }
 
   onSubmit(value: any): void { 

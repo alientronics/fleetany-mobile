@@ -7,10 +7,10 @@ import 'zone.js/dist/jasmine-patch';
 import 'zone.js/dist/async-test';
 import 'zone.js/dist/fake-async-test';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { TestBed } from '@angular/core/testing';
-import { App, MenuController, NavController, Platform, Config, Keyboard, Form, IonicModule, Events, Alert, GestureController, AlertController }  from 'ionic-angular';
-import { ConfigMock, AlertsProviderMock, BluetoothProviderMock } from './mocks';
+import { App, MenuController, NavController, Platform, Config, Keyboard, Form, IonicModule, Events, Alert, GestureController, AlertController, Haptic }  from 'ionic-angular';
+import { AlertsProviderMock, BluetoothProviderMock, GpsProviderMock, UserDataMock } from './mocks';
 
 import { TranslateService, TranslateStaticLoader, TranslateLoader, TranslateModule } from 'ng2-translate/ng2-translate';
 import { Http, BaseRequestOptions, HttpModule } from '@angular/http';
@@ -72,14 +72,17 @@ export class TestUtils {
         ...components,
       ],
       providers: [
-        App, Platform, Form, Keyboard, MenuController, NavController, Events, GestureController, AlertController,
-        {provide: Config, useClass: ConfigMock},
+        App, Platform, Form, Keyboard, Config, MenuController, NavController, Events, GestureController, AlertController, Haptic,
         {provide: AlertsProvider, useClass: AlertsProviderMock},
         {provide: BluetoothProvider, useClass: BluetoothProviderMock},
+        {provide: GpsProvider, useClass: GpsProviderMock},
+        {provide: UserData, useClass: UserDataMock},
       ],
       imports: [
         IonicModule,
         BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
         HttpModule,
         TranslateModule.forRoot({ 
           provide: TranslateLoader,

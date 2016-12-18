@@ -14,28 +14,28 @@
 
       <ion-item>
         <ion-label>{{ "fuel.Price" | translate }}</ion-label>
-        <ion-input type="number" [(ngModel)]="price"></ion-input>
+        <ion-input type="number" [(ngModel)]="price" [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
       <div *ngIf="price.hasError('required') && price.touched && false" 
           class="error">* {{ "fuel.Price" | translate }} {{ "validate.Numeric" | translate }}!</div>
 
       <ion-item>
         <ion-label>{{ "fuel.Amount" | translate }}</ion-label>
-        <ion-input type="number" [(ngModel)]="amount"></ion-input>
+        <ion-input type="number" [(ngModel)]="amount" [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
       <div *ngIf="amount.hasError('required') && amount.touched && false" 
           class="error">* {{ "fuel.Amount" | translate }} {{ "validate.Numeric" | translate }}!</div>
 
       <ion-item>
         <ion-label>{{ "fuel.Miliage" | translate }}</ion-label>
-        <ion-input type="number" [(ngModel)]="miliage"></ion-input>
+        <ion-input type="number" [(ngModel)]="miliage" [ngModelOptions]="{standalone: true}"></ion-input>
       </ion-item>
       <div *ngIf="miliage.hasError('required') && miliage.touched && false" 
           class="error">* {{ "fuel.Miliage" | translate }} {{ "validate.Numeric" | translate }}!</div>
 
       <ion-item>
         <ion-label>{{ "fuel.Type" | translate }}</ion-label>
-        <ion-select [(ngModel)]="type">
+        <ion-select [(ngModel)]="type" [ngModelOptions]="{standalone: true}">
           <ion-option *ngFor="let type of types" value="{{type.key}}">
             {{type.value}}
           </ion-option>
@@ -44,7 +44,7 @@
 
       <ion-item>
         <ion-label>{{ "fuel.TankFillUp" | translate }}</ion-label>
-        <ion-toggle [(ngModel)]="tankfill" checked="true"></ion-toggle>
+        <ion-toggle [(ngModel)]="tankfill" checked="true" [ngModelOptions]="{standalone: true}"></ion-toggle>
       </ion-item>
 
     </ion-list>
