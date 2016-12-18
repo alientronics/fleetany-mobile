@@ -22,41 +22,6 @@ export class FormMock {
   }
 }
 
-export class NavMock {
-
-  public pop(): any {
-    return new Promise(function(resolve: Function): void {
-      resolve();
-    });
-  }
-
-  public push(): any {
-    return new Promise(function(resolve: Function): void {
-      resolve();
-    });
-  }
-
-  public getActive(): any {
-    return {
-      'instance': {
-        'model': 'something',
-      },
-    };
-  }
-
-  public setRoot(): any {
-    return true;
-  }
-}
-
-export class PlatformMock {
-  public ready(): any {
-    return new Promise((resolve: Function) => {
-      resolve();
-    });
-  }
-}
-
 export class AlertsProviderMock {
   public getAlertsData(): any {
     return new Promise((resolve: Function) => {
@@ -65,10 +30,14 @@ export class AlertsProviderMock {
   }
 }
 
-export class MenuMock {
-  public close(): any {
+export class BluetoothProviderMock {
+
+  public getBluetoothCurrentData(): any {
     return new Promise((resolve: Function) => {
-      resolve();
+      resolve('[{\"blescan\":1,\"bledevice\":0,\"devices\":1,\"datastream\":0}]');
     });
   }
+
+  public bleToggle(b:boolean): any {}
+
 }
