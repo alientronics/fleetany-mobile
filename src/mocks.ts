@@ -58,3 +58,34 @@ export class GpsProviderMock {
   }
 
 }
+
+export class StorageMock {
+
+  public get(key: string): Promise<{}> {
+    return new Promise((resolve: Function) => {
+      resolve({key: key});
+    });
+  }
+
+  public set(key: string, value: string): Promise<{}> {
+    return new Promise((resolve: Function) => {
+      resolve({key: key, value: value});
+    });
+  }
+
+  public remove(key: string): Promise<{}> {
+    return new Promise((resolve: Function) => {
+      resolve({key: key});
+    });
+  }
+}
+
+export class GeofenceProviderMock {
+
+  public getGeofenceData(): any {
+    return new Promise((resolve: Function) => {
+      resolve('[1, 5]');
+    });
+  }
+
+}

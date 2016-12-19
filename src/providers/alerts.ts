@@ -13,13 +13,13 @@ export class AlertsProvider {
 
   constructor(
       @Inject(Events) public events: Events,
-      @Inject(Platform) public platform: Platform,
+      //@Inject(Platform) public platform: Platform,
       geofenceProvider: GeofenceProvider,
       public storage: Storage
   ) {
     this.events = events;
     this.geofenceProvider = geofenceProvider;
-    this.platform = platform;
+    //this.platform = platform;
     this.ALERTS_DATA = 'alertdate';
     this.listenToGeofenceEvents();
   }
