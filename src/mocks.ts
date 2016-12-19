@@ -89,3 +89,20 @@ export class GeofenceProviderMock {
   }
 
 }
+
+export class AlertControllerMock {
+  create(): any {
+    return {};
+  }
+}
+
+export class LoadingControllerMock {
+  create(opts?: any) {
+    return {
+      present: () => {
+      },
+      dismiss: () => {
+      }
+    };
+  };
+}
