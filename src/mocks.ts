@@ -1,9 +1,13 @@
 export class AlertsProviderMock {
+  
   public getAlertsData(): any {
     return new Promise((resolve: Function) => {
       resolve('[1, 5]');
     });
   }
+
+  public setAlertsData(a:any): any {};
+
 }
 
 export class BluetoothProviderMock {
@@ -14,7 +18,7 @@ export class BluetoothProviderMock {
     });
   }
 
-  public bleToggle(b:boolean): any {}
+  public bleToggle(b:boolean): any {};
 
 }
 
@@ -105,4 +109,38 @@ export class LoadingControllerMock {
       }
     };
   };
+}
+
+export class NavMock {
+
+  public pop(): any {
+    return new Promise(function(resolve: Function): void {
+      resolve();
+    });
+  }
+
+  public push(): any {
+    return new Promise(function(resolve: Function): void {
+      resolve();
+    });
+  }
+
+  public getActive(): any {
+    return {
+      'instance': {
+        'model': 'something',
+      },
+    };
+  }
+
+  public setRoot(): any {
+    return true;
+  }
+}
+
+export class TranslateServiceMock {
+
+  public setDefaultLang(a:any): any {}
+  public use(a:any): any {}
+
 }
