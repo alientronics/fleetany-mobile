@@ -14,4 +14,10 @@ describe('AlertsProvider', () => {
     expect(instance).not.toBeNull();
   });
 
+  it('should listen to geofence events', () => {
+    spyOn(instance.events, 'subscribe').and.callThrough();
+    instance.listenToGeofenceEvents();
+    expect(instance.events.subscribe).toHaveBeenCalled();
+  });
+
 });
