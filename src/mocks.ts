@@ -44,7 +44,7 @@ export class UserDataMock {
 
   public getVehicles(): any {
     return new Promise((resolve: Function) => {
-      resolve('');
+      resolve(['']);
     });
   }
 

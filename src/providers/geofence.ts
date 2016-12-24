@@ -77,10 +77,12 @@ export class GeofenceProvider {
     if(data == null) {
       this.storage.set(this.GEOFENCE_DATA, (JSON.stringify(arrayData)));
     } else {
-      arrayData = JSON.parse(localStorage.getItem(this.GEOFENCE_DATA));
-      data = JSON.parse(data); 
-      arrayData.push(data);
-      this.storage.set(this.GEOFENCE_DATA, (JSON.stringify(arrayData).replace(/[\\]/g, '')));
+      this.storage.get(this.GEOFENCE_DATA).then((value) => {
+        arrayData = JSON.parse(value);
+        data = JSON.parse(data); 
+        arrayData.push(data);
+        this.storage.set(this.GEOFENCE_DATA, (JSON.stringify(arrayData).replace(/[\\]/g, '')));
+      });
     }
   }
 
