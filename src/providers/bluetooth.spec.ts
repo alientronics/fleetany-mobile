@@ -1,6 +1,7 @@
 import { BluetoothProvider } from './bluetooth';
 import { Events, Platform }  from 'ionic-angular';
-import { StorageMock, UserDataMock, GpsProviderMock, AlertControllerMock } from '../mocks';
+import { StorageMock, UserDataMock, GpsProviderMock, AlertControllerMock, 
+         MockClass, PromiseMock, WatcherMock } from '../mocks';
 import { BLE, BluetoothSerial } from 'ionic-native';
 
 let instance: BluetoothProvider = null;
@@ -54,24 +55,14 @@ describe('BluetoothProvider', () => {
   });
 
   it('should alert about no devices', () => {
-    let promise: Object = {
-      then: function(callback: any): void {
-        return callback([]); 
-      }
-    };
-    spyOn(BluetoothSerial, 'list').and.returnValue(promise);
+    spyOn(BluetoothSerial, 'list').and.returnValue(new PromiseMock([]));
     spyOn(instance.userData, 'showToast').and.returnValue(true);
     instance.bleToggleMobile(true);
     expect(instance.userData.showToast).toHaveBeenCalled();
   });
 
   it('should have ble devices', () => {
-    let promise: Object = {
-      then: function(callback: any): void {
-        return callback([1,2,3]); 
-      }
-    };
-    spyOn(BluetoothSerial, 'list').and.returnValue(promise);
+    spyOn(BluetoothSerial, 'list').and.returnValue(new PromiseMock([1,2,3]));
     instance.bleToggleMobile(true);
     expect(instance.devices.length).toBe(3);
   });
@@ -80,6 +71,68 @@ describe('BluetoothProvider', () => {
     instance.watcher = null;
     instance.bleToggleMobile(false);
     expect(instance.watcher).toBeNull();
+  });
+
+  it('should disconnect ble device', () => {
+    instance.bledevice = "device";
+    instance.datastream = [];
+    instance.devices = [];
+    spyOn(BLE, 'disconnect').and.returnValue(new PromiseMock([]));
+    spyOn(BLE, 'startScan').and.returnValue(new WatcherMock(new MockClass(),false));
+    spyOn(BLE, 'stopScan').and.returnValue(new PromiseMock([]));
+    instance.bleToggleMobileBLE(true);
+    expect(BLE.disconnect).toHaveBeenCalled();
+    expect(instance.datastream.length).toBe(2);
+    expect(instance.devices.length).toBe(1);
+  });
+
+  it('should stop ble scan', () => {
+    instance.datastream = [];
+    spyOn(BLE, 'stopScan').and.returnValue(new PromiseMock([]));
+    instance.bleToggleMobileBLE(false);
+    expect(instance.datastream.length).toBe(1);
+  });
+
+  it('should send data to datastream', () => {
+    instance.datastream = [];
+    spyOn(instance, 'setBluetoothData').and.returnValue(true);
+    instance.sendData();
+    expect(instance.datastream.length).toBe(2);
+  });
+
+  it('should send data to datastream ok', () => {
+    spyOn(instance.platform, 'is').and.returnValue(true);
+    spyOn(BluetoothSerial, 'isConnected').and.returnValue(new PromiseMock([1,2,3]));
+    spyOn(BluetoothSerial, 'write').and.returnValue(new PromiseMock({}));
+    instance.datastream = [];
+    spyOn(instance, 'setBluetoothData').and.returnValue(true);
+    instance.sendData();
+    expect(instance.datastream.length).toBe(2);
+  });
+
+  it('should fake device data', () => {
+    spyOn(instance, 'setBluetoothData').and.returnValue(true);
+    spyOn(BluetoothSerial, 'isConnected').and.returnValue(new PromiseMock([1,2,3]));
+    instance.bledeviceChanged('deviceMac');
+    expect(instance.datastream.length).toBe(1);
+    expect(instance.setBluetoothData).toHaveBeenCalled();
+  });
+
+  it('should subscribe device', () => {
+    spyOn(instance.platform, 'is').and.returnValue(true);
+    spyOn(BluetoothSerial, 'isConnected').and.returnValue(new PromiseMock([1,2,3]));
+    spyOn(BluetoothSerial, 'subscribe').and.returnValue(new WatcherMock(new MockClass(),false));
+    spyOn(instance, 'setBluetoothData').and.returnValue(true);
+    instance.bledeviceChanged('deviceMac');
+    expect(instance.datastream.length).toBe(2);
+    expect(instance.setBluetoothData).toHaveBeenCalled();
+  });
+
+  it('should listen to userData events', () => {
+    spyOn(instance.events, 'subscribe').and.returnValue(true);
+    instance.listenToUserDataEvents();
+    instance.userData.logout();
+    expect(instance.events.subscribe).toHaveBeenCalled();
   });
 
 });

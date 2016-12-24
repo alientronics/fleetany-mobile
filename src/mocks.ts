@@ -50,6 +50,8 @@ export class UserDataMock {
 
   public showToast(s1:string, s2:string, a:any): any {}
   public setPlate(b:any): any {}
+  public checkConnection(): any {}
+  public logout(): any {}
 
 }
 
@@ -144,3 +146,37 @@ export class TranslateServiceMock {
   public use(a:any): any {}
 
 }
+
+export class MockClass {
+  public present(): any { return true; }
+  public unsubscribe(): any { return true; }
+  public json(): any { return true; }
+}
+
+export class PromiseMock {
+  public returnVar;
+  
+  constructor(returnVar) {
+    this.returnVar = returnVar;
+  }
+  public then(callback: any): void {
+    return callback(this.returnVar); 
+  }
+};
+
+export class WatcherMock {
+  public returnVar;
+  public callError;
+
+  constructor(returnVar, callError) {
+    this.returnVar = returnVar;
+    this.callError = callError;
+  }
+  public subscribe (callback: any, error: any): void {
+    if (this.callError) {
+      return error(this.returnVar);
+    } else {
+      return callback(this.returnVar);  
+    }
+  }
+};

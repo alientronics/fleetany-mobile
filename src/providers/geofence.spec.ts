@@ -1,6 +1,6 @@
 import { GeofenceProvider } from './geofence';
 import { Events, Platform }  from 'ionic-angular';
-import { StorageMock, UserDataMock } from '../mocks';
+import { StorageMock, UserDataMock, PromiseMock } from '../mocks';
 
 let instance: GeofenceProvider = null;
 
