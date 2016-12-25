@@ -20,7 +20,7 @@ export class BluetoothProvider {
   private counter: number;
   private lastPosition: any;
   public userData: UserData;
-  private gpsProvider: GpsProvider;
+  public gpsProvider: GpsProvider;
   private BLUETOOTH_DATA: string;
   private BLUETOOTH_CURRENT_DATA: string;
   
@@ -254,7 +254,9 @@ export class BluetoothProvider {
       this.storage.set(storage, (JSON.stringify(arrayData)));
     } else {
 
-        arrayData = JSON.parse(localStorage.getItem(storage));
+        this.storage.get(storage).then((stData) => {
+          arrayData = JSON.parse(stData);
+        });
         if (arrayData == null) {
           arrayData = [];
         }

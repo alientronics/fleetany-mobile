@@ -52,6 +52,8 @@ export class UserDataMock {
   public setPlate(b:any): any {}
   public checkConnection(): any {}
   public logout(): any {}
+  public postApi(s:string, d:any): any {}
+  public login(o: any): any{}
 
 }
 

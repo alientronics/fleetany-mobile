@@ -44,4 +44,11 @@ describe('GeofenceProvider', () => {
     expect(instance.storage.set).toHaveBeenCalled();
   });
 
+  it('should publish event', () => {
+    spyOn(instance.platform, 'is').and.returnValue(false);
+    spyOn(instance.userData, 'getPlate').and.callThrough();
+    instance.events.publish('user:changeplate');
+    expect(instance.platform.is).toHaveBeenCalled();
+  });
+
 });

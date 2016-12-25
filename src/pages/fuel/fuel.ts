@@ -41,7 +41,8 @@ export class Fuel {
         'amount':   ['', Validators.required ],
         'miliage':  ['', Validators.required ],
         'type':     ['', ],
-        'tankfill': ['', ]
+        'tankfill': ['', ],
+        'valid': ['', ]
     });
 
     for(let field in this.fuelForm.controls) {
@@ -52,12 +53,12 @@ export class Fuel {
       this.types = types;
     });
     
-    //this.fuelForm.controls['type'].updateValue('regular');
-    //this.fuelForm.controls['tankfill'].updateValue(true);
+    this.fuelForm.controls['type'].setValue('regular', { onlySelf: true });
+    this.fuelForm.controls['tankfill'].setValue(true, { onlySelf: true });
   }
 
   onSubmit(value: any): void { 
-      if(this.fuelForm.valid) {
+      if(this.fuelForm.valid || value.valid) {
           console.log('Submitted value: ', value);
 
           let params: any = {};
@@ -74,11 +75,11 @@ export class Fuel {
               res => {
 
                 for(let field in this.fuelForm.controls) {
-                  this.fuelForm.controls[field].updateValue('');
+                  this.fuelForm.controls[field].setValue('', { onlySelf: true });
                 };
 
-                this.fuelForm.controls['type'].updateValue('regular');
-                this.fuelForm.controls['tankfill'].updateValue(true);
+                this.fuelForm.controls['type'].setValue('regular', { onlySelf: true });
+                this.fuelForm.controls['tankfill'].setValue(true, { onlySelf: true });
 
                 this.userData.showToast('Fuel sent successfully!', 'Success!', this.alertCtrl);
             

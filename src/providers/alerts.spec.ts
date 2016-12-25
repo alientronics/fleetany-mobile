@@ -20,4 +20,16 @@ describe('AlertsProvider', () => {
     expect(instance.events.subscribe).toHaveBeenCalled();
   });
 
+  it('should publish on events', () => {
+    spyOn(instance.events, 'publish').and.callThrough();
+    instance.setAlertsData('');
+    expect(instance.events.publish).toHaveBeenCalled();
+  });
+
+  it('should get data from storage', () => {
+    spyOn(instance.storage, 'get').and.callThrough();
+    instance.getAlertsData();
+    expect(instance.storage.get).toHaveBeenCalled();
+  });
+
 });

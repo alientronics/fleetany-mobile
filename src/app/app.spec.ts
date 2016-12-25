@@ -32,4 +32,22 @@ describe('FleetanyApp', () => {
     expect(instance).toBeTruthy();
   });
 
+  it('should open page', () => {
+    spyOn(instance.nav, 'setRoot').and.returnValue(true);
+    instance.openPage({index: 1, title: 'menu.Logout', component: {} });
+    expect(instance.nav.setRoot).toHaveBeenCalled();
+  });
+
+  it('should open other page', () => {
+    spyOn(instance.nav, 'setRoot').and.returnValue(true);
+    instance.openPage({index: 0, title: '', component: {} });
+    expect(instance.nav.setRoot).toHaveBeenCalled();
+  });
+
+  it('should open menu', () => {
+    spyOn(instance.menu, 'enable').and.returnValue(true);
+    instance.enableMenu(true);
+    expect(instance.menu.enable).toHaveBeenCalled();
+  });
+
 });

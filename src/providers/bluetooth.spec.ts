@@ -86,6 +86,15 @@ describe('BluetoothProvider', () => {
     expect(instance.devices.length).toBe(1);
   });
 
+  it('should call error on ble device', () => {
+    instance.bledevice = '';
+    instance.datastream = [];
+    spyOn(BLE, 'startScan').and.returnValue(new WatcherMock(new MockClass(),true));
+    instance.bleToggleMobileBLE(true);
+    expect(BLE.startScan).toHaveBeenCalled();
+    expect(instance.datastream.length).toBe(1);
+  });
+
   it('should stop ble scan', () => {
     instance.datastream = [];
     spyOn(BLE, 'stopScan').and.returnValue(new PromiseMock([]));
@@ -133,6 +142,26 @@ describe('BluetoothProvider', () => {
     instance.listenToUserDataEvents();
     instance.userData.logout();
     expect(instance.events.subscribe).toHaveBeenCalled();
+  });
+
+  it('should get gps data', () => {
+    spyOn(instance.storage, 'get').and.callThrough();
+    spyOn(instance.storage, 'set').and.callThrough();
+    spyOn(instance.gpsProvider, 'getGpsCurrentData').and.returnValue(new PromiseMock('[{\"latitude\":1,\"longitude\":0}]'));
+    instance.setPostData('[{}]', '', '');
+    expect(instance.gpsProvider.getGpsCurrentData).toHaveBeenCalled();
+  });
+
+  it('should get storage', () => {
+    spyOn(instance.storage, 'get').and.callThrough();
+    instance.getPostData('');
+    expect(instance.storage.get).toHaveBeenCalled();
+  });
+
+  it('should get Bluetooth data', () => {
+    spyOn(instance, 'getBluetoothCurrentData').and.returnValue(new PromiseMock('[{\"blescan\":1,\"bledevice\":0,\"devices\":0,\"datastream\":0}]'));
+    instance.setDisplayData();
+    expect(instance.getBluetoothCurrentData).toHaveBeenCalled();
   });
 
 });
