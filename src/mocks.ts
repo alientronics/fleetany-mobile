@@ -151,6 +151,8 @@ export class MockClass {
   public present(): any { return true; }
   public unsubscribe(): any { return true; }
   public json(): any { return true; }
+  public backButton = { subscribe : () => {} }
+  public getComponent(): any { return true; }
 }
 
 export class PromiseMock {
@@ -179,4 +181,5 @@ export class WatcherMock {
       return callback(this.returnVar);  
     }
   }
+  public filter () { return this; }
 };
