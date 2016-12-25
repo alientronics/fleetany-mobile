@@ -1,6 +1,6 @@
 import { GpsProvider } from './gps';
 import { Events, Platform }  from 'ionic-angular';
-import { StorageMock, UserDataMock, AlertControllerMock, MockClass, WatcherMock } from '../mocks';
+import { StorageMock, UserDataMock, AlertControllerMock, MockClass, WatcherMock, PromiseMock } from '../mocks';
 import {Geolocation} from 'ionic-native';
 
 let instance: GpsProvider = null;
@@ -65,6 +65,24 @@ describe('GpsProvider', () => {
     instance.listenToUserDataEvents();
     instance.userData.logout();
     expect(instance.events.subscribe).toHaveBeenCalled();
+  });
+
+  it('should set Display data', () => {
+    spyOn(instance, 'getGpsCurrentData').and.returnValue(new PromiseMock('[{\"latitude\":1,\"longitude\":0,\"gpstracking\":0}]'));
+    instance.setDisplayData();
+    expect(instance.getGpsCurrentData).toHaveBeenCalled();
+  });
+
+  it('should get storage', () => {
+    spyOn(instance.storage, 'get').and.callThrough();
+    instance.getPostData('');
+    expect(instance.storage.get).toHaveBeenCalled();
+  });
+
+  it('should call event', () => {
+    spyOn(instance.storage, 'remove').and.callThrough();
+    instance.events.publish('user:logout');
+    expect(instance.storage.remove).toHaveBeenCalled();
   });
 
 });

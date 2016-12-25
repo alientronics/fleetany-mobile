@@ -51,4 +51,10 @@ describe('GeofenceProvider', () => {
     expect(instance.platform.is).toHaveBeenCalled();
   });
 
+  it('should get storage', () => {
+    spyOn(instance.storage, 'get').and.callThrough();
+    instance.getGeofenceData();
+    expect(instance.storage.get).toHaveBeenCalled();
+  });
+
 });
