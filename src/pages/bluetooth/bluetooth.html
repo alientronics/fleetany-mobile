@@ -9,39 +9,46 @@
 
 <ion-content class="bluetooth">
 
-  <ion-list radio-group [(ngModel)]="bledevice" (ngModelChange)="bledeviceChanged($event)">
-    <ion-list-header>
-      {{ "ble.SelectDevice" | translate }}
-    </ion-list-header>
+  <ion-list>
 
-    <ion-item *ngFor="let device of devices">
-      <ion-label>{{device.name}}</ion-label>
-      <ion-radio value="{{device.id}}"></ion-radio>
+    <ion-item>
+      <ion-label>{{ "ble.SelectDevice" | translate }}</ion-label>
+      <ion-select [(ngModel)]="bledevice" (ngModelChange)="bledeviceChanged($event)">
+        <ion-option *ngFor="let device of devices" value="{{device.id}}">
+          {{device.name}}
+        </ion-option>
+      </ion-select>
     </ion-item>
 
   </ion-list>
 
-  <ion-list [hidden]="!bledevice">
-    <ion-list-header>
-      {{ "ble.SelectedDevice" | translate }}
-    </ion-list-header>
-    <ion-item>{{bledevice}}</ion-item>
+  <ion-list [hidden]="!selected">
+
     <ion-item>
-      <ion-label>{{ "Tire Position" }}</ion-label>
+      <ion-label>Posi&ccedil;&atilde;o do Pneu</ion-label>
       <ion-select [(ngModel)]="position">
         <ion-option *ngFor="let position of positions" value="{{position.k}}">
           {{position.v}}
         </ion-option>
       </ion-select>
     </ion-item>
+    
     <ion-item>
-      <button ion-button primary block (click)="sendData()">{{ "Send Data" }}</button>
+      <button primary block (click)="inflatePair(position)" style="width: 45%; float:left; clear: none; margin: 5px;">{{ "Pareamento" }}</button>
+      <button secondary block (click)="askTiresData(position)" style="width: 45%; float:left; clear: none; margin: 5px;">{{ "Pegar Dados" }}</button>
     </ion-item>
+
   </ion-list>
 
-  <ion-card *ngFor="let data of datastream">
+  <ion-card *ngFor="let tire of datastream" [hidden]="!selected" style="width: 160px; float: left; margin-top: 0;">
+  <ion-card-header>
+    Posi&ccedil;&atilde;o: {{tire.pos}}
+  </ion-card-header>  
     <ion-card-content>
-      {{data}}
+      <p>Sensor: {{tire.id}}</p>
+      <p>Press&atilde;o: {{tire.pres}} psi</p>
+      <p>Temperatura: {{tire.temp}} &#x2103;</p>
+      Leituras <ion-badge item-right secondary>{{tire.count}}</ion-badge>
     </ion-card-content>
   </ion-card>
 
